@@ -649,7 +649,7 @@ public class AsstProxy
                     _logger.Information("Skip startup auto-run due to {Arg}", Bootstrapper.SkipStartupAutoRunArg);
                     return;
                 }
-
+/*
                 // 会自动开任务或模拟器时，先给 10 秒反悔倒计时（不强制拉起主窗口）
                 if (runDirectly || openEmulator)
                 {
@@ -668,7 +668,7 @@ public class AsstProxy
                         return;
                     }
                 }
-
+*/
                 if (runDirectly)
                 {
                     // 如果是直接运行模式，就先让按钮显示为运行
