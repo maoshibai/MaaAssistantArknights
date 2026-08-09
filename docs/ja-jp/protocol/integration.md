@@ -997,6 +997,12 @@ Sarkaz テーマ、Investment モード、「破棘成金分隊」または「�
 :::  
 ::: field name="task_names" type="array<string>" required  
 配列内の最初の一致（および後続の next など）でタスクを実行。複数のタスクを実行したい場合は、Custom task を複数回 append できます。  
+シークレットフロント（`MiniGame@SecretFront`）の連結形式に対応：`MiniGame@SecretFront@Begin@Ending[A-E](@イベント名)?`。イベント名は省略可（支援作战平台 / 游侠 / 诡影迷踪）、例：`MiniGame@SecretFront@Begin@EndingA@支援作战平台`。  
+:::  
+::: field name="params" type="object" optional  
+タスクの追加パラメータ。現在はピクセル画タスク（`MiniGame@PixelPaint@Begin`）のみで使用：  
+- `params.pixel_paint.groups`：色ごとのマス座標リスト。`color` はパレットのスロット番号（0~39、ゲーム右側パレットの順序と一致）、`points` は `[x, y]` のマス座標配列（0~23、左上原点）。  
+- `params.pixel_paint.swipe`（bool、任意、デフォルト true）：同じ色の連続マスを1回のドラッグで描画し高速化。一部のタッチ方式では正常に動作しない可能性があります。  
 :::  
 ::::
 
@@ -1007,6 +1013,20 @@ Sarkaz テーマ、Investment モード、「破棘成金分隊」または「�
 {
    "enable": true,
    "task_names": ["StartUp", "Infrast", "Fight"]
+}
+```
+
+```json
+{
+   "enable": true,
+   "task_names": ["MiniGame@PixelPaint@Begin"],
+   "params": {
+      "pixel_paint": {
+         "groups": [
+            { "color": 7, "points": [[0, 1], [3, 4]] }
+         ]
+      }
+   }
 }
 ```
 
