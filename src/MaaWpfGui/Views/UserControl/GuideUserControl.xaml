@@ -193,7 +193,7 @@
                                 <TextBlock
                                     Margin="100,0"
                                     HorizontalAlignment="Center"
-                                    Foreground="Red"
+                                    Foreground="{DynamicResource ErrorLogBrush}"
                                     Text="{DynamicResource UseAttachWindowWarning}"
                                     TextWrapping="Wrap"
                                     Visibility="{c:Binding IsPCConnectConfig}" />
@@ -433,8 +433,8 @@
                                     </ContentControl>
                                 </StackPanel>
 
-                                <!--  截图测试（ADB 模式）  -->
-                                <StackPanel HorizontalAlignment="Center" Visibility="{c:Binding '!IsPCConnectConfig'}">
+                                <!--  截图测试  -->
+                                <StackPanel HorizontalAlignment="Center">
                                     <Button
                                         Height="30"
                                         Margin="5"
@@ -615,7 +615,7 @@
                                                         </ToolTip>
                                                     </RadioButton.ToolTip>
                                                     <RadioButton.ContextMenu>
-                                                        <ContextMenu Width="150">
+                                                        <ContextMenu Width="150" ItemContainerStyle="{StaticResource MaaMenuItemDefaultStyle}">
                                                             <MenuItem Header="{DynamicResource RunTaskOnce}" />
                                                             <MenuItem Header="{DynamicResource Copy}" />
                                                             <MenuItem Header="{DynamicResource Rename}" />
@@ -835,7 +835,7 @@
                                             Cursor="Hand"
                                             NavigateUri="{Binding Source={x:Static constants:MaaUrls.MirrorChyanWebsite}}"
                                             TextDecorations="None">
-                                            <TextBlock Text="{DynamicResource MirrorChyan}" />
+                                            <TextBlock Style="{StaticResource HyperlinkTextBlockStyle}" Text="{DynamicResource MirrorChyan}" />
                                         </Hyperlink>
                                     </controls:TextBlock>
                                 </StackPanel>
