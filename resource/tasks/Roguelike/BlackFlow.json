@@ -815,7 +815,7 @@
         "isAscii": true,
         "withoutDet": true,
         "text": ["0", "-0", "-1", "-2", "-3", "-4", "-5", "-6", "-7", "-8", "-9"],
-        "ocrReplace": [["^.*-([0-9])$", "-$1"]],
+        "ocrReplace": [["^.*([0-9])$", "-$1"]],
         "fullMatch": true
     },
     "BlackFlow@Roguelike@MovePreviewDisplayedName": {
@@ -946,8 +946,15 @@
     },
     "BlackFlow@Roguelike@MovementPanelBackClick": {
         "algorithm": "JustReturn",
+        "sub": ["BlackFlow@Roguelike@MovementPanelBackClickOnce*2", "BlackFlow@Roguelike@MovementPanelBackClickWait"]
+    },
+    "BlackFlow@Roguelike@MovementPanelBackClickOnce": {
+        "algorithm": "JustReturn",
         "action": "ClickRect",
-        "specificRect": [2, 138, 36, 293],
+        "specificRect": [18, 138, 20, 293]
+    },
+    "BlackFlow@Roguelike@MovementPanelBackClickWait": {
+        "algorithm": "JustReturn",
         "postDelay": 500
     },
     "BlackFlow@Roguelike@MovementPanelItems": {

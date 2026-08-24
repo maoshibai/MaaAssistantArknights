@@ -745,6 +745,7 @@ HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Notifications\Settin
     <system:String x:Key="ConnectionAddressTip">｢{key=AutoDetectConnection}｣ を有効にして成功すると自動的に入力されます。検出に失敗した場合は、エミュレータの実際のポートを確認して入力してください。</system:String>
     <system:String x:Key="ConnectionPreset">接続構成</system:String>
     <system:String x:Key="ScreenshotTest">スクリーンショットテスト</system:String>
+    <system:String x:Key="WindowRestore">ウィンドウ復元</system:String>
     <system:String x:Key="MuMu12ExtrasEnabled">MuMu のスクリーンショット拡張モードを有効にする</system:String>
     <system:String x:Key="MuMuExtrasTouchEnabled">MuMu タッチ強化を有効化（実験的、MuMu エミュレータ 6.3.2+、バックグラウンド常駐対応）</system:String>
     <system:String x:Key="MuMuEmulatorPathNotFound">MuMu エミュレータのパスが見つかりません。</system:String>
@@ -1380,7 +1381,7 @@ C:\\leidian\\LDPlayer9
     <system:String x:Key="GiveUpUploadingPenguins">Penguin-Statsへのアップロードをあきらめました</system:String>
     <system:String x:Key="ReportSkippedForPcClient">PC クライアントではカーソルがドロップ品や個数の認識を遮る場合があります。誤ったデータでデータプールを汚染しないよう、今回のレポートは自動的にスキップしました</system:String>
     <system:String x:Key="TheEx">ステージ報酬がないため停止します</system:String>
-    <system:String x:Key="MissingOperators">以下の{key=Operator}グループの{key=Operator}を所有していません（各グループ1体で足ります）：\n{0}｢戦術要員｣ マークは{key=Operator}の認識に影響する可能性があります。上記の{key=Operator}を所有している場合はマークを解除して再試行してください。所有していない場合は、不足グループが1つなら ｢{key=SupportUnitUsage}｣ で補えますが、2つ以上の場合は他の作業ファイルを使用してください。</system:String>
+    <system:String x:Key="MissingOperators">以下の{key=Operator}グループの{key=Operator}を所有していません（各グループ1体で足ります）：\n{0}｢戦術要員｣ マークは{key=Operator}の認識に影響する可能性があります。実際に所有している場合は、マークを解除して再試行するか、｢{key=AutoSquad}｣ をオフにして手動で補充してください。実際に所有していない場合は、不足グループが1つなら ｢{key=SupportUnitUsage}｣ で補えますが、2つ以上の場合は他の作業ファイルを使用してください。</system:String>
     <system:String x:Key="RecruitSupportOperator">サポートユニットを追加：{0}</system:String>
     <system:String x:Key="StageQueue">ステージキュー:</system:String>
     <system:String x:Key="UnableToAgent">自動指揮利用不可</system:String>
@@ -1707,7 +1708,7 @@ C:\\leidian\\LDPlayer9
     <system:String x:Key="AttachWindowScreencapMethod">スクリーンキャプチャ方式</system:String>
     <system:String x:Key="AttachWindowMouseMethod">マウス入力方式</system:String>
     <system:String x:Key="AttachWindowKeyboardMethod">キーボード入力方式</system:String>
-    <system:String x:Key="AttachWindowScreencapFramePool">FramePool（バックグラウンド、高効率、最小化可）</system:String>
+    <system:String x:Key="AttachWindowScreencapFramePool">FramePool（バックグラウンド、高効率、最小化不可）</system:String>
     <system:String x:Key="AttachWindowScreencapPrintWindow">PrintWindow（バックグラウンド、安定、最小化可）</system:String>
     <system:String x:Key="AttachWindowScreencapScreenDC">ScreenDC（バックグラウンド、予備、最小化不可）</system:String>
     <system:String x:Key="AttachWindowScreencapDesktopDupWindow">DesktopWindow（フォアグラウンド、遮蔽不可）</system:String>
@@ -2410,7 +2411,7 @@ MAA を複数開くには、新しい MAA を他のフォルダにコピーし�
 
     <system:String x:Key="Achievement.SlackingOff.Title">本業を怠る</system:String>
     <system:String x:Key="Achievement.SlackingOff.Description">本業に疲れたら、ちょっと別の遊びを。</system:String>
-    <system:String x:Key="Achievement.SlackingOff.Conditions">ミニゲームを1回起動する</system:String>
+    <system:String x:Key="Achievement.SlackingOff.Conditions">{key=MiniGame}を1回起動する</system:String>
 
     <system:String x:Key="AchievementDlcProgressNotice">実績 DLC 識別子：#1 は実績システムと同時公開、以降はアップデートで追加されます。一部実績の進捗は所属 DLC 公開後にのみ加算されます。</system:String>
     <system:String x:Key="AchievementDlcReleaseDate">公開日</system:String>
