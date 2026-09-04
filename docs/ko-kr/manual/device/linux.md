@@ -47,7 +47,7 @@ ADB를 통해 USB 장치에 연결해야 하는 경우, 먼저 Wine 외부에서
 
 #### Linux 네이티브 MaaCore 사용 (실험적 기능)
 
-[MAA Wine Bridge](https://github.com/MaaAssistantArknights/MaaAssistantArknights/tree/dev/src/MaaWineBridge) 소스 코드를 다운로드하고 빌드하여, 생성된 `MaaCore.dll`(ELF 파일)로 Windows 버전을 교체하고, Linux 네이티브 동적 라이브러리(`libMaaCore.so` 및 종속성)를 같은 디렉토리에 넣습니다.
+[MAA Wine Bridge](https://github.com/MaaAssistantArknights/MaaAssistantArknights/tree/dev-v2/src/MaaWineBridge) 소스 코드를 다운로드하고 빌드하여, 생성된 `MaaCore.dll`(ELF 파일)로 Windows 버전을 교체하고, Linux 네이티브 동적 라이브러리(`libMaaCore.so` 및 종속성)를 같은 디렉토리에 넣습니다.
 
 이때 Wine을 통해 `MAA.exe`를 실행하면 Linux 네이티브 동적 라이브러리가 로드됩니다.
 
@@ -78,7 +78,7 @@ MAA Wine Bridge에서 생성된 `MaaDesktopIntegration.so`를 `MAA.exe`와 같�
    1. [MAA 공식 웹사이트](https://maa.plus/)에서 Linux 동적 라이브러리를 다운로드하고 압축을 풀거나 소프트웨어 저장소에서 설치합니다:
       - AUR：[maa-assistant-arknights](https://aur.archlinux.org/packages/maa-assistant-arknights)을 설치한 후에 설치 지침에 따라 파일을 편집합니다.
       - Nixpkgs: [maa-assistant-arknights](https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/by-name/ma/maa-assistant-arknights/package.nix)
-   2. `./MAA-v{버전}-linux-{아키텍처}/Python/` 디렉토리로 이동하여 `sample.py` 파일을 엽니다.
+   2. 압축을 해제한 디렉터리의 `Python/` 디렉토리로 이동하여 `sample.py` 파일을 엽니다.
 
    ::: tip
    사전 컴파일된 버전은 상대적으로 최신 버전의 Linux 배포판 (Ubuntu 22.04)에서 컴파일된 동적 라이브러리를 포함하고 있습니다. 시스템의 libstdc++ 버전이 오래되면 ABI 호환성 문제가 발생할 수 있습니다.
@@ -86,7 +86,7 @@ MAA Wine Bridge에서 생성된 `MaaDesktopIntegration.so`를 `MAA.exe`와 같�
    :::
 
 2. ADB 구성
-   1. [`if asst.connect('adb.exe', '127.0.0.1:5554'):`](https://github.com/MaaAssistantArknights/MaaAssistantArknights/blob/b4fc3528decd6777441a8aca684c22d35d2b2574/src/Python/sample.py#L62) 줄을 찾습니다.
+   1. [`if asst.connect("adb.exe", "127.0.0.1:5555"):`](https://github.com/MaaAssistantArknights/MaaAssistantArknights/blob/dev-v2/src/Python/sample.py#L71) 줄을 찾습니다.
    2. ADB 도구 호출
       - 에뮬레이터가 `Android Studio`의 `avd`를 사용하는 경우 ADB가 내장되어 있습니다. `adb.exe` 필드에 ADB 경로를 입력합니다. 일반적으로 `$HOME/Android/Sdk/platform-tools/` 폴더에서 찾을 수 있습니다. 예시:
 
@@ -115,7 +115,7 @@ MAA Wine Bridge에서 생성된 `MaaDesktopIntegration.so`를 `MAA.exe`와 같�
 
 3. 작업 구성
 
-사용자 정의 작업: 필요에 따라 [통합 문서](../../protocol/integration.md)를 참조하여 `sample.py`의 [`# 작업 및 매개변수는 docs/integration.md 참조`](https://github.com/MaaAssistantArknights/MaaAssistantArknights/blob/722f0ddd4765715199a5dc90ea1bec2940322344/src/Python/sample.py#L54) 부분을 수정합니다.
+사용자 정의 작업: 필요에 따라 [통합 문서](../../protocol/integration.md)를 참조하여 `sample.py`의 [`# 작업 및 매개변수는 docs/zh-cn/protocol/integration.md 참조`](https://github.com/MaaAssistantArknights/MaaAssistantArknights/blob/dev-v2/src/Python/sample.py#L77) 부분을 수정합니다.
 
 ::::
 

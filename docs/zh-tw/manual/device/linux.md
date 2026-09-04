@@ -47,7 +47,7 @@ MAA WPF GUI 當前可以透過 Wine 執行。MAA 已採用自包含部署方式�
 
 #### 使用 Linux 原生 MaaCore（實驗性功能）
 
-下載 [MAA Wine Bridge](https://github.com/MaaAssistantArknights/MaaAssistantArknights/tree/dev/src/MaaWineBridge) 原始碼並建置，用產生的 `MaaCore.dll`（ELF 檔案）替換 Windows 版本，並將 Linux 原生動態函式庫（`libMaaCore.so` 以及依賴項）放在同一目錄下。
+下載 [MAA Wine Bridge](https://github.com/MaaAssistantArknights/MaaAssistantArknights/tree/dev-v2/src/MaaWineBridge) 原始碼並建置，用產生的 `MaaCore.dll`（ELF 檔案）替換 Windows 版本，並將 Linux 原生動態函式庫（`libMaaCore.so` 以及依賴項）放在同一目錄下。
 
 此時透過 Wine 執行 `MAA.exe`，將會載入 Linux 原生動態函式庫。
 
@@ -78,7 +78,7 @@ MAA WPF GUI 當前可以透過 Wine 執行。MAA 已採用自包含部署方式�
    1. 在 [MAA 官網](https://maa.plus/) 下載 Linux 動態函式庫並解壓縮，或從軟體源安裝：
       - AUR：[maa-assistant-arknights](https://aur.archlinux.org/packages/maa-assistant-arknights)，按照安裝後的提示編輯檔案
       - Nixpkgs: [maa-assistant-arknights](https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/by-name/ma/maa-assistant-arknights/package.nix)
-   2. 進入 `./MAA-v{版本號}-linux-{架構}/Python/` 目錄下開啟 `sample.py` 檔案
+   2. 進入解壓縮後的 `Python/` 目錄下開啟 `sample.py` 檔案
 
    ::: tip
    預編譯的版本包含在相對較新的 Linux 發行版 (Ubuntu 22.04) 中編譯的動態函式庫，如果您系統中的 libstdc++ 版本較舊，可能遇到 ABI 不相容的問題。
@@ -86,7 +86,7 @@ MAA WPF GUI 當前可以透過 Wine 執行。MAA 已採用自包含部署方式�
    :::
 
 2. ADB 配置
-   1. 找到 [`if asst.connect('adb.exe', '127.0.0.1:5554'):`](https://github.com/MaaAssistantArknights/MaaAssistantArknights/blob/b4fc3528decd6777441a8aca684c22d35d2b2574/src/Python/sample.py#L62) 一欄
+   1. 找到 [`if asst.connect("adb.exe", "127.0.0.1:5555"):`](https://github.com/MaaAssistantArknights/MaaAssistantArknights/blob/dev-v2/src/Python/sample.py#L71) 一欄
    2. ADB 工具呼叫
       - 如果模擬器使用 `Android Studio` 的 `avd`，其內建 ADB。可以直接在 `adb.exe` 一欄填寫 ADB 路徑，通常在 `$HOME/Android/Sdk/platform-tools/` 裡面可以找到，例如：
 
@@ -115,7 +115,7 @@ MAA WPF GUI 當前可以透過 Wine 執行。MAA 已採用自包含部署方式�
 
 3. 任務配置
 
-自定義任務：根據需要參閱 [整合文件](../../protocol/integration.md) 對 `sample.py` 的 [`# 任務及參數請參考 docs/integration.md`](https://github.com/MaaAssistantArknights/MaaAssistantArknights/blob/722f0ddd4765715199a5dc90ea1bec2940322344/src/Python/sample.py#L54) 一欄進行修改。
+自訂任務：根據需要參閱 [整合文件](../../protocol/integration.md) 對 `sample.py` 的 [`# 任務及參數請參考 docs/zh-cn/protocol/integration.md`](https://github.com/MaaAssistantArknights/MaaAssistantArknights/blob/dev-v2/src/Python/sample.py#L77) 一欄進行修改。
 
 ::::
 
@@ -152,7 +152,7 @@ waydroid prop set persist.waydroid.width 1280
 waydroid prop set persist.waydroid.height 720
 ```
 
-設定 ADB 的 IP 位址：開啟 `設定` - `關於` - `IP地址` ，記錄第一個 `IP` ，將 `${記錄的IP}:5555` 填入 `sample.py` 的 adb IP 一欄。
+設定 ADB 的 IP 位址：開啟 `設定` - `關於` - `IP 位址` ，記錄第一個 `IP` ，將 `${記錄的IP}:5555` 填入 `sample.py` 的 adb IP 一欄。
 
 如果使用 amdgpu，`screencap` 指令可能向 stderr 輸出資訊導致圖片解碼失敗。
 可以執行 `adb exec-out screencap | xxd | head` 並檢查輸出中是否有類似 `/vendor/etc/hwdata/amdgpu.ids: No such file...` 的文字來確認這一點。

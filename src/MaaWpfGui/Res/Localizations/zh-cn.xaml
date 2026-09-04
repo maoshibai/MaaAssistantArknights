@@ -53,6 +53,7 @@
     <system:String x:Key="ExternalNotificationSendWhenComplete">任务完成后发送通知</system:String>
     <system:String x:Key="ExternalNotificationSendWhenError">任务出错时发送通知</system:String>
     <system:String x:Key="ExternalNotificationSendWhenStalled">任务日志输出停滞时发送通知</system:String>
+    <system:String x:Key="ExternalNotificationSendWhenStalledTip">需在 ｢{key=GameSettings}｣ 中开启 ｢{key=StallTimeoutEnabled}｣ 后才会生效</system:String>
     <system:String x:Key="ExternalNotificationSendSuccess">发送成功</system:String>
     <system:String x:Key="ExternalNotificationSendFail">发送失败</system:String>
     <system:String x:Key="ExternalNotificationSendTest">发送测试</system:String>
@@ -169,6 +170,27 @@
     <system:String x:Key="InfrastReceptionSendClue">赠送线索</system:String>
     <system:String x:Key="ReceptionOptionsRequireInfrast">以下功能需在{key=Infrast}中设置并执行</system:String>
     <system:String x:Key="ContinueTraining">训练完成后继续尝试专精当前技能</system:String>
+    <system:String x:Key="InfrastFiammettaRecovery">启用菲亚梅塔心情恢复</system:String>
+    <system:String x:Key="InfrastFiammettaRecoveryTips">开启后，换班开始时会将恢复目标与满心情的菲亚梅塔放入宿舍互换心情，菲亚梅塔随后留在宿舍恢复心情。</system:String>
+    <system:String x:Key="InfrastFiammettaTargets">菲亚梅塔恢复目标</system:String>
+    <system:String x:Key="InfrastFiammettaTargetNone">无</system:String>
+    <system:String x:Key="InfrastFiammettaTargetPurestream">清流</system:String>
+    <system:String x:Key="InfrastFiammettaTargetClosure">可露希尔</system:String>
+    <system:String x:Key="InfrastFiammettaTargetProviso">但书</system:String>
+    <system:String x:Key="InfrastFiammettaTargetShamare">巫恋</system:String>
+    <system:String x:Key="InfrastFiammettaTargetTequila">龙舌兰</system:String>
+    <system:String x:Key="InfrastFiammettaTargetGladiia">歌蕾蒂娅</system:String>
+    <system:String x:Key="InfrastFiammettaTargetsTips">虽然理论上恢复巫恋和龙舌兰可以 007，但是自动换班情况下难以实现，因此不推荐选择恢复巫恋和龙舌兰</system:String>
+    <system:String x:Key="InfrastUsePinusSylvestris">使用红松骑士团跨设施组合</system:String>
+    <system:String x:Key="InfrastUsePinusSylvestrisTips" xml:space="preserve">必要干员：焰尾(精二)、薇薇安娜(精二)、野鬃(精二)/灰毫(精二)/远牙(精二)至少一个&#10;参与计算干员：砾</system:String>
+    <system:String x:Key="InfrastUsePerceptionInformation">使用感知信息跨设施组合</system:String>
+    <system:String x:Key="InfrastUsePerceptionInformationTips" xml:space="preserve">必要干员：絮雨(精二)、迷迭香(精二)、黑键(精二)&#10;参与计算干员：夕、塑心、爱丽丝、车尔尼&#10;优先度高于人间烟火</system:String>
+    <system:String x:Key="InfrastUseWorldlyPlight">使用人间烟火跨设施组合</system:String>
+    <system:String x:Key="InfrastUseWorldlyPlightTips" xml:space="preserve">必要干员：桑葚(精二)、乌有(精二)&#10;参与计算干员：重岳、令、夕</system:String>
+    <system:String x:Key="InfrastUseAbyssalHunter">使用深海猎人跨设施组合</system:String>
+    <system:String x:Key="InfrastUseAbyssalHunterTips" xml:space="preserve">必要干员：歌蕾蒂娅(精二)、乌尔比安、斯卡蒂、幽灵鲨、安哲拉&#10;因算法原因同时勾选红松骑士团时不会和红松骑士团同时参与排班</system:String>
+    <system:String x:Key="InfrastFacilitySelection">换班设施</system:String>
+    <system:String x:Key="InfrastFacilitySelectionTip" xml:space="preserve">｢{key=InfrastModeNormal}｣ 下换班顺序由算法统一安排，此处仅选择需要换班的设施类别，列表顺序不生效。&#10;若需自定义换班顺序，请使用 ｢{key=InfrastModeCustom}｣。</system:String>
     <system:String x:Key="TrainingIdle">训练室空闲中</system:String>
     <system:String x:Key="TrainingCompleted">训练完成</system:String>
     <system:String x:Key="TrainingLevel">专精等级</system:String>
@@ -229,7 +251,7 @@
     <system:String x:Key="RoguelikeBlackFlowCultivationTargetCerberus">襁褓三头犬</system:String>
     <system:String x:Key="RoguelikeStrategyLastReward">刷开局，刷取热水壶或精二{key=Operator}开局</system:String>
     <system:String x:Key="RoguelikeStrategyCollapse">刷坍缩范式，遇到非稀有坍缩范式后直接重开</system:String>
-    <system:String x:Key="RoguelikeCollectibleModeSquad">烧水使用分队</system:String>
+    <system:String x:Key="RoguelikeCollectibleModeSquad">刷开局使用分队</system:String>
     <system:String x:Key="RoguelikeStrategyMonthlySquad">刷月度小队，尽可能稳定地打更多层数</system:String>
     <system:String x:Key="RoguelikeStrategyDeepExploration">刷深入调查，尽可能稳定地打更多层数</system:String>
     <system:String x:Key="RoguelikeStrategyFindPlaytime">刷常乐节点，第一层进洞，找不到需要的节点就重开</system:String>
@@ -251,6 +273,7 @@
     <system:String x:Key="Roguelike3FirstFloorFoldartal">凹第一层远见密文板，不进行作战</system:String>
     <system:String x:Key="Roguelike3NewSquad2StartingFoldartal">生活队凹开局密文板</system:String>
     <system:String x:Key="Roguelike3NewSquad2StartingFoldartalTip">最多写三个，并用英文分号 ｢;｣ 隔开</system:String>
+    <system:String x:Key="Roguelike3FirstFloorFoldartalTip">填写远见密文板名称，多个用英文分号 ｢;｣ 隔开</system:String>
     <system:String x:Key="RoguelikeCollapseList">坍缩范式列表</system:String>
     <system:String x:Key="RoguelikeCollapseListTip">用英文分号 ｢;｣ 隔开，留空将使用默认列表。</system:String>
     <system:String x:Key="RoguelikeUseSupportUnit">｢{key=StartingCoreChar}｣ 使用助战</system:String>
@@ -265,8 +288,10 @@
     <system:String x:Key="RoguelikeMonthlySquadCheckComms">月度小队通讯</system:String>
     <system:String x:Key="RoguelikeDeepExplorationAutoIterate">深入调查自动切换</system:String>
     <system:String x:Key="DeploymentWithPause">划火柴模式（自动战斗相关）（不稳定, 暂不推荐开启）</system:String>
+    <system:String x:Key="DeploymentWithPauseTip">自动战斗部署{key=Operator}时暂停游戏，再下{key=Operator}</system:String>
     <system:String x:Key="AdbLiteEnabled">使用 ADB Lite（实验性功能）</system:String>
-    <system:String x:Key="KillAdbOnExit">退出时释放 ADB</system:String>
+    <system:String x:Key="AdbLiteEnabledTip">MAA 自实现的 ADB 功能，避免每次执行 adb 命令都启动一个 adb.exe 进程</system:String>
+    <system:String x:Key="KillAdbOnExit">退出时结束 ADB 进程</system:String>
     <system:String x:Key="DefaultSquad">默认分队</system:String>
     <system:String x:Key="IS2NewSquad1">心胜于物分队</system:String>
     <system:String x:Key="IS2NewSquad2">物尽其用分队</system:String>
@@ -382,6 +407,7 @@
     <system:String x:Key="UpdateAutoDownloadTip" xml:space="preserve">取消勾选后，检测到新版本时（包括手动触发 ｢{key=UpdateCheckNow}｣）将不再自动下载，仅通过系统通知提示并附带下载链接，可自行下载更新包后拖入 MAA 完成更新。
 若系统通知已关闭，则改为软件内通知，但软件内通知不提供可交互的下载按钮。</system:String>
     <system:String x:Key="AutoInstallUpdatePackage">自动安装更新包</system:String>
+    <system:String x:Key="AutoInstallUpdatePackageTip">检测到新版本后不再弹窗询问，将在任务空闲时自动更新并重启 MAA</system:String>
     <system:String x:Key="ShowUpdaterConsole">显示更新程序控制台输出</system:String>
     <system:String x:Key="ShowUpdaterProgress">显示更新程序进度窗口</system:String>
     <system:String x:Key="ShowUpdaterProgressTip" xml:space="preserve">更新时由更新程序显示一个独立的进度窗口，展示当前更新状态与文件处理进度。
@@ -502,8 +528,9 @@ D:\
     <system:String x:Key="ForceScheduledStart">强制定时启动</system:String>
     <system:String x:Key="ForceScheduledStartTip">停止当前任务，重启游戏并开始新任务</system:String>
     <system:String x:Key="ShowWindowBeforeForceScheduledStart">强制定时启动前显示窗口</system:String>
+    <system:String x:Key="ShowWindowBeforeForceScheduledStartTip">定时启动前显示主窗口，避免最小化时看不到倒计时</system:String>
     <system:String x:Key="TimerCustomConfig">自定义配置选择</system:String>
-    <system:String x:Key="TimerCustomConfigTip">将提前两分钟重启并切换配置</system:String>
+    <system:String x:Key="TimerCustomConfigTip">定时启动前两分钟重启游戏并切换配置</system:String>
     <system:String x:Key="Timer">定时</system:String>
     <system:String x:Key="GlobalConfigTip">此选项页为全局配置</system:String>
     <system:String x:Key="MultiTasksShareTip">以下选项为多任务共用</system:String>
@@ -552,13 +579,15 @@ D:\
     <system:String x:Key="MiniTouchMode">Minitouch（默认）</system:String>
     <system:String x:Key="MaaTouchMode">MaaTouch（实验功能）</system:String>
     <system:String x:Key="AdbTouchMode">ADB Input（不推荐使用）</system:String>
-    <system:String x:Key="MaaFwAdbTouchMode">MaaFramework（实验功能）</system:String>
+    <system:String x:Key="MaaFwAdbTouchMode">MaaFwAdb（实验功能）</system:String>
     <system:String x:Key="MumuExtrasTouchMode">MuMu 触控增强（实验功能）</system:String>
-    <system:String x:Key="TouchModeTip" xml:space="preserve">ADB Input 仅用于兼容系统版本过低的实体机设备。能用其他模式时，不要选择 ADB Input。&#10;ADB Input 的滑动容易拖飞，为避免此问题，滑动速度会设置得非常慢，且滑动距离与其他模式不同；在需要精确控制坐标的场景下无法使用。</system:String>
+    <system:String x:Key="TouchModeTip" xml:space="preserve">ADB Input 仅用于兼容系统版本过低的实体机设备，能用其他模式时不要选择。&#10;ADB Input 的滑动容易拖飞，为此滑动速度会设置得非常慢，且滑动距离与其他模式不同，需要精确控制坐标的场景下无法使用。&#10;&#10;MaaFwAdb 不支持额外滑动，依赖额外滑动防止拖飞的页面在该模式下会拖飞。&#10;额外滑动是主滑动结束后沿垂直方向追加一小段的 ｢刹车｣ 滑动（轨迹类似拐 90° 的 L 形），用于抵消列表惯性。</system:String>
     <system:String x:Key="AdditionCommand">附加命令</system:String>
     <system:String x:Key="AdditionCommandTip" xml:space="preserve">附加命令用于指定模拟器启动参数（如 ｢--instance 1｣ 表示启动 1 号实例）。&#10;不同模拟器的命令格式不同，通常包括实例编号、窗口模式等参数，请参考您使用的模拟器文档</system:String>
     <system:String x:Key="StartsWithScript">开始前脚本</system:String>
+    <system:String x:Key="StartsWithScriptPlaceholder">示例："C:\1.cmd" -minimized</system:String>
     <system:String x:Key="EndsWithScript">结束后脚本</system:String>
+    <system:String x:Key="EndsWithScriptPlaceholder">示例："C:\1.cmd" -noWindow</system:String>
     <system:String x:Key="CopilotWithScript">自动战斗时启用上述脚本</system:String>
     <system:String x:Key="ManualStopWithScript">手动暂停时启用上述脚本</system:String>
     <system:String x:Key="BlockSleep">运行任务时阻止休眠</system:String>
@@ -686,13 +715,11 @@ D:\
     <system:String x:Key="HideTray">隐藏托盘图标</system:String>
     <system:String x:Key="MinimizeToTray">最小化时隐藏至托盘</system:String>
     <system:String x:Key="SystemNotification">重要信息弹出系统通知</system:String>
-    <system:String x:Key="SystemNotificationInfo" xml:space="preserve">
-MAA 是非安装型软件，通知功能使用 Microsoft.Toolkit.Uwp.Notifications 库，该库默认以程序所在路径作为注册标识。
+    <system:String x:Key="SystemNotificationInfo" xml:space="preserve">MAA 是非安装型软件，通知功能使用 Microsoft.Toolkit.Uwp.Notifications 库，该库默认以程序所在路径作为注册标识。
 如果从多个路径启动过 MAA，Windows 会为每个路径生成不同的通知来源图标（如任务栏弹窗图标），这是该库的默认行为，MAA 无法控制或自动清除。
 如需清理，请手动打开注册表编辑器，定位至：
 HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings
-删除对应的路径项即可。
-</system:String>
+删除对应的路径项即可。</system:String>
     <system:String x:Key="HideCloseButton">隐藏关闭按钮</system:String>
     <system:String x:Key="WindowTitleScrollable">窗口标题滚动</system:String>
     <system:String x:Key="MainTasksNullFunctionality">反转主任务右键单击效果</system:String>
@@ -707,6 +734,7 @@ HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Notifications\Settin
     <system:String x:Key="SwitchResolutionTip">将模拟器分辨率更改为 1920x1080！</system:String>
     <system:String x:Key="ResolutionInfoYoStarEN">确保模拟器设置为 1920x1080</system:String>
     <system:String x:Key="AllowUseStoneSave">允许使用源石保存状态</system:String>
+    <system:String x:Key="AllowUseStoneSaveTip">默认 ｢{key=UseOriginitePrime}｣ 仅生效一次；勾选后其状态将保存，左键可正常切换，右键选中时仍仅生效一次</system:String>
     <system:String x:Key="AllowUseStoneSaveWarning">该功能属于危险功能。按下 ｢{key=Confirm}｣ 键即视为你了解并愿意承担可能出现的风险。</system:String>
     <system:String x:Key="UseAlternateStage">使用备选关卡</system:String>
     <system:String x:Key="UseExpiringMedicine">无限吃 N 小时内过期的理智药</system:String>
@@ -748,25 +776,28 @@ HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Notifications\Settin
     <system:String x:Key="MuMu12ExtrasEnabled">启用 MuMu 截图增强</system:String>
     <system:String x:Key="MuMuExtrasTouchEnabled">启用 MuMu 触控增强（实验性，需 MuMu 模拟器 6.3.2+，支持后台保活）</system:String>
     <system:String x:Key="MuMuEmulatorPathNotFound">未找到 MuMu 模拟器路径。</system:String>
-    <system:String x:Key="MuMuExternalRendererMissing" xml:space="preserve">external_renderer_ipc.dll 未在所选 MuMu 安装目录中找到。\n
+    <system:String x:Key="MuMuExternalRendererMissing" xml:space="preserve">external_renderer_ipc.dll 未在所选 MuMu 安装目录中找到。
+
 期望的相对路径：
 nx_device/15.0/shell/sdk/external_renderer_ipc.dll 或
 nx_device/12.0/shell/sdk/external_renderer_ipc.dll 或
-shell/sdk/external_renderer_ipc.dll\n
+shell/sdk/external_renderer_ipc.dll
+
 请确认安装目录。</system:String>
-    <system:String x:Key="MuMu12ExtrasEnabledTip" xml:space="preserve">
-需使用官版或方舟专版 MuMu V4.0.0 或更新版本，国际版需 V5.21.3 或更新版本。
+    <system:String x:Key="MuMu12ExtrasEnabledTip" xml:space="preserve">需使用官版或方舟专版 MuMu V4.1.26 或更新版本，国际版需 V5.21.3 或更新版本。
 强烈建议在开启本功能后立刻运行一次截图测试。
-MAA 会自动通过注册表获取安装路径，若获取失败则请手动填写。\n
+MAA 会自动通过注册表获取安装路径，若获取失败则请手动填写。
+
 安装路径应填写模拟器安装目录的根目录，例如模拟器进程文件路径为
-C:\\Program Files\\Netease\\MuMuPlayer\\nx_device\\12.0\\shell\\MuMuNxDevice.exe
+C:\Program Files\Netease\MuMuPlayer\nx_device\12.0\shell\MuMuNxDevice.exe
 则应填写
-C:\\Program Files\\Netease\\MuMuPlayer。\n
+C:\Program Files\Netease\MuMuPlayer。
+
 注意：
 1. 若当前连接地址端口号为 7555，则需将端口号改为 16384。
-2. 若正在使用网络桥接，则需勾选 MuMu 网络桥接模式并手动填写序号。
-    </system:String>
+2. 若正在使用网络桥接，则需勾选 MuMu 网络桥接模式并手动填写序号。</system:String>
     <system:String x:Key="MuMu12EmulatorPath">MuMu 安装路径</system:String>
+    <system:String x:Key="MuMu12EmulatorPathPlaceholder">示例：C:\Program Files\Netease\MuMuPlayer</system:String>
     <system:String x:Key="MuMuEmulatorPathEmptyError">MuMu 安装路径为空！占位符仅为示例，请在 ｢{key=Settings} - {key=ConnectionSettings}｣ 填写实际路径</system:String>
     <system:String x:Key="MuMuBridgeConnection">MuMu 网络桥接模式</system:String>
     <system:String x:Key="MuMuBridgeConnectionTip">除非你知道自己在做什么，否则不要启用此选项</system:String>
@@ -778,23 +809,22 @@ C:\\Program Files\\Netease\\MuMuPlayer。\n
     <system:String x:Key="LdExtrasEnabled">启用 LD 截图增强</system:String>
     <system:String x:Key="LdPlayerEmulatorPathNotFound">未找到 LDPlayer 模拟器路径。</system:String>
     <system:String x:Key="LdPlayerOpenglMissing">在所选 LDPlayer 路径中未找到 ldopengl64.dll，请确认安装目录。</system:String>
-    <system:String x:Key="LdExtrasEnabledTip" xml:space="preserve">
-需使用官版或国际版雷电模拟器 9 V9.1.32 或更新版本。
+    <system:String x:Key="LdExtrasEnabledTip" xml:space="preserve">需使用官版或国际版雷电模拟器 9 V9.1.32 或更新版本。
 强烈建议在开启本功能后立刻运行一次截图测试。
 MAA 会自动通过注册表获取安装路径，若获取失败则请手动填写。
 
 安装路径应填写模拟器安装目录的根目录，例如模拟器进程文件路径为
-C:\\leidian\\LDPlayer9\\dnplayer.exe
+C:\leidian\LDPlayer9\dnplayer.exe
 则应填写
-C:\\leidian\\LDPlayer9
+C:\leidian\LDPlayer9
 
 实例编号可在雷电多开器中查看，
 主多开为 0，其他多开为 版本/编号 ID 后的数字。
 
 截图增强功能强制要求模拟器分辨率设置为横屏模式，且在连接过程中请勿翻转屏幕。
-如在竖屏状态下启动游戏后切换为横屏，可能导致画面撕裂等问题。
-    </system:String>
+如在竖屏状态下启动游戏后切换为横屏，可能导致画面撕裂等问题。</system:String>
     <system:String x:Key="LdEmulatorPath">LD 安装路径</system:String>
+    <system:String x:Key="LdEmulatorPathPlaceholder">示例：C:\leidian\LDPlayer9</system:String>
     <system:String x:Key="LdEmulatorPathEmptyError">雷电模拟器安装路径为空！占位符仅为示例，请在 ｢{key=Settings} - {key=ConnectionSettings}｣ 填写实际路径</system:String>
     <system:String x:Key="LdManualSetIndex">手动填写 ｢{key=LdIndex}｣</system:String>
     <system:String x:Key="LdIndex">实例编号</system:String>
@@ -855,6 +885,7 @@ C:\\leidian\\LDPlayer9
     <system:String x:Key="Inverse">反选</system:String>
     <system:String x:Key="Clear">清空</system:String>
     <system:String x:Key="PostActions">完成后</system:String>
+    <system:String x:Key="PostActionsSettings">完成后动作设置</system:String>
     <system:String x:Key="DoNothing">无动作</system:String>
     <system:String x:Key="ExitArknights">退出 明日方舟</system:String>
     <system:String x:Key="ExitSelf">退出 MAA</system:String>
@@ -868,10 +899,13 @@ C:\\leidian\\LDPlayer9
 取消勾选本选项后，其他选项状态将会正常保存
 右键点击其他选项时，会同步勾选/取消勾选本选项</system:String>
     <system:String x:Key="IfNoOtherMaa">无其他 MAA 时</system:String>
+    <system:String x:Key="IfNoOtherMaaTip">勾选后，仅当没有其他 MAA 实例在运行时，才会执行睡眠/休眠/关机</system:String>
     <system:String x:Key="BackToAndroidHome">返回 模拟器 主屏幕</system:String>
     <system:String x:Key="LinkStart">Link Start!</system:String>
     <system:String x:Key="Stop">停止</system:String>
     <system:String x:Key="WaitAndStop">等待 &amp; 停止</system:String>
+    <system:String x:Key="AutoReloadResource">自动重载资源</system:String>
+    <system:String x:Key="CustomTaskName">任务名</system:String>
     <!--  战斗设置  -->
     <system:String x:Key="UseSanityPotion">使用药剂</system:String>
     <system:String x:Key="UseOriginitePrime">使用源石</system:String>
@@ -1212,7 +1246,7 @@ C:\\leidian\\LDPlayer9
 勾选此项将跳过这些检查，但可能导致作业无法正常运行
 干员精英化等级无法被跳过，如果跳过了任何需求，则战斗完成后不再进行自动点赞</system:String>
     <system:String x:Key="AddUserAdditional">追加自定{key=Operator}</system:String>
-    <system:String x:Key="AddUserAdditionalTip">以英文 ｢;｣ 为分隔符，英文 ｢,｣ 分隔{key=Operator}名与技能，例: 史尔特尔,3;艾雅法拉,1</system:String>
+    <system:String x:Key="AddUserAdditionalTip">点击旁边的设置按钮打开编辑窗口，点击 ｢{key=UserAdditional.Add}｣ 逐条添加，按列填写{key=Operator}名、技能与操作</system:String>
     <system:String x:Key="UserAdditional.OperatorName">{key=Operator}名</system:String>
     <system:String x:Key="UserAdditional.Skill">技能</system:String>
     <system:String x:Key="UserAdditional.Action">操作</system:String>
@@ -1233,6 +1267,9 @@ C:\\leidian\\LDPlayer9
 右键添加突袭难度</system:String>
     <system:String x:Key="CopilotClearTask" xml:space="preserve">左键清除所有任务
 右键清除未激活任务</system:String>
+    <system:String x:Key="CopilotSelectTaskTip" xml:space="preserve">左键：查看作业信息
+右键：选中该作业并退出多作业模式</system:String>
+    <system:String x:Key="WindowUpdateInfoTip">点击立即更新</system:String>
     <system:String x:Key="Start">开始</system:String>
     <system:String x:Key="RunTaskOnce">单次运行</system:String>
     <system:String x:Key="VideoLink">视频链接</system:String>
@@ -1346,6 +1383,7 @@ C:\\leidian\\LDPlayer9
     <system:String x:Key="FailedToReplaceAdbAndUseLocalDesc">已使用本地 ADB 进行连接。如需再次尝试，请重新检测连接后 ｢关闭模拟器与 ADB｣ 或 ｢重启电脑后在未开启模拟器的情况下使用管理员权限打开 MAA｣ 后进行操作。</system:String>
     <system:String x:Key="InitializationError">初始化错误！</system:String>
     <system:String x:Key="ResolutionNotSupported">模拟器分辨率不支持，请设置为 720p 或更高，且为 16:9 比例，推荐使用 1280x720 或 1920x1080</system:String>
+    <system:String x:Key="ResolutionChanged">模拟器分辨率已变更，连接已断开。请重新开始任务以应用新分辨率</system:String>
     <system:String x:Key="ResolutionNotSupportedCurrentResolution">当前分辨率：{0}x{1}</system:String>
     <system:String x:Key="ResolutionAcquisitionFailure">模拟器分辨率获取失败，建议重启模拟器与 ADB 或重启电脑，或更换模拟器后再次尝试</system:String>
     <system:String x:Key="TryToReconnect">模拟器断开，正在尝试重连</system:String>
@@ -1361,7 +1399,9 @@ C:\\leidian\\LDPlayer9
     <system:String x:Key="EmulatorFpsErrorTip">检测到模拟器设置帧率过低（{0} FPS），可能导致任务异常，请关闭模拟器后台降帧并将帧率设置为 60 FPS</system:String>
     <system:String x:Key="EmulatorFpsHighTip">检测到模拟器设置帧率为 {0} FPS，高于游戏原生帧率上限（60 FPS），可能是模拟器插帧功能，可能导致画面异常或识别不稳定，建议关闭插帧并将帧率设置为 60 FPS</system:String>
     <system:String x:Key="IdentifyTheMistakes">识别错误</system:String>
+    <system:String x:Key="RecruitRefreshLimitReached">刷新次数达到上限</system:String>
     <system:String x:Key="TaskError" xml:space="preserve">任务出错: </system:String>
+    <system:String x:Key="OutOfMemoryError">{0}任务因内存不足停止，请关闭部分程序或重启 MAA 后重试</system:String>
     <system:String x:Key="CombatError">战斗出错</system:String>
     <system:String x:Key="StartTask" xml:space="preserve">开始任务: </system:String>
     <system:String x:Key="CompleteTask" xml:space="preserve">完成任务: </system:String>
@@ -1376,6 +1416,11 @@ C:\\leidian\\LDPlayer9
     <system:String x:Key="ErrorOccurred">出现错误</system:String>
     <system:String x:Key="HasReturned">已返回</system:String>
     <system:String x:Key="DropRecognitionError">掉落识别错误</system:String>
+    <system:String x:Key="PenguinUploadUnknownStage">未识别关卡</system:String>
+    <system:String x:Key="PenguinUploadNotThreeStars">非三星结算</system:String>
+    <system:String x:Key="PenguinUploadUnknownTimes">未识别关卡次数</system:String>
+    <system:String x:Key="PenguinUploadUnknownDropType">未识别掉落类型</system:String>
+    <system:String x:Key="PenguinUploadUnknownDrops">未识别掉落物</system:String>
     <system:String x:Key="GiveUpUploadingPenguins">放弃上传企鹅物流</system:String>
     <system:String x:Key="ReportSkippedForPcClient">PC 端鼠标为独立渲染，可能遮挡掉落物及数量识别。为避免错误数据污染数据池，已自动跳过本次上报</system:String>
     <system:String x:Key="TheEx">无奖励关卡，已停止</system:String>
@@ -1398,7 +1443,7 @@ C:\\leidian\\LDPlayer9
     <system:String x:Key="FightMissionFailedAndStop">代理失败次数已达上限，任务已停止</system:String>
     <system:String x:Key="LabelsRefreshed">已刷新标签</system:String>
     <system:String x:Key="RecruitConfirm">已确认招募</system:String>
-    <system:String x:Key="InfrastDormDoubleConfirmed">{key=Operator}冲突</system:String>
+    <system:String x:Key="InfrastDormDoubleConfirmed">检测到{key=Operator}已进驻其他设施，已自动确认将其调动</system:String>
     <system:String x:Key="BegunToExplore">已开始探索</system:String>
     <system:String x:Key="RoutingRestartTooManyBattles">前方战斗数：{0}，重开路线</system:String>
     <system:String x:Key="ExplorationAbandoned">已放弃本次探索</system:String>
@@ -1530,9 +1575,10 @@ C:\\leidian\\LDPlayer9
     <system:String x:Key="BlackFlowMilestoneBurnFloor2Final">第二层抵达险路尽头</system:String>
     <system:String x:Key="BlackFlowMilestoneBabyCheckSeedShop">第一层检查商店中的种子</system:String>
     <system:String x:Key="BlackFlowMilestoneBabyCultivateScrapShop">第一至三层进入秘境行商培育种子</system:String>
+    <system:String x:Key="BlackFlowMilestoneBabyCultivateScrapShopTransit">第一、二层进入秘境行商培育种子后前往层出口</system:String>
+    <system:String x:Key="BlackFlowMilestoneBabyCultivateScrapShopFinal">第三层进入秘境行商培育种子</system:String>
     <system:String x:Key="BlackFlowMilestoneBabyExploreHidden">尚未发现秘境行商时尽量多开未知的诡秘</system:String>
     <system:String x:Key="BlackFlowMilestoneBabyVisitIncident">顺路进入不期而遇</system:String>
-    <system:String x:Key="BlackFlowMilestoneBabyVisitLight">顺路进入羽瞰点</system:String>
     <system:String x:Key="BlackFlowMilestoneBabyFloor2Shops">第二层经过普通商店时继续获取种子</system:String>
     <system:String x:Key="BlackFlowMilestoneBabyFloor3Shops">第三层经过普通商店时卖货、刷新并尽量购买种子</system:String>
     <system:String x:Key="BlackFlowMilestoneEnding2SandtableA">获得沙盘 A</system:String>
@@ -1629,6 +1675,7 @@ C:\\leidian\\LDPlayer9
     <system:String x:Key="RecruitmentOfStar">公招出 {0} 星了哦！</system:String>
     <system:String x:Key="RecruitmentOfBot">公招出小车了哦！</system:String>
     <system:String x:Key="Choose">选择</system:String>
+    <system:String x:Key="RecruitTagsSelectedLog" xml:space="preserve">选择 Tags：&#10;{0}</system:String>
     <system:String x:Key="Refreshed">当前槽位已刷新</system:String>
     <system:String x:Key="ContinueRefresh">无招聘许可，继续尝试刷新 Tags</system:String>
     <system:String x:Key="NoRecruitmentPermit">无招聘许可，已返回</system:String>
@@ -1698,10 +1745,12 @@ C:\\leidian\\LDPlayer9
 
 如需使用，请确认：
 1. 需要以管理员身份启动 MAA
-2. 部分截图方式下，游戏窗口不能最小化
-3. 明日方舟设置 → 游戏 → UI 缩放需设为 100%
-4. 在明日方舟设置中调小鼠标指针比例，以减少对识别区域的遮挡
-5. 游戏分辨率需为 16:9，推荐设置 1280x720 或 1920x1080</system:String>
+2. 推荐在设置-热键设置中添加 Link start/stop 的热键，以防无法点击停止的情况
+3. 部分截图方式下，游戏窗口不能最小化
+4. 明日方舟设置 → 游戏 → UI 缩放需设为 100%
+5. 在明日方舟设置中调小鼠标指针比例，以减少对识别区域的遮挡
+6. 游戏分辨率需为 16:9，推荐设置 1280x720 或 1920x1080</system:String>
+    <system:String x:Key="UseAttachWindowWarningRecommendation" xml:space="preserve">7. 推荐鼠标输入方式使用 SendMsg-WindowPos，使用此方式可以很大程度解决 PC 端识别错误和卡住的问题</system:String>
     <system:String x:Key="AttachWindowScreencapMethod">截图方式</system:String>
     <system:String x:Key="AttachWindowMouseMethod">鼠标输入</system:String>
     <system:String x:Key="AttachWindowKeyboardMethod">键盘输入</system:String>
@@ -1710,8 +1759,10 @@ C:\\leidian\\LDPlayer9
     <system:String x:Key="AttachWindowScreencapScreenDC">ScreenDC（后台，备用，不可最小化）</system:String>
     <system:String x:Key="AttachWindowScreencapDesktopDupWindow">DesktopWindow（前台，不可遮挡）</system:String>
     <system:String x:Key="AttachWindowInputSeize">Seize（前台，完全抢鼠标）</system:String>
+    <system:String x:Key="AttachWindowInputSendMsgDisabled">SendMsg（全后台，明日方舟仅按真实鼠标定位，无效）</system:String>
+    <system:String x:Key="AttachWindowInputPostMsgDisabled">PostMsg（全后台，明日方舟仅按真实鼠标定位，无效）</system:String>
     <system:String x:Key="AttachWindowInputSendWithCursor">SendMsg-CursorPos（半后台，短暂抢鼠标）</system:String>
-    <system:String x:Key="AttachWindowInputSendWithWindowPos">SendMsg-WindowPos（全后台，不抢鼠标，窗口会乱飞但不影响使用，建议最小化）</system:String>
+    <system:String x:Key="AttachWindowInputSendWithWindowPos">SendMsg-WindowPos（推荐，全后台，不抢鼠标，窗口会乱飞，截图方式仅 PrintWindow，建议最小化）</system:String>
     <system:String x:Key="AttachWindowInputSendMsg">SendMsg（稳定）</system:String>
     <system:String x:Key="AttachWindowInputPostMsg">PostMsg（高效）</system:String>
     <!--  !AsstProxy  -->

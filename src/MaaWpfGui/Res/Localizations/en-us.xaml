@@ -53,6 +53,7 @@
     <system:String x:Key="ExternalNotificationSendWhenComplete">Send notification when complete</system:String>
     <system:String x:Key="ExternalNotificationSendWhenError">Send notification when task fails</system:String>
     <system:String x:Key="ExternalNotificationSendWhenStalled">Send notification when task log output stalls</system:String>
+    <system:String x:Key="ExternalNotificationSendWhenStalledTip">Only takes effect after enabling ｢{key=StallTimeoutEnabled}｣ in ｢{key=GameSettings}｣</system:String>
     <system:String x:Key="ExternalNotificationSendSuccess">Send successfully</system:String>
     <system:String x:Key="ExternalNotificationSendFail">Send failed</system:String>
     <system:String x:Key="ExternalNotificationSendTest">Send Test</system:String>
@@ -169,6 +170,27 @@
     <system:String x:Key="InfrastReceptionSendClue">Send Clues</system:String>
     <system:String x:Key="ReceptionOptionsRequireInfrast">The following functions require configuration and execution within {key=Infrast}.</system:String>
     <system:String x:Key="ContinueTraining">After training is complete, try to continue mastering the current Skill</system:String>
+    <system:String x:Key="InfrastFiammettaRecovery">Enable Fiammetta morale recovery</system:String>
+    <system:String x:Key="InfrastFiammettaRecoveryTips">When enabled, the recovery target and a full-mood Fiammetta swap moods in a dormitory at the start of each shift, after which Fiammetta stays in the dormitory to recover.</system:String>
+    <system:String x:Key="InfrastFiammettaTargets">Fiammetta recovery targets</system:String>
+    <system:String x:Key="InfrastFiammettaTargetNone">None</system:String>
+    <system:String x:Key="InfrastFiammettaTargetPurestream">Purestream</system:String>
+    <system:String x:Key="InfrastFiammettaTargetClosure">Closure</system:String>
+    <system:String x:Key="InfrastFiammettaTargetProviso">Proviso</system:String>
+    <system:String x:Key="InfrastFiammettaTargetShamare">Shamare</system:String>
+    <system:String x:Key="InfrastFiammettaTargetTequila">Tequila</system:String>
+    <system:String x:Key="InfrastFiammettaTargetGladiia">Gladiia</system:String>
+    <system:String x:Key="InfrastFiammettaTargetsTips">Although recovering Shamare and Tequila can theoretically enable 007, it is difficult to achieve with automatic shift changes, so selecting Shamare or Tequila is not recommended.</system:String>
+    <system:String x:Key="InfrastUsePinusSylvestris">Use Pinus Sylvestris cross-facility team</system:String>
+    <system:String x:Key="InfrastUsePinusSylvestrisTips" xml:space="preserve">Required operators: Flametail (E2), Viviana (E2), and at least one of Wild Mane (E2), Ashlock (E2), or Fartooth (E2)&#10;Operators included in calculation: Gravel</system:String>
+    <system:String x:Key="InfrastUsePerceptionInformation">Use Perception Information cross-facility team</system:String>
+    <system:String x:Key="InfrastUsePerceptionInformationTips" xml:space="preserve">Required operators: Whisperain (E2), Rosmontis (E2), and Ebenholz (E2)&#10;Operators included in calculation: Dusk, Virtuosa, Iris, and Czerny&#10;Higher priority than Worldly Plight</system:String>
+    <system:String x:Key="InfrastUseWorldlyPlight">Use Worldly Plight cross-facility team</system:String>
+    <system:String x:Key="InfrastUseWorldlyPlightTips" xml:space="preserve">Required operators: Mulberry (E2) and Stainless (E2)&#10;Operators included in calculation: Chongyue, Ling, and Dusk</system:String>
+    <system:String x:Key="InfrastUseAbyssalHunter">Use Abyssal Hunter cross-facility team</system:String>
+    <system:String x:Key="InfrastUseAbyssalHunterTips" xml:space="preserve">Required operators: Gladiia (E2), Ulpianus, Skadi, Specter, and Andreana&#10;Due to algorithm limitations, when Pinus Sylvestris is also selected, the two teams will not participate in scheduling together.</system:String>
+    <system:String x:Key="InfrastFacilitySelection">Facilities</system:String>
+    <system:String x:Key="InfrastFacilitySelectionTip" xml:space="preserve">In ｢{key=InfrastModeNormal}｣, the shift order is planned automatically by the algorithm. This list only selects which facility types to process; the order here does not matter.&#10;To customize the shift order, please use ｢{key=InfrastModeCustom}｣.</system:String>
     <system:String x:Key="TrainingIdle">Training room is vacant</system:String>
     <system:String x:Key="TrainingCompleted">Training completed</system:String>
     <system:String x:Key="TrainingLevel">Skill Rank</system:String>
@@ -251,6 +273,7 @@ To customize rotation schedules, please use ｢{key=InfrastModeCustom}｣.</syst
     <system:String x:Key="Roguelike3FirstFloorFoldartal">Repeat for foldartal foreseed first floor, No Battle</system:String>
     <system:String x:Key="Roguelike3NewSquad2StartingFoldartal">Start with ｢Life Prioritizing Squad｣ and acquire the cypherboard</system:String>
     <system:String x:Key="Roguelike3NewSquad2StartingFoldartalTip">Write up to three and separate with ｢;｣</system:String>
+    <system:String x:Key="Roguelike3FirstFloorFoldartalTip">Enter the foldartal names, separated by ｢;｣</system:String>
     <system:String x:Key="RoguelikeCollapseList">Collapse Paradigm List</system:String>
     <system:String x:Key="RoguelikeCollapseListTip">Separate with ｢;｣. Leave blank to use the default list.</system:String>
     <system:String x:Key="RoguelikeUseSupportUnit">Select ｢{key=StartingCoreChar}｣ from support unit list</system:String>
@@ -265,7 +288,9 @@ To customize rotation schedules, please use ｢{key=InfrastModeCustom}｣.</syst
     <system:String x:Key="RoguelikeMonthlySquadCheckComms">Monthly Squad Communication</system:String>
     <system:String x:Key="RoguelikeDeepExplorationAutoIterate">Deep Investigation Auto-Switch</system:String>
     <system:String x:Key="DeploymentWithPause" xml:space="preserve">Pause Trick (Experimental)</system:String>
+    <system:String x:Key="DeploymentWithPauseTip">Pauses the game when deploying {key=Operator} in auto combat, then deploys the next {key=Operator}</system:String>
     <system:String x:Key="AdbLiteEnabled">Use ADB Lite (Experimental)</system:String>
+    <system:String x:Key="AdbLiteEnabledTip">ADB implementation built into MAA, avoiding launching an adb.exe process every time an adb command is executed</system:String>
     <system:String x:Key="KillAdbOnExit">Kill ADB On Exit</system:String>
     <system:String x:Key="DefaultSquad">Default Squad</system:String>
     <system:String x:Key="IS2NewSquad1">Mind Over Matter Squad</system:String>
@@ -382,6 +407,8 @@ To customize rotation schedules, please use ｢{key=InfrastModeCustom}｣.</syst
     <system:String x:Key="UpdateAutoDownloadTip" xml:space="preserve">When disabled, detected updates (including manually triggered ｢{key=UpdateCheckNow}｣) will no longer download automatically. Instead, a system notification with a download link will be shown, allowing you to download the package and drag it into MAA manually.
 If system notifications are turned off, an in-app notification will be used instead, though it does not provide an interactive download button.</system:String>
     <system:String x:Key="AutoInstallUpdatePackage">Auto Install Update</system:String>
+    <system:String x:Key="AutoInstallUpdatePackageTip">No longer shows a confirmation dialog when a new version is detected; MAA will update and restart automatically when tasks are idle</system:String>
+    <system:String x:Key="WindowUpdateInfoTip">Click to update now</system:String>
     <system:String x:Key="ShowUpdaterConsole">Show updater console output during update</system:String>
     <system:String x:Key="ShowUpdaterProgress">Show updater progress window</system:String>
     <system:String x:Key="ShowUpdaterProgressTip" xml:space="preserve">Shows a standalone progress window from the updater during the update, displaying the current status and file processing progress.
@@ -439,7 +466,7 @@ You can cancel this popup by clicking the ｢{key=Settings} - {key=IssueReport}�
     <system:String x:Key="ForceGithubGlobalSourceTip">When updates are detected, force download update packages from GitHub</system:String>
     <system:String x:Key="MirrorChyan">MirrorChyan</system:String>
     <system:String x:Key="MirrorChyanSelectedButNoCdk">Please go to ｢{key=Settings} - {key=UpdateSettings}｣ to configure MirrorChyan CDK or switch to Global Source.</system:String>
-    <system:String x:Key="MirrorChyanResourceUpdateTip">Resource update {0} detected. Please go to ｢{key=Settings} - {key=UpdateSettings} - {key=ResourceUpdate}｣ to update manually, or fill in MirrorChayn CDK to update automatically.</system:String>
+    <system:String x:Key="MirrorChyanResourceUpdateTip">Resource update {0} detected. Please go to ｢{key=Settings} - {key=UpdateSettings} - {key=ResourceUpdate}｣ to update manually, or fill in MirrorChyan CDK to update automatically.</system:String>
     <system:String x:Key="MirrorChyanResourceUpdateShortTip">Resource update {0} detected</system:String>
     <system:String x:Key="MirrorChyanCdkExpired">The CDK has expired. Please use a new CDK for authorization.</system:String>
     <system:String x:Key="MirrorChyanCdkInvalid">The CDK is invalid. Please check if the input is correct.</system:String>
@@ -502,8 +529,9 @@ Continue only after you have verified the directory layout and finished a manual
     <system:String x:Key="ForceScheduledStart">Force scheduled start</system:String>
     <system:String x:Key="ForceScheduledStartTip">Stop current task, restart game and start new tasks</system:String>
     <system:String x:Key="ShowWindowBeforeForceScheduledStart">Show window before force scheduled start</system:String>
+    <system:String x:Key="ShowWindowBeforeForceScheduledStartTip">Show the main window before the scheduled start so the countdown isn't missed while minimized</system:String>
     <system:String x:Key="TimerCustomConfig">Custom config</system:String>
-    <system:String x:Key="TimerCustomConfigTip">Restart and switch configuration two minutes in advance</system:String>
+    <system:String x:Key="TimerCustomConfigTip">Restart the game and switch the configuration two minutes before the scheduled start</system:String>
     <system:String x:Key="Timer">Timer</system:String>
     <system:String x:Key="GlobalConfigTip">This option page is for global config</system:String>
     <system:String x:Key="MultiTasksShareTip">The following options are for multiple tasks.</system:String>
@@ -552,13 +580,15 @@ If you choose ｢{key=ManualRestart}｣ and start MAA manually later, ｢{key=Ru
     <system:String x:Key="MiniTouchMode">Minitouch (Default)</system:String>
     <system:String x:Key="MaaTouchMode">MaaTouch (Experimental)</system:String>
     <system:String x:Key="AdbTouchMode">ADB Input (Deprecated)</system:String>
-    <system:String x:Key="MaaFwAdbTouchMode">MaaFramework (Experimental)</system:String>
+    <system:String x:Key="MaaFwAdbTouchMode">MaaFwAdb (Experimental)</system:String>
     <system:String x:Key="MumuExtrasTouchMode">MuMu Touch (Experimental)</system:String>
-    <system:String x:Key="TouchModeTip" xml:space="preserve">ADB Input is only for physical devices running an older OS version. Do not use ADB Input if other modes work.&#10;ADB Input swipes tend to drift. To avoid this, swipe speed is set very slow and swipe distances differ from other modes. It cannot be used in scenarios requiring precise coordinate control.</system:String>
+    <system:String x:Key="TouchModeTip" xml:space="preserve">ADB Input is only for physical devices running an older OS version. Do not use it if other modes work.&#10;ADB Input swipes tend to drift, so swipe speed is set very slow and swipe distances differ from other modes; it cannot be used in scenarios requiring precise coordinate control.&#10;&#10;MaaFwAdb does not support extra swipe, so pages that rely on extra swipe to prevent overshooting will overshoot in this mode.&#10;An extra swipe is a short "brake" swipe appended perpendicular to the end of the main swipe (tracing an L-shaped 90° turn) to counteract list inertia.</system:String>
     <system:String x:Key="AdditionCommand">Additional command arguments</system:String>
     <system:String x:Key="AdditionCommandTip" xml:space="preserve">Additional commands for emulator parameters (e.g. ｢--instance 1｣ for instance 1).&#10;Command formats vary by emulator, typically including instance numbers and window modes, please consult your emulator's documentation.</system:String>
     <system:String x:Key="StartsWithScript">Starts with Script</system:String>
+    <system:String x:Key="StartsWithScriptPlaceholder">Example: "C:\1.cmd" -minimized</system:String>
     <system:String x:Key="EndsWithScript">Ends with Script</system:String>
+    <system:String x:Key="EndsWithScriptPlaceholder">Example: "C:\1.cmd" -noWindow</system:String>
     <system:String x:Key="CopilotWithScript">Enable the above script during Copilot</system:String>
     <system:String x:Key="ManualStopWithScript">Enable the above script during manual stop</system:String>
     <system:String x:Key="BlockSleep">Prevent hibernation when running tasks</system:String>
@@ -687,13 +717,11 @@ Please do not check it when the stage OF-1 is not unlocked.</system:String>
     <system:String x:Key="HideTray">Disable Tray Icon</system:String>
     <system:String x:Key="MinimizeToTray">Hide to tray when minimized</system:String>
     <system:String x:Key="SystemNotification">System Notification</system:String>
-    <system:String x:Key="SystemNotificationInfo" xml:space="preserve">
-MAA is a portable (non-installed) application. Its notification feature uses the Microsoft.Toolkit.Uwp.Notifications library, which by default registers notifications using the application's executable path.
+    <system:String x:Key="SystemNotificationInfo" xml:space="preserve">MAA is a portable (non-installed) application. Its notification feature uses the Microsoft.Toolkit.Uwp.Notifications library, which by default registers notifications using the application's executable path.
 If you have run MAA from multiple locations, Windows will create separate notification icons (e.g., in the taskbar toast) for each path. This is the default behavior of the library and cannot be controlled or cleaned up automatically by MAA.
 To clean up, open the Registry Editor and navigate to:
 HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings
-Then delete the entries corresponding to the paths.
-</system:String>
+Then delete the entries corresponding to the paths.</system:String>
     <system:String x:Key="HideCloseButton">Hide close button</system:String>
     <system:String x:Key="WindowTitleScrollable">Window Title Scrolling</system:String>
     <system:String x:Key="MainTasksNullFunctionality">Reverse right-click effect for main task</system:String>
@@ -708,6 +736,7 @@ Then delete the entries corresponding to the paths.
     <system:String x:Key="SwitchResolutionTip">Change the emulator resolution to 1920x1080!</system:String>
     <system:String x:Key="ResolutionInfoYoStarEN">For YoStarEN, make sure the emulator is set to 1920x1080</system:String>
     <system:String x:Key="AllowUseStoneSave">Save ｢Use Originium｣</system:String>
+    <system:String x:Key="AllowUseStoneSaveTip">By default, ｢{key=UseOriginitePrime}｣ is effective only once; when checked, its state will be saved, the left-click toggles it normally, and a right-click selection still takes effect only once</system:String>
     <system:String x:Key="AllowUseStoneSaveWarning">This function is considered dangerous. Pressing the ｢{key=Confirm}｣ button indicates that you understand and are willing to accept the potential risks.</system:String>
     <system:String x:Key="UseAlternateStage">Use alternative stage</system:String>
     <system:String x:Key="UseExpiringMedicine">Unlimited use of expiring (&lt;N hours) sanity potion</system:String>
@@ -749,24 +778,27 @@ Only supports Official(CN), Bilibili, Traditional Chinese and YostarKR servers. 
     <system:String x:Key="MuMu12ExtrasEnabled">Enable MuMu's screenshot enhancement mode</system:String>
     <system:String x:Key="MuMuExtrasTouchEnabled">Enable MuMu touch enhancement (experimental, requires MuMu Emulator 6.3.2+, supports background keep-alive)</system:String>
     <system:String x:Key="MuMuEmulatorPathNotFound">MuMu Emulator path not found.</system:String>
-    <system:String x:Key="MuMuExternalRendererMissing" xml:space="preserve">external_renderer_ipc.dll was not found under the selected MuMu installation.\n
+    <system:String x:Key="MuMuExternalRendererMissing" xml:space="preserve">external_renderer_ipc.dll was not found under the selected MuMu installation.
+
 Expected relative path: nx_device/15.0/shell/sdk/external_renderer_ipc.dll or
 nx_device/12.0/shell/sdk/external_renderer_ipc.dll or
-shell/sdk/external_renderer_ipc.dll\n
+shell/sdk/external_renderer_ipc.dll
+
 Please verify the installation directory.</system:String>
-    <system:String x:Key="MuMu12ExtrasEnabledTip" xml:space="preserve">
-MuMu / MuMu Arknights V4.0.0 or later is required. MuMu Global requires V5.21.3 or later.
+    <system:String x:Key="MuMu12ExtrasEnabledTip" xml:space="preserve">MuMu / MuMu Arknights V4.1.26 or later is required. MuMu Global requires V5.21.3 or later.
 It's strongly recommended to run a screenshot test immediately after enabling this feature.
-MAA will attempt to automatically fill in the exec path through the registry. If failed, please fill it in manually.\n
+MAA will attempt to automatically fill in the exec path through the registry. If failed, please fill it in manually.
+
 The installation path should be the root directory of the emulator installation, for example, if the emulator process file path is
-C:\\Program Files\\Netease\\MuMuPlayer\\nx_device\\12.0\\shell\\MuMuNxDevice.exe
+C:\Program Files\Netease\MuMuPlayer\nx_device\12.0\shell\MuMuNxDevice.exe
 then it should be filled in as
-C:\\Program Files\\Netease\\MuMuPlayer\n
+C:\Program Files\Netease\MuMuPlayer
+
 Note:
 1. If the port number of the connection address is 7555, you need to change the port number to 16384.
-2. If using network bridging, check the MuMu network bridging mode and manually enter the serial number.
-    </system:String>
+2. If using network bridging, check the MuMu network bridging mode and manually enter the serial number.</system:String>
     <system:String x:Key="MuMu12EmulatorPath">MuMu Installation Path</system:String>
+    <system:String x:Key="MuMu12EmulatorPathPlaceholder">Example: C:\Program Files\Netease\MuMuPlayer</system:String>
     <system:String x:Key="MuMuEmulatorPathEmptyError">MuMu installation path is empty! The placeholder is only an example, please fill in the actual path in ｢{key=Settings} - {key=ConnectionSettings}｣</system:String>
     <system:String x:Key="MuMuBridgeConnection">MuMu Network Bridge Connection</system:String>
     <system:String x:Key="MuMuBridgeConnectionTip">Unless you know what you are doing, do not enable this option</system:String>
@@ -778,23 +810,22 @@ Note:
     <system:String x:Key="LdExtrasEnabled">Enable LD's screenshot enhancement mode</system:String>
     <system:String x:Key="LdPlayerEmulatorPathNotFound">LDPlayer emulator path not found.</system:String>
     <system:String x:Key="LdPlayerOpenglMissing">ldopengl64.dll was not found in the selected LDPlayer path. Please verify the installation directory.</system:String>
-    <system:String x:Key="LdExtrasEnabledTip" xml:space="preserve">
-LDPlayer 9 V9.1.32 or later is required.
+    <system:String x:Key="LdExtrasEnabledTip" xml:space="preserve">LDPlayer 9 V9.1.32 or later is required.
 It's strongly recommended to run a screenshot test immediately after enabling this feature.
 MAA will attempt to automatically fill in the exec path through the registry. If failed, please fill it in manually.
 
 The installation path should be the root directory of the emulator installation, for example, if the emulator process file path is
-C:\\leidian\\LDPlayer9\\dnplayer.exe
+C:\leidian\LDPlayer9\dnplayer.exe
 then it should be filled in as
-C:\\leidian\\LDPlayer9
+C:\leidian\LDPlayer9
 
 The instance number can be viewed in LDPlayer Multi-Instance Manager,
 The primary instance is 0, and other instances are the numbers after the version/instance ID.
 
 The screenshot enhancement feature requires the emulator resolution to be set to landscape mode and the screen orientation not to be changed during connection.
-If the game is launched in portrait mode and then switched to landscape, it may cause screen tearing or other issues.
-    </system:String>
+If the game is launched in portrait mode and then switched to landscape, it may cause screen tearing or other issues.</system:String>
     <system:String x:Key="LdEmulatorPath">LD Emulator exec path</system:String>
+    <system:String x:Key="LdEmulatorPathPlaceholder">Example: C:\leidian\LDPlayer9</system:String>
     <system:String x:Key="LdEmulatorPathEmptyError">LDPlayer installation path is empty! The placeholder is only an example, please fill in the actual path in ｢{key=Settings} - {key=ConnectionSettings}｣</system:String>
     <system:String x:Key="LdManualSetIndex">Manually enter ｢{key=LdIndex}｣</system:String>
     <system:String x:Key="LdIndex">Instance Index</system:String>
@@ -855,6 +886,7 @@ If the game is launched in portrait mode and then switched to landscape, it may 
     <system:String x:Key="Inverse">Invert</system:String>
     <system:String x:Key="Clear">Clear</system:String>
     <system:String x:Key="PostActions">Then</system:String>
+    <system:String x:Key="PostActionsSettings">Post-action settings</system:String>
     <system:String x:Key="DoNothing">Do Nothing</system:String>
     <system:String x:Key="ExitArknights">Exit Arknights</system:String>
     <system:String x:Key="ExitSelf">Exit MAA</system:String>
@@ -868,10 +900,13 @@ If the game is launched in portrait mode and then switched to landscape, it may 
 After unchecking this option, other option states will be saved normally
 Right-clicking other options will check/uncheck this option simultaneously</system:String>
     <system:String x:Key="IfNoOtherMaa">If no other running MAA</system:String>
+    <system:String x:Key="IfNoOtherMaaTip">When checked, Sleep/Hibernate/Shutdown will only run when no other MAA instance is running</system:String>
     <system:String x:Key="BackToAndroidHome">Return to home screen of emulator</system:String>
     <system:String x:Key="LinkStart">Link Start!</system:String>
     <system:String x:Key="Stop">Stop</system:String>
     <system:String x:Key="WaitAndStop">Wait &amp; Stop</system:String>
+    <system:String x:Key="AutoReloadResource">Auto Reload Resource</system:String>
+    <system:String x:Key="CustomTaskName">Task Name(s)</system:String>
     <!--  FightSettings  -->
     <system:String x:Key="UseSanityPotion">Use Sanity Potion</system:String>
     <system:String x:Key="UseOriginitePrime">Use Originium</system:String>
@@ -1212,7 +1247,7 @@ Only level rewards can be farmed; to get the Engraved Medal, all ｢Key Objectiv
 Enabling this will skip these checks, but may cause the job to fail.
 Operators' Elite level CANNOT be ignored. If any requirements are ignored, the operation will no longer be automatically rated after the battle.</system:String>
     <system:String x:Key="AddUserAdditional">Add custom {key=Operator}s</system:String>
-    <system:String x:Key="AddUserAdditionalTip">Use ｢;｣ as the separator, ｢,｣ to separate the {key=Operator} name and Skills, for example: W, 3; Ash, 2</system:String>
+    <system:String x:Key="AddUserAdditionalTip">Click the settings button next to it to open the editing window, then click ｢{key=UserAdditional.Add}｣ to add entries one by one, and fill in the {key=Operator} name, skill, and action in each column</system:String>
     <system:String x:Key="UserAdditional.OperatorName">{key=Operator} Name</system:String>
     <system:String x:Key="UserAdditional.Skill">Skill</system:String>
     <system:String x:Key="UserAdditional.Action">Action</system:String>
@@ -1231,6 +1266,8 @@ When ｢{key=UseCopilotList}｣ is enabled, individual jobs will be automaticall
     <system:String x:Key="CopilotTaskRaidStage">(Challenge)</system:String>
     <system:String x:Key="CopilotAddTask" xml:space="preserve">Left-click to add Normal difficulty
 Right click to add challenge difficulty</system:String>
+    <system:String x:Key="CopilotSelectTaskTip" xml:space="preserve">Left-click: view job details
+Right-click: select this job and exit multi-job mode</system:String>
     <system:String x:Key="CopilotClearTask" xml:space="preserve">Left-click to clear all jobs
 Right-click to clear inactive jobs</system:String>
     <system:String x:Key="Start">Start</system:String>
@@ -1346,6 +1383,7 @@ Right-click to clear inactive jobs</system:String>
     <system:String x:Key="FailedToReplaceAdbAndUseLocalDesc">Connected using local ADB. If you want to try again, please disconnect the emulator from ADB and close it, or restart your computer and open MAA with administrator privileges without starting the emulator.</system:String>
     <system:String x:Key="InitializationError">Initialization error!</system:String>
     <system:String x:Key="ResolutionNotSupported">Emulator resolution not supported, please set a resolution of at least 1280x720 with a 16:9 aspect ratio; 1280x720 or 1920x1080 is recommended</system:String>
+    <system:String x:Key="ResolutionChanged">Emulator resolution has changed, connection closed. Please restart the task to apply the new resolution</system:String>
     <system:String x:Key="ResolutionNotSupportedCurrentResolution">Current resolution: {0}x{1}</system:String>
     <system:String x:Key="ResolutionAcquisitionFailure">Failed to obtain emulator resolution. It is recommended to restart the emulator and ADB, or restart the computer, or consider switching to another emulator</system:String>
     <system:String x:Key="TryToReconnect">Emulator disconnected, trying to reconnect</system:String>
@@ -1361,7 +1399,9 @@ Right-click to clear inactive jobs</system:String>
     <system:String x:Key="EmulatorFpsErrorTip">Emulator refresh rate is set too low ({0} FPS), which may cause tasks to malfunction. Please turn off background frame rate reduction and set the frame rate to 60 FPS</system:String>
     <system:String x:Key="EmulatorFpsHighTip">Emulator refresh rate is set to {0} FPS, above the game's native frame rate cap (60 FPS). This may be the emulator's frame interpolation feature, which can cause visual artifacts or unstable recognition. It is recommended to disable frame interpolation and set the frame rate to 60 FPS</system:String>
     <system:String x:Key="IdentifyTheMistakes">Recognition error</system:String>
+    <system:String x:Key="RecruitRefreshLimitReached">Refresh count reached the limit</system:String>
     <system:String x:Key="TaskError" xml:space="preserve">Task error:&#160;</system:String>
+    <system:String x:Key="OutOfMemoryError">The {0} task stopped due to insufficient memory. Close some programs or restart MAA and try again</system:String>
     <system:String x:Key="CombatError">Combat error</system:String>
     <system:String x:Key="StartTask" xml:space="preserve">Start task:&#160;</system:String>
     <system:String x:Key="CompleteTask" xml:space="preserve">Complete task:&#160;</system:String>
@@ -1376,6 +1416,11 @@ Right-click to clear inactive jobs</system:String>
     <system:String x:Key="ErrorOccurred">Error occurred</system:String>
     <system:String x:Key="HasReturned">Has returned</system:String>
     <system:String x:Key="DropRecognitionError">Drops recognition error</system:String>
+    <system:String x:Key="PenguinUploadUnknownStage">Unknown stage</system:String>
+    <system:String x:Key="PenguinUploadNotThreeStars">Not a three-star run</system:String>
+    <system:String x:Key="PenguinUploadUnknownTimes">Unknown stage times</system:String>
+    <system:String x:Key="PenguinUploadUnknownDropType">Unknown drop type</system:String>
+    <system:String x:Key="PenguinUploadUnknownDrops">Unknown drops</system:String>
     <system:String x:Key="GiveUpUploadingPenguins">Abort upload to Penguin Statistics</system:String>
     <system:String x:Key="ReportSkippedForPcClient">The PC client cursor can obscure drop items and counts. This report was skipped to avoid polluting the data pool with inaccurate data</system:String>
     <system:String x:Key="TheEx">No bonus stage, stopped</system:String>
@@ -1398,7 +1443,7 @@ Right-click to clear inactive jobs</system:String>
     <system:String x:Key="FightMissionFailedAndStop">Proxy failed too many times, task stopped</system:String>
     <system:String x:Key="LabelsRefreshed">Labels refreshed</system:String>
     <system:String x:Key="RecruitConfirm">Recruit confirm</system:String>
-    <system:String x:Key="InfrastDormDoubleConfirmed">{key=Operator} conflict</system:String>
+    <system:String x:Key="InfrastDormDoubleConfirmed">Some {key=Operator}s are already assigned to another facility; the transfer has been confirmed automatically</system:String>
     <system:String x:Key="BegunToExplore">Exploration started</system:String>
     <system:String x:Key="RoutingRestartTooManyBattles">Too many battles ahead: {0}, restarting route</system:String>
     <system:String x:Key="ExplorationAbandoned">Abandoned this Exploration</system:String>
@@ -1530,9 +1575,10 @@ Right-click to clear inactive jobs</system:String>
     <system:String x:Key="BlackFlowMilestoneBurnFloor2Final">Reach the final node on floor 2</system:String>
     <system:String x:Key="BlackFlowMilestoneBabyCheckSeedShop">Check the floor 1 shop for seeds</system:String>
     <system:String x:Key="BlackFlowMilestoneBabyCultivateScrapShop">Enter a scrap trader on floors 1-3 to cultivate seeds</system:String>
+    <system:String x:Key="BlackFlowMilestoneBabyCultivateScrapShopTransit">Enter a scrap trader on floors 1-2 to cultivate seeds, then head for the exit</system:String>
+    <system:String x:Key="BlackFlowMilestoneBabyCultivateScrapShopFinal">Enter the scrap trader on floor 3 to cultivate seeds</system:String>
     <system:String x:Key="BlackFlowMilestoneBabyExploreHidden">Reveal as many unknown nodes as possible until a scrap trader is found</system:String>
     <system:String x:Key="BlackFlowMilestoneBabyVisitIncident">Visit an encounter along the way</system:String>
-    <system:String x:Key="BlackFlowMilestoneBabyVisitLight">Visit a vantage point along the way</system:String>
     <system:String x:Key="BlackFlowMilestoneBabyFloor2Shops">Continue collecting seeds when visiting a normal shop on floor 2</system:String>
     <system:String x:Key="BlackFlowMilestoneBabyFloor3Shops">Sell items, refresh stock, and collect seeds when visiting a normal shop on floor 3</system:String>
     <system:String x:Key="BlackFlowMilestoneEnding2SandtableA">Obtain Sandtable A</system:String>
@@ -1629,6 +1675,7 @@ Right-click to clear inactive jobs</system:String>
     <system:String x:Key="RecruitmentOfStar">{0}★ has been recruited!</system:String>
     <system:String x:Key="RecruitmentOfBot">Robot! Robot! More Robot!</system:String>
     <system:String x:Key="Choose">Choose</system:String>
+    <system:String x:Key="RecruitTagsSelectedLog" xml:space="preserve">Selected tags:&#10;{0}</system:String>
     <system:String x:Key="Refreshed">Refreshed</system:String>
     <system:String x:Key="ContinueRefresh">No recruitment permit, trying to refresh Tags</system:String>
     <system:String x:Key="NoRecruitmentPermit">No recruitment permit, returned</system:String>
@@ -1699,10 +1746,12 @@ If you don't strictly need it, we recommend using ADB to connect to an Android e
 
 If you do need to use it, please ensure:
 1. MAA is launched with administrator privileges
-2. For some screencap methods, the game window cannot be minimized
-3. Arknights Settings → Game → UI Scaling is set to 100%
-4. Lower the mouse pointer scale in Arknights settings to reduce obstruction of recognition areas
-5. Game resolution must be 16:9; recommended settings: 1280x720 or 1920x1080</system:String>
+2. It is recommended to add a Link start/stop hotkey in Settings → Hotkey Settings, in case the Stop button cannot be clicked
+3. For some screencap methods, the game window cannot be minimized
+4. Arknights Settings → Game → UI Scaling is set to 100%
+5. Lower the mouse pointer scale in Arknights settings to reduce obstruction of recognition areas
+6. Game resolution must be 16:9; recommended settings: 1280x720 or 1920x1080</system:String>
+    <system:String x:Key="UseAttachWindowWarningRecommendation" xml:space="preserve">7. We recommend using SendMsg-WindowPos as the mouse input method; it can greatly reduce recognition errors and freezing issues on the PC client</system:String>
     <system:String x:Key="AttachWindowScreencapMethod">Screencap Method</system:String>
     <system:String x:Key="AttachWindowMouseMethod">Mouse Input Method</system:String>
     <system:String x:Key="AttachWindowKeyboardMethod">Keyboard Input Method</system:String>
@@ -1711,8 +1760,10 @@ If you do need to use it, please ensure:
     <system:String x:Key="AttachWindowScreencapScreenDC">ScreenDC (Background, Backup, Cannot Minimize)</system:String>
     <system:String x:Key="AttachWindowScreencapDesktopDupWindow">DesktopWindow (Foreground, No Occlusion)</system:String>
     <system:String x:Key="AttachWindowInputSeize">Seize (Foreground, Fully Captures Mouse)</system:String>
+    <system:String x:Key="AttachWindowInputSendMsgDisabled">SendMsg (Full Background, Arknights Uses Real Mouse Position Only, Ineffective)</system:String>
+    <system:String x:Key="AttachWindowInputPostMsgDisabled">PostMsg (Full Background, Arknights Uses Real Mouse Position Only, Ineffective)</system:String>
     <system:String x:Key="AttachWindowInputSendWithCursor">SendMsg-CursorPos (Semi-background, Briefly Captures Mouse)</system:String>
-    <system:String x:Key="AttachWindowInputSendWithWindowPos">SendMsg-WindowPos (Full Background, No Mouse Capture, Window May Move, Recommend Minimizing)</system:String>
+    <system:String x:Key="AttachWindowInputSendWithWindowPos">SendMsg-WindowPos (Recommended, Full Background, No Mouse Capture, Window May Move, PrintWindow Screencap Only, Recommend Minimizing)</system:String>
     <system:String x:Key="AttachWindowInputSendMsg">SendMsg (Stable)</system:String>
     <system:String x:Key="AttachWindowInputPostMsg">PostMsg (Efficient)</system:String>
     <!--  !AsstProxy  -->

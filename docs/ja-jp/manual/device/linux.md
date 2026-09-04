@@ -47,7 +47,7 @@ ADB 経由で USB デバイスに接続する必要がある場合は、まず W
 
 #### Linux ネイティブ MaaCore の使用（実験的機能）
 
-[MAA Wine Bridge](https://github.com/MaaAssistantArknights/MaaAssistantArknights/tree/dev/src/MaaWineBridge) のソースコードをダウンロードしてビルドし、生成された `MaaCore.dll`（ELF ファイル）で Windows 版を置き換え、Linux ネイティブ動的ライブラリ（`libMaaCore.so` および依存関係）を同じディレクトリに配置します。
+[MAA Wine Bridge](https://github.com/MaaAssistantArknights/MaaAssistantArknights/tree/dev-v2/src/MaaWineBridge) のソースコードをダウンロードしてビルドし、生成された `MaaCore.dll`（ELF ファイル）で Windows 版を置き換え、Linux ネイティブ動的ライブラリ（`libMaaCore.so` および依存関係）を同じディレクトリに配置します。
 
 この状態で Wine を通じて `MAA.exe` を実行すると、Linux ネイティブ動的ライブラリが読み込まれます。
 
@@ -78,7 +78,7 @@ MAA Wine Bridge で生成された `MaaDesktopIntegration.so` を `MAA.exe` と�
    1. Linux ダイナミック ライブラリを [MAA ウェブサイト](https://maa.plus/) からダウンロードし、解凍します、または以下のソフトウェアリポジトリからインストールします：
       - AUR：[maa-assistant-arknights](https://aur.archlinux.org/packages/maa-assistant-arknights)、インストール後のプロンプトに従ってファイルを編集します
       - Nixpkgs: [maa-assistant-arknights](https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/by-name/ma/maa-assistant-arknights/package.nix)
-   2. `./MAA-v{バージョン}-linux-{アーキテクチャ}/Python/` ディレクトリに移動し、`sample.py` ファイルを開きます
+   2. 解凍後の `Python/` ディレクトリに移動し、`sample.py` ファイルを開きます
 
    ::: tip
    プリコンパイル済みバージョンには、比較的新しいLinuxディストリビューション(Ubuntu 22.04)でコンパイルされた動的ライブラリが含まれており、システムに古いバージョンのlibstdc++がある場合、ABIの非互換性に遭遇する可能性があります。
@@ -86,7 +86,7 @@ MAA Wine Bridge で生成された `MaaDesktopIntegration.so` を `MAA.exe` と�
    :::
 
 2. ADB 構成
-   1. [`if asst.connect('adb.exe', '127.0.0.1:5554'):`](https://github.com/MaaAssistantArknights/MaaAssistantArknights/blob/722f0ddd4765715199a5dc90ea1bec2940322344/src/Python/sample.py#L48) セクションを見つける
+   1. [`if asst.connect("adb.exe", "127.0.0.1:5555"):`](https://github.com/MaaAssistantArknights/MaaAssistantArknights/blob/dev-v2/src/Python/sample.py#L71) セクションを見つける
    2. `adb` ツール呼び出し
       - エミュレータが `Android Studio` に `avd` を使用している場合は、 `adb` が付属します。 `adb.exe` の欄に直接 `adb` パスを記入することができ、一般的には `$HOME/Android/Sdk/platform-tools/` で見つけることができます。例：
 
@@ -115,7 +115,7 @@ MAA Wine Bridge で生成された `MaaDesktopIntegration.so` を `MAA.exe` と�
 
 3. タスク構成
 
-   カスタムタスク：必要に応じて [統合ドキュメント](../../protocol/integration.md) を参照し、`sample.py` の [`# タスクとパラメーターについては docs/integration.md 参照`](https://github.com/MaaAssistantArknights/MaaAssistantArknights/blob/722f0ddd4765715199a5dc90ea1bec2940322344/src/Python/sample.py#L54) 欄を変更します
+   カスタムタスク：必要に応じて [統合ドキュメント](../../protocol/integration.md) を参照し、`sample.py` の [`# タスクとパラメーターについては docs/zh-cn/protocol/integration.md 参照`](https://github.com/MaaAssistantArknights/MaaAssistantArknights/blob/dev-v2/src/Python/sample.py#L77) 欄を変更します
 
 ::::
 

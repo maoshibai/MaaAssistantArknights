@@ -190,8 +190,9 @@ Currently supported stages for navigation include:
   @optional
   Number of battles.  
   :::  
-  ::: field series  
+  ::: field series
   @type number
+  @default 1
   @optional
   Number of consecutive battles, -1~10.
   <br>
@@ -358,7 +359,7 @@ Whether to use Expedited Plans.
 ::: field expedite_times  
 @type number
 @optional
-Number of expedites, only effective when `expedite` is true. By default unlimited (until `times` limit is reached).  
+Number of expedites, only effective when `expedite` is true. No longer effective in the current version; expedites are unlimited until the `times` limit is reached.  
 :::  
 ::: field skip_robot  
 @type boolean
@@ -460,7 +461,7 @@ Whether to enable this task.
 @optional
 Shift mode. Editing in run-time is not supported.
 <br>
-`0` - `Default`: Default shift mode, single facility optimal solution.
+`0` - `Default`: Default shift mode, automatically calculates efficient operator combinations within and across facilities.
 <br>
 `10000` - `Custom`: Custom shift mode, reads user configuration, see [Base Scheduling Schema](./base-scheduling-schema.md).
 <br>
@@ -469,7 +470,9 @@ Shift mode. Editing in run-time is not supported.
 ::: field facility  
 @type array<string>
 @required
-Facilities for shifting (ordered). Editing in run-time is not supported.
+Facilities for shifting. Editing in run-time is not supported.
+<br>
+When `mode = 0`, this array acts as an enabled set; the order and duplicates do not affect scheduling (the shift order is planned automatically by the algorithm). When `mode = 10000` / `20000`, facilities are processed in array order.
 <br>
 Facility name: `Mfg` | `Trade` | `Power` | `Control` | `Reception` | `Office` | `Dorm` | `Processing` | `Training`  
 :::  
@@ -509,6 +512,44 @@ Whether to enable "Not Stationed in Dorm" option.
 @optional
 Whether to fill dormitory with operators not at max trust.  
 :::  
+::: field fiammetta_targets  
+@type array<string>
+@default ["清流", "可露希尔", "但书"]
+@optional
+Fiammetta recovery target list. At the start of a shift change, the target operator with the lowest morale in the list is placed in a dormitory together with Fiammetta to swap moods. Only effective when `mode = 0` and `fiammetta_recovery_enabled` is true.
+<br>
+Options: `清流` | `可露希尔` | `但书` | `巫恋` | `龙舌兰` | `歌蕾蒂娅` (entries outside the options or duplicates are ignored)  
+:::  
+::: field fiammetta_recovery_enabled  
+@type boolean
+@default false
+@optional
+Whether to use Fiammetta to restore the target's morale at the start of the shift; when disabled, the shift change skips the dormitory preparation step. Only effective when `mode = 0`.  
+:::  
+::: field use_pinus_sylvestris  
+@type boolean
+@default false
+@optional
+Whether to enable the ｢Pinus Sylvestris Knights｣ cross-facility team. Only effective when `mode = 0`.  
+:::  
+::: field use_perception_information  
+@type boolean
+@default false
+@optional
+Whether to enable the ｢Perception Information｣ cross-facility team, which takes priority over ｢Worldly Plight｣. Only effective when `mode = 0`.  
+:::  
+::: field use_worldly_plight  
+@type boolean
+@default false
+@optional
+Whether to enable the ｢Worldly Plight｣ cross-facility team. Only effective when `mode = 0`.  
+:::  
+::: field use_abyssal_hunter  
+@type boolean
+@default false
+@optional
+Whether to enable the ｢Abyssal Hunters｣ cross-facility team. Only effective when `mode = 0`; when enabled together with ｢Pinus Sylvestris Knights｣, the two teams will not participate in scheduling together.  
+:::  
 ::: field reception_message_board  
 @type boolean
 @default true
@@ -540,6 +581,12 @@ Custom config path. Editing in run-time is not supported.
 Plan index number in the configuration. Editing in run-time is not supported.
 <br>
 <Badge type="warning" text="Only effective when mode = 10000" />  
+:::  
+::: field continue_training  
+@type boolean
+@default false
+@optional
+Whether to continue unfinished skill training in the Training Room.  
 :::  
 ::::
 
@@ -744,7 +791,9 @@ Theme.
 <br>
 `Sarkaz` - Tales of the Unfathomable
 <br>
-`JieGarden` - Sui's Garden of Grotesqueries  
+`JieGarden` - Sui's Garden of Grotesqueries
+<br>
+`BlackFlow` - 黑流树海  
 :::  
 ::: field mode  
 @type number
@@ -756,9 +805,9 @@ Mode.
 <br>
 `1` - Originium Ingot farming, exit after investing in the first layer.
 <br>
-`2` - <Badge type="danger" text="Deprecated" /> Balances modes 0 and 1; continues until the next investment, exits otherwise.
+`2` - <Badge type="danger" text="Removed" /> Originally balanced modes 0 and 1; rejected in the current version.
 <br>
-`3` - Under development...
+`3` - <Badge type="danger" text="Not yet available" /> Rejected when passed.
 <br>
 `4` - Opening reset; first reaches the third layer at difficulty 0, then restarts and switches to the specified difficulty to reset the opening reward. If not the desired item, restart at difficulty 0; in the Phantom theme, retry only in the current difficulty.
 <br>
@@ -767,6 +816,12 @@ Mode.
 `6` - Monthly squad rewards farming, same as mode 0 except for specific mode adaptations.
 <br>
 `7` - Deep Dive rewards farming, same as mode 0 except for specific mode adaptations.
+<br>
+`10001` - Quickly clear the first layer; only available in the Sarkaz theme.
+<br>
+`20001` - Playtime node farming; enter the hollow on the first layer and restart if the required node cannot be found; only available in the JieGarden theme, requires `find_playTime_target`.
+<br>
+`30001` - Swaddled baby animal farming; only available in the BlackFlow theme.
 :::  
 ::: field squad  
 @type string
@@ -805,9 +860,9 @@ Number of times to start exploration. Stops automatically upon reaching limit.
 :::  
 ::: field difficulty  
 @type number
-@default 0
+@default -1
 @optional
-Specified difficulty level. Selects the highest unlocked difficulty if the desired one is not unlocked.  
+Specified difficulty level; `-1` means no preference. Selects the highest unlocked difficulty if the specified one is not unlocked.  
 :::  
 ::: field stop_at_final_boss  
 @type boolean
@@ -950,15 +1005,36 @@ Whether to enable shopping in hot water mode.
 Squad to use in hot water mode, default synced with squad, when squad is empty and collectible_mode_squad not specified, uses 指挥分队.  
 :::  
 ::: field start_with_seed  
-@type boolean
-@default false
+@type string
 @optional
-Use seed for money farming.
+Fixed seed for seed-based money farming; leave empty to disable.
 <br>
-Only possible to be true in Sarkaz theme, Investment mode, with "点刺成锭分队" (Point-Stab Ingot Squad) or "后勤分队" (Logistics Squad).
-<br>
-Uses fixed seed.  
+Only effective in Sarkaz theme, Investment mode, with "点刺成锭分队" (Point-Stab Ingot Squad) or "后勤分队" (Logistics Squad).  
 :::  
+::: field blackflow_strategy  
+@type string
+@optional
+Strategy for the 黑流树海 (BlackFlow) theme; inferred from `mode` and `investment_enabled` when left empty.
+<br>
+`baby_animal` - Check the general store on floor 1, then explore floors 2 and 3 and enter the 秘境行商 (secret-route trader) to cultivate seeds; requires `blackflow_cultivation_target`
+<br>
+`investment` - Reach the fixed general store on floor 1 via the route with the fewest battles and the shortest estimated time
+<br>
+`burn_with_investment` - Complete investment on floor 1, then reach floor 3 as fast as possible and restart upon arrival
+<br>
+`burn` - Reach floor 3 as fast as possible and restart upon arrival  
+:::  
+::: field blackflow_cultivation_target  
+@type string
+@default swaddled_cat
+@optional
+Target of the baby animal farming mode. Options: `swaddled_cat` (Swaddled Cat) | `swaddled_feathered_serpent` (Swaddled Feathered Serpent) | `swaddled_dog` (Swaddled Dog) | `swaddled_cerberus` (Swaddled Cerberus); only used when `blackflow_strategy` is `baby_animal`.  
+:::  
+::: field find_playTime_target
+@type number
+@optional
+Target playtime node of the playtime node farming mode. `1` - Ling (掷地有声, Resounding); `2` - Shu (种因得果, Sow the Cause, Reap the Fruit); `3` - Nian (三缺一, Three Out of Four). Only used when the theme is JieGarden and the mode is 20001, required in that mode; other or missing values cause the task parameters to fail to be set.  
+:::
 ::::
 
 <details>
@@ -1006,7 +1082,7 @@ Uses fixed seed.
    "deep_exploration_auto_iterate": false,
    "collectible_mode_shopping": false,
    "collectible_mode_squad": "指挥分队",
-   "start_with_seed": false
+   "start_with_seed": ""
 }
 ```
 
@@ -1077,7 +1153,7 @@ Each object contains:
   <br>
 - `name`: Operator name, optional, default "", if left empty this operator will be ignored
   <br>
-- `skill`: Skill to bring, optional, default 1; must be an integer between 1–3; otherwise, follows the in-game default
+- `skill`: Skill to bring, optional, default 0 (follows the in-game default skill selection); must be an integer between 1–3; otherwise, also follows the in-game default
   :::  
   ::: field add_trust  
   @type boolean
@@ -1192,10 +1268,12 @@ Whether to enable this task.
 @required
 File path of a single operation JSON, supports absolute/relative paths. Runtime editing not supported. Mutually exclusive with list (required, choose one).  
 :::  
-::: field list  
-@type array<string>
+::: field list
+@type array`<object>` | array`<string>`
 @required
-List of operation JSON files, supports absolute/relative paths. Runtime editing not supported. Mutually exclusive with filename (required, choose one).  
+List of jobs. Runtime editing not supported. Mutually exclusive with filename (required, choose one).
+<br>
+Array elements support two forms: an object containing `id` (job identifier, passed as-is to the `CopilotListLoadTaskFileSuccess` callback) and `filename` (path to the job JSON file, both absolute and relative paths supported); or a job path string used directly.
 :::  
 ::::
 
@@ -1300,11 +1378,17 @@ Mode. Supported modes vary by theme:
 <br>
 `48` (`RA4`) - RA-4, Use the Gold from Strategy Planning Management to unlock areas, and use Wis'adel to complete the boss elimination mission.
 :::  
-::: field tools_to_craft  
+::: field tools_to_craft
 @type array<string>
-@default [&quot;荧光棒&quot;]
+@default []
 @optional
-Automatically crafted items. Suggested to fill in the substring. Only effective for Tales theme.  
+Automatically crafted items. Suggested to fill in the substring; leave empty to craft nothing. Only effective in the Tales theme with a save (mode = 1).
+:::  
+::: field clear_store  
+@type boolean
+@default false
+@optional
+Whether to purchase (clear out) shop items after the task completes. Only effective in the Tales theme without a save (mode = 0).  
 :::  
 ::: field increment_mode  
 @type number
@@ -1410,12 +1494,12 @@ Whether to enable this task.
 @required
 Currently only supports `"copilot"`.  
 :::  
-::: field subtask  
+::: field subtype
 @type string
 @required
 Subtask type.
 <br>
-`stage` - Set stage name, requires `"details": { "stage": "xxxx" }`.
+`stage` - Set stage name, requires `"details": { "stage_name": "xxxx" }`.
 <br>
 `start` - Start mission, without details.
 <br>
@@ -1435,9 +1519,9 @@ Detailed parameters for the subtask.
 {
    "enable": true,
    "type": "copilot",
-   "subtask": "stage",
+   "subtype": "stage",
    "details": {
-      "stage": "1-7"
+      "stage_name": "1-7"
    }
 }
 ```
@@ -1478,7 +1562,7 @@ Video file path, supporting absolute/relative paths. Editing in run-time is not 
 #### Prototype
 
 ```cpp
-bool ASSTAPI AsstSetTaskParams(AsstHandle handle, AsstTaskId id, const char* params);
+AsstBool ASSTAPI AsstSetTaskParams(AsstHandle handle, AsstTaskId id, const char* params);
 ```
 
 #### Description
@@ -1487,7 +1571,7 @@ Set task parameters
 
 #### Return Value
 
-- `bool`  
+- `AsstBool`  
    Whether the parameters are successfully set.
 
 #### Parameter Description
@@ -1498,7 +1582,7 @@ Set task parameters
 @required
 Instance handle  
 :::  
-::: field task  
+::: field id  
 @type AsstTaskId
 @required
 Task ID, the return value of `AsstAppendTask`  
@@ -1516,7 +1600,7 @@ For those fields that do not mention "Editing in run-time is not supported" can 
 #### Prototype
 
 ```cpp
-bool ASSTAPI AsstSetStaticOption(AsstStaticOptionKey key, const char* value);
+AsstBool ASSTAPI AsstSetStaticOption(AsstStaticOptionKey key, const char* value);
 ```
 
 #### Description
@@ -1525,7 +1609,7 @@ Set process-level parameters
 
 #### Return Value
 
-- `bool`  
+- `AsstBool`  
    Is the setup successful
 
 #### Parameter Description
@@ -1545,14 +1629,31 @@ value
 
 ##### List of Key and value
 
-None currently
+:::: field-group  
+::: field Invalid
+@type number
+@default 0
+@optional
+Invalid placeholder. Enum value: 0.
+:::
+::: field CpuOCR
+@type boolean
+@optional
+Use the CPU for OCR. The value is not parsed. Switching after resources are loaded is not supported. Enum value: 1.
+:::
+::: field GpuOCR
+@type string
+@optional
+Use the GPU for OCR. The value is the GPU device index (integer); on Windows, `luid:<hexadecimal LUID>` is also accepted. Switching after resources are loaded is not supported. Enum value: 2.
+:::
+::::
 
 ### `AsstSetInstanceOption`
 
 #### Prototype
 
 ```cpp
-bool ASSTAPI AsstSetInstanceOption(AsstHandle handle, AsstInstanceOptionKey key, const char* value);
+AsstBool ASSTAPI AsstSetInstanceOption(AsstHandle handle, AsstInstanceOptionKey key, const char* value);
 ```
 
 #### Description
@@ -1561,7 +1662,7 @@ Set instance-level parameters
 
 #### Return Value
 
-- `bool`  
+- `AsstBool`  
    Is the setup successful
 
 #### Parameter Description
@@ -1602,7 +1703,7 @@ Deprecated. Originally for enabling Minitouch; "1" - on, "0" - off. Note that th
 @type string
 @default minitouch
 @optional
-Touch mode setting. Options: minitouch | maatouch | adb | MaaFwAdb. Default minitouch. Enum value: 2.  
+Touch mode setting. Options: minitouch | maatouch | adb | MacPlayTools | MaaFwAdb | MumuExtras. Default minitouch. Enum value: 2.  
 :::  
 ::: field DeploymentWithPause  
 @type boolean
