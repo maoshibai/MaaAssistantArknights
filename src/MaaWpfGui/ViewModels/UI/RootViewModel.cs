@@ -63,7 +63,7 @@ public class RootViewModel : Conductor<Screen>.Collection.OneActive
         {
             MessageBoxHelper.Show(LocalizationHelper.GetString("NightlyWarning"));
         }
-
+        /*
         Task.Run(async () => {
             await Instances.AnnouncementDialogViewModel.CheckAndDownloadAnnouncement();
             if (Instances.AnnouncementDialogViewModel.DoNotRemindThisAnnouncementAgain)
@@ -81,7 +81,7 @@ public class RootViewModel : Conductor<Screen>.Collection.OneActive
                 _ = Execute.OnUIThreadAsync(() => Instances.WindowManager.ShowWindow(Instances.AnnouncementDialogViewModel));
             }
         });
-
+        */
         _ = StartupIntegrityCheckAndUpdateAsync();
 
         // 主窗口已显示，此时弹窗不会导致 WPF 因无窗口而退出
