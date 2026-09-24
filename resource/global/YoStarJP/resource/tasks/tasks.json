@@ -1109,7 +1109,13 @@
             ["簡易通信機", "简易通讯机"],
             ["騎士の貯金箱", "骑士储蓄罐"],
             ["騎士の戒律", "骑士戒律"],
-            ["緊急派遣券", "紧急调度券"]
+            ["緊急派遣券", "紧急调度券"],
+            ["監禁施設", "禁闭所"],
+            ["警備塔", "警戒塔"],
+            ["煙玉", "伪装工具"],
+            ["ボタニ", "伯塔尼"],
+            ["ウクシク", "乌啾"],
+            ["怒潮ズィマー", "怒潮凛冬"]
         ]
     },
     "GameStartCheckResourceOCR": {
@@ -1236,6 +1242,15 @@
     "SpecialAccessActivitiesConfirm": {
         "text": ["受け取る"]
     },
+    "SignInEventEnter": {
+        "text": ["スタンプ"]
+    },
+    "SignInEventInPopup": {
+        "text": ["終了時間"]
+    },
+    "SignInEventEarnRewards": {
+        "text": ["物資獲得", "物資", "獲得"]
+    },
     "NoFriends": {
         "text": ["戦友があリませれ"]
     },
@@ -1287,6 +1302,12 @@
     "InfrastTrainingIdle": {
         "text": ["待機中"],
         "roi": [325, 637, 180, 50]
+    },
+    "InfrastTrainingMasteryPage": {
+        "text": ["協力者"]
+    },
+    "InfrastTrainingMasterybusy": {
+        "text": ["訓練中"]
     },
     "InfrastTrainingProcessing": {
         "text": ["訓練進捗"]
@@ -1657,6 +1678,14 @@
     "BattleDeployWhenPause": {
         "specialParams": [0]
     },
+    "DepotMaterialTab": {
+        "Doc": "This task should be removed when updating the Depot UI. da5ccfe4edcc3fae14d8a91ec2e19ea6b8241bf2",
+        "roi": [1026, 0, 254, 138]
+    },
+    "DepotMaterialTabClicked": {
+        "Doc": "This task should be removed when updating the Depot UI. da5ccfe4edcc3fae14d8a91ec2e19ea6b8241bf2",
+        "roi": [1026, 0, 254, 138]
+    },
     "OperBoxSortTabSelect": {
         "text": ["レベル"]
     },
@@ -1747,5 +1776,23 @@
     },
     "YellowTicket@Store@Purchase": {
         "text": ["購入"]
+    },
+    "RedTicket@Store@ChooseTicketType": {
+        "text": ["購買資格証"]
+    },
+    "RedTicket@Store@ChooseTicketTypeSelected": {
+        "text": ["購買資格証"]
+    },
+    "RedTicket@Store@Purchase": {
+        "text": ["購入"]
+    },
+    "OperProgress@OperBoxRoleFiltered": {
+        "text": ["先鋒", "前衛", "重装", "狙撃", "術師", "医療", "補助", "特殊"]
+    },
+    "OperProgress@OperBoxRoleFilteredOpen": {
+        "text": ["先鋒", "前衛", "重装", "狙撃", "術師", "医療", "補助", "特殊"]
+    },
+    "OperProgress@OperBoxSortTabs": {
+        "text": ["レベル", "レア度", "入手時間"]
     }
 }

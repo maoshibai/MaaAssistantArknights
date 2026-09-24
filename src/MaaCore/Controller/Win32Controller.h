@@ -2,6 +2,7 @@
 
 #ifdef _WIN32
 
+#include <deque>
 #include <memory>
 #include <string>
 
@@ -57,7 +58,7 @@ public: // ControllerAPI 接口
         const Point& p1,
         const Point& p2,
         int duration = 0,
-        bool extra_swipe = false,
+        SwipeExtraDirection extra_swipe = SwipeExtraDirection::None,
         double slope_in = 1,
         double slope_out = 1,
         bool with_pause = false) override;
@@ -87,8 +88,6 @@ private:
     bool unit_click_key(int key);
 
 private:
-    static constexpr int DefaultSwipeDelay = 10; // ms
-
     AsstCallback m_callback = nullptr;
     std::unique_ptr<Win32ControlUnitLoader> m_loader;
     void* m_unit_handle = nullptr;
@@ -101,6 +100,9 @@ private:
     Win32ScreencapMethod m_screencap_method = Win32Screencap::None;
     Win32InputMethod m_mouse_method = Win32Input::None;
     Win32InputMethod m_keyboard_method = Win32Input::None;
+
+    std::deque<long long> m_screencap_cost;
+    int m_screencap_times = 0;
 
     bool m_main_screen_recognition = false;
     RECT m_original_window_rect = { 0, 0, 0, 0 };

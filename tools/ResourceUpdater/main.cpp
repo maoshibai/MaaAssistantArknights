@@ -187,6 +187,9 @@ int main([[maybe_unused]] int argc, char** argv)
     if (argc == 4 && std::string_view(argv[1]) == "--infrast-data") {
         return update_infrast_data(fs::path(argv[2]), fs::path(argv[3])) ? 0 : 1;
     }
+    if (argc == 4 && std::string_view(argv[1]) == "--items-data") {
+        return update_items_data(fs::path(argv[2]), fs::path(argv[3]), false) ? 0 : 1;
+    }
 
     // ---- PATH DECLARATION ----
 
@@ -466,10 +469,8 @@ bool run_parallel_tasks(
     recruit_thread.join();
     items_data_thread.join();
 
-    if (!error_occurred.load()
-        && !validate_infrast_resources(
-            resource_dir,
-            official_data_dir / "gamedata" / "excel" / "building_data.json")) {
+    if (!error_occurred.load() &&
+        !validate_infrast_resources(resource_dir, official_data_dir / "gamedata" / "excel" / "building_data.json")) {
         std::cerr << "validate_infrast_resources failed" << '\n';
         error_occurred.store(true);
     }
@@ -479,16 +480,75 @@ bool run_parallel_tasks(
 
 bool update_items_data(const fs::path& input_dir, const fs::path& output_dir, bool with_imgs)
 {
-    const auto input_json_path =
-        with_imgs ? input_dir / "gamedata" / "excel" / "item_table.json" : input_dir / "item_table.json";
+    const auto input_excel_dir = with_imgs ? input_dir / "gamedata" / "excel" : input_dir;
+    const auto input_json_path = input_excel_dir / "item_table.json";
 
     auto parse_ret = json::open(input_json_path);
     if (!parse_ret) {
-        std::cerr << "parse json failed" << '\n';
+        std::cerr << input_json_path << " parse error" << '\n';
         return false;
     }
 
     auto& input_json = parse_ret.value();
+    const auto building_data_path = input_excel_dir / "building_data.json";
+    auto building_data_ret = json::open(building_data_path);
+    if (!building_data_ret || !building_data_ret->contains("workshopFormulas") ||
+        !building_data_ret->contains("manufactFormulas")) {
+        std::cerr << building_data_path << " parse error or has no required formulas" << '\n';
+        return false;
+    }
+
+    std::unordered_set<std::string> rarity_item_ids;
+    std::unordered_map<std::string, json::value> formula_by_item_id;
+    for (const std::string& formulas_name : { std::string("workshopFormulas"), std::string("manufactFormulas") }) {
+        for (const auto& [formula_id, formula_data] : building_data_ret.value()[formulas_name].as_object()) {
+            const std::string formula_type = formula_data.get("formulaType", std::string());
+            const bool is_evolve_or_skill = formula_type == "F_EVOLVE" || formula_type == "F_SKILL";
+            const bool is_asc = formula_type == "F_ASC";
+            const bool should_collect_rarity = is_evolve_or_skill || is_asc;
+            if (!should_collect_rarity) {
+                continue;
+            }
+            const bool has_formula = formulas_name == "workshopFormulas" ? is_evolve_or_skill : is_asc;
+
+            const std::string item_id = formula_data.get("itemId", std::string());
+            const int output_count = formula_data.get("count", 0);
+            const auto costs_opt = formula_data.find<json::array>("costs");
+            if (item_id.empty() || (has_formula && output_count != 1) || !costs_opt || costs_opt->empty()) {
+                std::cerr << "Invalid item formula: " << formulas_name << ' ' << formula_id << '\n';
+                return false;
+            }
+            if (!input_json["items"].contains(item_id)) {
+                std::cerr << "Formula product is absent from item_table: " << formulas_name << ' ' << formula_id << ' '
+                          << item_id << '\n';
+                return false;
+            }
+            rarity_item_ids.emplace(item_id);
+
+            json::value formula_costs;
+            for (const auto& cost : costs_opt.value()) {
+                const std::string ingredient_id = cost.get("id", std::string());
+                const int ingredient_count = cost.get("count", 0);
+                const std::string ingredient_type = cost.get("type", std::string());
+                if (ingredient_id.empty() || ingredient_count <= 0 || ingredient_type != "MATERIAL" ||
+                    formula_costs.contains(ingredient_id) || !input_json["items"].contains(ingredient_id)) {
+                    std::cerr << "Invalid item formula cost: " << formulas_name << ' ' << formula_id << ' '
+                              << ingredient_id << '\n';
+                    return false;
+                }
+                rarity_item_ids.emplace(ingredient_id);
+                formula_costs[ingredient_id] = ingredient_count;
+            }
+            if (!has_formula) {
+                continue;
+            }
+            if (!formula_by_item_id.emplace(item_id, std::move(formula_costs)).second) {
+                std::cerr << "Duplicate item formula product: " << item_id << '\n';
+                return false;
+            }
+        }
+    }
+
     json::value output_json;
     for (auto&& [item_id, item_info] : input_json["items"].as_object()) {
         static const std::vector<std::string> BlackListPrefix = {
@@ -559,6 +619,16 @@ bool update_items_data(const fs::path& input_dir, const fs::path& output_dir, bo
         output["description"] = item_info["description"];
         output["sortId"] = item_info["sortId"];
         output["classifyType"] = item_info["classifyType"];
+        if (rarity_item_ids.contains(item_id)) {
+            // Official rarity is an integer, overseas is a "TIER_n" string; ItemConfig reads integers only.
+            const auto& rarity = item_info["rarity"];
+            output["rarity"] = rarity.is_string()
+                                   ? std::stoi(rarity.as_string().substr(std::string_view("TIER_").size())) - 1
+                                   : rarity.as_integer();
+        }
+        if (auto formula_iter = formula_by_item_id.find(item_id); formula_iter != formula_by_item_id.cend()) {
+            output["formula"] = formula_iter->second;
+        }
     }
     auto output_json_path = output_dir / "item_index.json";
     std::ofstream ofs(output_json_path, std::ios::out);
@@ -1089,9 +1159,9 @@ bool validate_infrast_resources(const fs::path& resource_dir, const fs::path& bu
             room_skill_ids.emplace(skill_id);
             // Skills maintained ahead of the game data fall back to the resource key,
             // resolved against existing template names the same way.
-            const std::string expected_template =
-                expected_template_by_key.contains(skill_id) ? expected_template_by_key.at(skill_id)
-                                                            : resolve_infrast_template_name(existing_templates, skill_id);
+            const std::string expected_template = expected_template_by_key.contains(skill_id)
+                                                      ? expected_template_by_key.at(skill_id)
+                                                      : resolve_infrast_template_name(existing_templates, skill_id);
             if (skill.at("template").as_string() != expected_template) {
                 std::cerr << "Infrastructure template field differs for " << skill_id << ": expected "
                           << expected_template << '\n';
@@ -1330,16 +1400,16 @@ bool update_battle_chars_info(const fs::path& official_dir, const fs::path& over
 
     const auto& patch_json = chars_patch_opt.value()["patchChars"].as_object();
     json::value Amiya_data;
-    Amiya_data["name"] = "阿米娅-WARRIOR";
-    Amiya_data["name_en"] = "Amiya-WARRIOR";
-    Amiya_data["name_jp"] = "アーミヤ-WARRIOR";
-    Amiya_data["name_kr"] = "아미야-WARRIOR";
-    Amiya_data["name_tw"] = "阿米婭-WARRIOR";
+    Amiya_data["name"] = "阿米娅";
+    Amiya_data["name_en"] = "Amiya";
+    Amiya_data["name_jp"] = "アーミヤ";
+    Amiya_data["name_kr"] = "아미야";
+    Amiya_data["name_tw"] = "阿米婭";
     if (auto amiya2_opt = patch_json.find<json::object>("char_1001_amiya2")) {
         Amiya_data["profession"] = amiya2_opt->at("profession");
         Amiya_data["rarity"] = static_cast<int>(amiya2_opt->at("rarity")) + 1;
         Amiya_data["position"] = amiya2_opt->at("position");
-        Amiya_data["sortIndex"] = amiya2_opt->at("sortIndex");
+        Amiya_data["sortIndex"] = 17; // yj 给升变的 sortIndex 设了0，暂时使用主角色的 sortIndex
         Amiya_data["subProfessionId"] = amiya2_opt->at("subProfessionId");
         const std::string& default_range = amiya2_opt->get("phases", 0, "rangeId", "0-1");
         Amiya_data["rangeId"] = json::array {
@@ -1351,16 +1421,16 @@ bool update_battle_chars_info(const fs::path& official_dir, const fs::path& over
     chars.emplace("char_1001_amiya2", std::move(Amiya_data));
 
     json::value Amiya_data3;
-    Amiya_data3["name"] = "阿米娅-MEDIC";
-    Amiya_data3["name_en"] = "Amiya-MEDIC";
-    Amiya_data3["name_jp"] = "アーミヤ-MEDIC";
-    Amiya_data3["name_kr"] = "아미야-MEDIC";
-    Amiya_data3["name_tw"] = "阿米婭-MEDIC";
+    Amiya_data3["name"] = "阿米娅";
+    Amiya_data3["name_en"] = "Amiya";
+    Amiya_data3["name_jp"] = "アーミヤ";
+    Amiya_data3["name_kr"] = "아미야";
+    Amiya_data3["name_tw"] = "阿米婭";
     if (auto amiya3_opt = patch_json.find<json::object>("char_1037_amiya3")) {
         Amiya_data3["profession"] = amiya3_opt->at("profession");
         Amiya_data3["rarity"] = static_cast<int>(amiya3_opt->at("rarity")) + 1;
         Amiya_data3["position"] = amiya3_opt->at("position");
-        Amiya_data3["sortIndex"] = amiya3_opt->at("sortIndex");
+        Amiya_data3["sortIndex"] = 17;
         Amiya_data3["subProfessionId"] = amiya3_opt->at("subProfessionId");
         const std::string& default_range = amiya3_opt->get("phases", 0, "rangeId", "0-1");
         Amiya_data3["rangeId"] = json::array {

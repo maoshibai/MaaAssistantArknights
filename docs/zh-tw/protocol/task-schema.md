@@ -92,8 +92,9 @@ icon: material-symbols:task
                                             // 以 1280 * 720 為基準自動縮放
 
         "specialParams": [int, ...],        // 某些特殊辨識器需要的參數
-                                            // 額外的，當 action 為 Swipe 時選填，[0] 表示 duration，[1] 表示是否啟用額外滑動，
-                                            // [2] 和 [3] 分別表示滑動軌跡的緩入、緩出斜率，預設均為 1
+                                            // 額外的，當 action 為 Swipe 時選填，[0] 表示 duration，[1] 表示額外滑動的方向（0 不啟用，1/2/3/4 分別為上/下/左/右），
+                                            // [2] 和 [3] 分別表示滑動軌跡的緩入、緩出斜率，需要乘 10 輸入，預設均為 10
+                                            // 如果需要正常進入並緩出，則 [2]、[3] 建議分別為 37, 1
 
         "highResolutionSwipeFix": false,    // 選填，是否啟用高解析度滑動修復
                                             // 現階段應該只有關卡導航未使用 unity 滑動方式所以需要開啟
@@ -160,6 +161,12 @@ icon: material-symbols:task
 
         "isAscii": false,                   // 選填，要辨識的文字內容是否為 ASCII 碼字元
                                             // 不填寫預設為 false
+
+        "orderBy": "None",                  // 選填，多個匹配時的結果排序方式（不填預設繼承 baseTask，無 base 則不重排、按辨識順序）
+                                            //      - None:         不重排（按辨識順序），可顯式寫來覆蓋 base 已設的排序
+                                            //      - Horizontal:   行優先（行內從左到右）
+                                            //      - Vertical:     列優先（列內從上到下）
+                                            //      - Score:        按分數從高到低
 
         "withoutDet": false,                // 選填，是否不使用檢測模型
                                             // 不填寫預設為 false

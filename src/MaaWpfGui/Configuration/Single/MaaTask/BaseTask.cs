@@ -22,6 +22,7 @@ namespace MaaWpfGui.Configuration.Single.MaaTask;
 [JsonDerivedType(typeof(StartUpTask), typeDiscriminator: nameof(StartUpTask))]
 [JsonDerivedType(typeof(CloseDownTask), typeDiscriminator: nameof(CloseDownTask))]
 [JsonDerivedType(typeof(FightTask), typeDiscriminator: nameof(FightTask))]
+[JsonDerivedType(typeof(OperProgressTask), typeDiscriminator: nameof(OperProgressTask))]
 [JsonDerivedType(typeof(AwardTask), typeDiscriminator: nameof(AwardTask))]
 [JsonDerivedType(typeof(MallTask), typeDiscriminator: nameof(MallTask))]
 [JsonDerivedType(typeof(InfrastTask), typeDiscriminator: nameof(InfrastTask))]
@@ -35,6 +36,7 @@ namespace MaaWpfGui.Configuration.Single.MaaTask;
 [JsonDerivedType(typeof(UserDataUpdateTask), typeDiscriminator: nameof(UserDataUpdateTask))]
 [JsonDerivedType(typeof(ReclamationTask), typeDiscriminator: nameof(ReclamationTask))]
 [JsonDerivedType(typeof(DepotMaintainTask), typeDiscriminator: nameof(DepotMaintainTask))]
+[JsonDerivedType(typeof(SwitchThemeTask), typeDiscriminator: nameof(SwitchThemeTask))]
 [JsonDerivedType(typeof(CustomTask), typeDiscriminator: nameof(CustomTask))]
 public class BaseTask : NotifyPropertyChangedWithValue
 {

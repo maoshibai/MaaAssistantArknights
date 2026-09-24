@@ -93,8 +93,9 @@ Please note that JSON files do not support comments. The comments in this docume
                                             // Auto-scales to 1280 * 720 resolution
 
         "specialParams": [int, ...],        // Parameters for special recognizers
-                                            // Optional when action is Swipe, [0] for duration, [1] for extra swipe toggle,
-                                            // [2] and [3] for the ease-in and ease-out slopes of the swipe trajectory, both default to 1
+                                            // Optional when action is Swipe, [0] for duration, [1] for the extra swipe direction (0 disabled, 1/2/3/4 for up/down/left/right),
+                                            // [2] and [3] for the ease-in and ease-out slopes of the swipe trajectory, need to be multiplied by 10, both default to 10
+                                            // If you want normal ease-in and ease-out, [2] and [3] are recommended to be 37 and 1 respectively
 
         "highResolutionSwipeFix": false,    // Optional, whether to enable high-resolution swipe fix
                                             // Currently only needed for stage navigation which doesn't use unity swipe method
@@ -161,6 +162,12 @@ Please note that JSON files do not support comments. The comments in this docume
 
         "isAscii": false,                   // Optional, whether text content is ASCII characters
                                             // Default false
+
+        "orderBy": "None",                  // Optional, ordering of results when there are multiple matches (omit to inherit baseTask; no base = no reorder, recognition order)
+                                            //      - None:         no reorder (recognition order); write explicitly to override an ordering set by base
+                                            //      - Horizontal:   row-major (left-to-right within a row)
+                                            //      - Vertical:     column-major (top-to-bottom within a column)
+                                            //      - Score:        by score from high to low
 
         "withoutDet": false,                // Optional, whether to skip detection model
                                             // Default false

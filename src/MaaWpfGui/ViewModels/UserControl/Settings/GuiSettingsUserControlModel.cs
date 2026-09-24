@@ -153,7 +153,7 @@ public class GuiSettingsUserControlModel : PropertyChangedBase
             NotifyOfPropertyChange();
             if (value)
             {
-                ToastNotification.ShowDirect("Test test");
+                ToastNotification.ShowDirect(LocalizationHelper.GetString("ToastNotificationTest"));
                 var (isAvailable, detail) = ToastNotification.ToastNotificationCheck();
                 if (!isAvailable)
                 {
@@ -168,6 +168,15 @@ public class GuiSettingsUserControlModel : PropertyChangedBase
         get => ConfigFactory.Root.Gui.MainTasksInvertNullFunction;
         set {
             ConfigFactory.Root.Gui.MainTasksInvertNullFunction = value;
+            NotifyOfPropertyChange();
+        }
+    }
+
+    public bool HideHoverActionButtons
+    {
+        get => ConfigFactory.Root.Gui.HideHoverActionButtons;
+        set {
+            ConfigFactory.Root.Gui.HideHoverActionButtons = value;
             NotifyOfPropertyChange();
         }
     }
@@ -580,6 +589,7 @@ public class GuiSettingsUserControlModel : PropertyChangedBase
 
         DarkModeList.RefreshLocalization();
         InverseClearModeList.RefreshLocalization();
+        TransitionSpeedList.RefreshLocalization();
         RefreshWindowTitleAllShowDict();
         Instances.SettingsViewModel.UpdateWindowTitle();
     }

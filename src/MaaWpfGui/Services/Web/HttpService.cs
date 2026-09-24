@@ -23,6 +23,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using MaaWpfGui.Configuration.Factory;
 using MaaWpfGui.Constants;
@@ -88,7 +89,11 @@ public class HttpService : IHttpService
             {
                 foreach (var kvp in extraHeader)
                 {
-                    request.Headers.Add(kvp.Key, kvp.Value);
+                    // Add 对含 “/” “=” 等字符的值抛 FormatException 且异常消息带原值，凭据类 header 会明文泄漏进日志
+                    if (!request.Headers.TryAddWithoutValidation(kvp.Key, kvp.Value))
+                    {
+                        _logger.Warning("Failed to add external header: {Header}", kvp.Key);
+                    }
                 }
             }
 
@@ -146,48 +151,52 @@ public class HttpService : IHttpService
         }
     }
 
-    public async Task<HttpResponseMessage> GetAsync(Uri uri, Dictionary<string, string>? extraHeader = null, HttpCompletionOption httpCompletionOption = HttpCompletionOption.ResponseHeadersRead, UriPartial uriPartial = UriPartial.Query)
+    public async Task<HttpResponseMessage> GetAsync(Uri uri, Dictionary<string, string>? extraHeader = null, HttpCompletionOption httpCompletionOption = HttpCompletionOption.ResponseHeadersRead, UriPartial uriPartial = UriPartial.Query, CancellationToken token = default)
     {
         var request = new HttpRequestMessage { RequestUri = uri, Method = HttpMethod.Get, Version = HttpVersion.Version20, };
         if (extraHeader != null)
         {
             foreach (var kvp in extraHeader)
             {
-                request.Headers.Add(kvp.Key, kvp.Value);
+                // Add 对含 “/” “=” 等字符的值抛 FormatException 且异常消息带原值，凭据类 header 会明文泄漏进日志
+                if (!request.Headers.TryAddWithoutValidation(kvp.Key, kvp.Value))
+                {
+                    _logger.Warning("Failed to add external header: {Header}", kvp.Key);
+                }
             }
         }
 
         var stopwatch = Stopwatch.StartNew();
-        var response = await _client.SendAsync(request, httpCompletionOption);
+        var response = await _client.SendAsync(request, httpCompletionOption, token);
         stopwatch.Stop();
         response.Log(uriPartial, stopwatch.Elapsed.TotalMilliseconds);
         return response;
     }
 
-    public async Task<string?> PostAsJsonAsync<T>(Uri uri, T content, Dictionary<string, string>? extraHeader = null)
+    public async Task<string?> PostAsJsonAsync<T>(Uri uri, T content, Dictionary<string, string>? extraHeader = null, UriPartial uriPartial = UriPartial.Query)
     {
         try
         {
-            var response = await PostAsync(uri, new StringContent(JsonSerializer.Serialize(content), Encoding.UTF8, "application/json"), extraHeader);
+            var response = await PostAsync(uri, new StringContent(JsonSerializer.Serialize(content), Encoding.UTF8, "application/json"), extraHeader, uriPartial);
             return await response.Content.ReadAsStringAsync();
         }
         catch (Exception e)
         {
-            _logger.Error(e, "Failed to send POST request to {Uri}", uri);
+            _logger.Error(e, "Failed to send POST request to {Uri}", uri.GetLeftPart(uriPartial));
             return null;
         }
     }
 
-    public async Task<string?> PostAsFormUrlEncodedAsync(Uri uri, Dictionary<string, string?> content, Dictionary<string, string>? extraHeader = null)
+    public async Task<string?> PostAsFormUrlEncodedAsync(Uri uri, Dictionary<string, string?> content, Dictionary<string, string>? extraHeader = null, UriPartial uriPartial = UriPartial.Query)
     {
         try
         {
-            var response = await PostAsync(uri, new FormUrlEncodedContent(content), extraHeader);
+            var response = await PostAsync(uri, new FormUrlEncodedContent(content), extraHeader, uriPartial);
             return await response.Content.ReadAsStringAsync();
         }
         catch (Exception e)
         {
-            _logger.Error(e, "Failed to send POST request to {Uri}", uri);
+            _logger.Error(e, "Failed to send POST request to {Uri}", uri.GetLeftPart(uriPartial));
             return null;
         }
     }
