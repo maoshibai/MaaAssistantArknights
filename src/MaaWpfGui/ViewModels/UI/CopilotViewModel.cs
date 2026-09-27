@@ -55,7 +55,6 @@ namespace MaaWpfGui.ViewModels.UI;
 /// The view model of copilot.
 /// </summary>
 // 通过 container.Get<CopilotViewModel>(); 实例化或获取实例
-// ReSharper disable once ClassNeverInstantiated.Global
 public partial class CopilotViewModel : Screen
 {
     private readonly RunningState _runningState;
@@ -78,11 +77,11 @@ public partial class CopilotViewModel : Screen
     private const string CopilotIdPrefix = "maa://";
     private const string CopilotNewIdPrefix = "prts://"; // 新格式前缀，prts://12345 为作业，prts://s12345 为作业集
     private const string CopilotNewSetIdPrefix = "prts://s"; // 新格式作业集前缀
-    private static readonly string TempCopilotFile = Path.Combine(CacheDir, "_temp_copilot.json");
+    private static readonly string _tempCopilotFile = Path.Combine(CacheDir, "_temp_copilot.json");
 
     // VideoRecognition 已不支持：仅保留 json 作业
     private static readonly string[] _supportExt = [".json"];
-    private static readonly string CopilotJsonDir = Path.Combine(ConfigDir, "copilot");
+    private static readonly string _copilotJsonDir = Path.Combine(ConfigDir, "copilot");
     private const string StageNameRegex = @"(?:[a-z]{0,3})(?:\d{0,2})-(?:(?:A|B|C|D|EX|S|TR|MO)-?)?(?:\d{1,2})";
     private const string InvalidStageNameChars = @"[:',\.\(\)\|\[\]\?，。【】｛｝；：]"; // 无效字符
 
@@ -971,7 +970,7 @@ public partial class CopilotViewModel : Screen
 
         try
         {
-            Directory.Delete(CopilotJsonDir, true);
+            Directory.Delete(_copilotJsonDir, true);
         }
         catch
         {
@@ -1245,9 +1244,10 @@ public partial class CopilotViewModel : Screen
         }
         foreach (var action in copilot.Actions.Where(a => a.Type is "Skill" or "Retreat" or "BulletTime" or "SkillUsage"))
         {
+            // 重复指定干员和坐标，使用坐标
             var hasLoc = action.Location is not null;
             var hasOper = action.Name is not null;
-            if (hasLoc && hasOper) // 重复指定干员和坐标，使用坐标
+            if (hasLoc && hasOper)
             {
                 AddLog(LocalizationHelper.GetStringFormat("Copilot.ActionWithBothLocAndOper", $"{action.Type}[{action.Location}]"), UiLogColor.Warning, showTime: false);
                 action.Role = null;
@@ -1257,7 +1257,8 @@ public partial class CopilotViewModel : Screen
         }
         foreach (var action in copilot.Actions.Where(a => a.Type is "Click"))
         {
-            if (action.Rect is not null && action.Location is not null) // Core 对同填 rect 与 location 的点击动作按 rect 执行，此处移除 location 以与 Core 语义一致
+            // Core 对同填 rect 与 location 的点击动作按 rect 执行，此处移除 location 以与 Core 语义一致
+            if (action.Rect is not null && action.Location is not null)
             {
                 AddLog(LocalizationHelper.GetStringFormat("Copilot.ActionWithBothRectAndLoc", $"{action.Type}[{string.Join(",", action.Rect)}]"), UiLogColor.Warning, showTime: false);
                 action.Location = null;
@@ -1319,7 +1320,7 @@ public partial class CopilotViewModel : Screen
                 // 取消后不得写盘，避免旧轮次内容覆盖新一轮结果
                 token.ThrowIfCancellationRequested();
                 var json = JsonConvert.SerializeObject(copilot, Formatting.Indented, new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, });
-                await File.WriteAllTextAsync(TempCopilotFile, json, token);
+                await File.WriteAllTextAsync(_tempCopilotFile, json, token);
             }
             catch (OperationCanceledException)
             {
@@ -1327,7 +1328,7 @@ public partial class CopilotViewModel : Screen
             }
             catch
             {
-                _logger.Error("Could not save copilot task to file: " + TempCopilotFile);
+                _logger.Error("Could not save copilot task to file: " + _tempCopilotFile);
                 return false;
             }
         }
@@ -1377,7 +1378,7 @@ public partial class CopilotViewModel : Screen
             {
                 // 取消后不得写盘，避免旧轮次内容覆盖新一轮结果
                 token.ThrowIfCancellationRequested();
-                await File.WriteAllTextAsync(TempCopilotFile, JsonConvert.SerializeObject(copilot, Formatting.Indented, new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, }), token);
+                await File.WriteAllTextAsync(_tempCopilotFile, JsonConvert.SerializeObject(copilot, Formatting.Indented, new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, }), token);
             }
             catch (OperationCanceledException)
             {
@@ -1385,7 +1386,7 @@ public partial class CopilotViewModel : Screen
             }
             catch
             {
-                _logger.Error("Could not save copilot task to file: " + TempCopilotFile);
+                _logger.Error("Could not save copilot task to file: " + _tempCopilotFile);
                 return false;
             }
         }
@@ -1701,11 +1702,11 @@ public partial class CopilotViewModel : Screen
             return false;
         }
 
-        if (!Path.Exists(CopilotJsonDir))
+        if (!Path.Exists(_copilotJsonDir))
         {
             try
             {
-                Directory.CreateDirectory(CopilotJsonDir);
+                Directory.CreateDirectory(_copilotJsonDir);
             }
             catch
             {
@@ -1735,11 +1736,11 @@ public partial class CopilotViewModel : Screen
         }
 
         var fileName = !string.IsNullOrEmpty(stageCode) ? stageCode : DateTimeOffset.Now.ToUnixTimeSeconds().ToString();
-        var cachePath = Path.GetRelativePath(BaseDir, $"{CopilotJsonDir}/{fileName}.json");
+        var cachePath = Path.GetRelativePath(BaseDir, $"{_copilotJsonDir}/{fileName}.json");
         await _semaphore.WaitAsync(token);
         if (File.Exists(cachePath) && CopilotItemViewModels.Any(i => i.FilePath == cachePath))
         {
-            cachePath = Path.GetRelativePath(BaseDir, $"{CopilotJsonDir}/{fileName}_{DateTimeOffset.Now.ToUnixTimeMilliseconds()}.json");
+            cachePath = Path.GetRelativePath(BaseDir, $"{_copilotJsonDir}/{fileName}_{DateTimeOffset.Now.ToUnixTimeMilliseconds()}.json");
             if (CopilotItemViewModels.Any(i => i.FilePath == cachePath))
             {
                 _logger.Error("Could not add copilot task with duplicate stage name: {StageName}", copilot.StageName);
@@ -1810,11 +1811,11 @@ public partial class CopilotViewModel : Screen
             return false;
         }
 
-        if (!Path.Exists(CopilotJsonDir))
+        if (!Path.Exists(_copilotJsonDir))
         {
             try
             {
-                Directory.CreateDirectory(CopilotJsonDir);
+                Directory.CreateDirectory(_copilotJsonDir);
             }
             catch
             {
@@ -1828,11 +1829,11 @@ public partial class CopilotViewModel : Screen
             fileName = DateTimeOffset.Now.ToUnixTimeSeconds().ToString();
         }
 
-        var cachePath = Path.GetRelativePath(BaseDir, $"{CopilotJsonDir}/{fileName}.json");
+        var cachePath = Path.GetRelativePath(BaseDir, $"{_copilotJsonDir}/{fileName}.json");
         await _semaphore.WaitAsync(token);
         if (File.Exists(cachePath) && CopilotItemViewModels.Any(i => i.FilePath == cachePath))
         {
-            cachePath = Path.GetRelativePath(BaseDir, $"{CopilotJsonDir}/{fileName}_{DateTimeOffset.Now.ToUnixTimeMilliseconds()}.json");
+            cachePath = Path.GetRelativePath(BaseDir, $"{_copilotJsonDir}/{fileName}_{DateTimeOffset.Now.ToUnixTimeMilliseconds()}.json");
             if (CopilotItemViewModels.Any(i => i.FilePath == cachePath))
             {
                 _logger.Error("Could not add SSS copilot task with duplicate stage name: {StageName}", copilot.StageName);
@@ -2159,11 +2160,11 @@ public partial class CopilotViewModel : Screen
         {
             try
             {
-                await File.WriteAllTextAsync(TempCopilotFile, JsonConvert.SerializeObject(_copilotCache, Formatting.Indented, new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, }));
+                await File.WriteAllTextAsync(_tempCopilotFile, JsonConvert.SerializeObject(_copilotCache, Formatting.Indented, new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, }));
             }
             catch
             {
-                AddLog(LocalizationHelper.GetString("CopilotCouldNotSaveFile") + TempCopilotFile, UiLogColor.Error);
+                AddLog(LocalizationHelper.GetString("CopilotCouldNotSaveFile") + _tempCopilotFile, UiLogColor.Error);
                 return false;
             }
         }
@@ -2171,13 +2172,13 @@ public partial class CopilotViewModel : Screen
         bool appended;
         if (CopilotTabIndex == 2)
         {
-            var singleTask = new AsstParadoxCopilotTask() { FileName = IsDataFromWeb ? TempCopilotFile : Filename };
+            var singleTask = new AsstParadoxCopilotTask() { FileName = IsDataFromWeb ? _tempCopilotFile : Filename };
             appended = Instances.AsstProxy.AsstAppendTaskWithEncoding(AsstProxy.TaskType.Copilot, singleTask).IsSuccess;
         }
         else
         {
             var singleTask = new AsstCopilotTask() {
-                FileName = IsDataFromWeb ? TempCopilotFile : Filename,
+                FileName = IsDataFromWeb ? _tempCopilotFile : Filename,
                 Formation = Form,
                 SupportUnitUsage = UseSupportUnitUsage ? (int)SupportUnitUsage : 0,
                 AddTrust = AddTrust,

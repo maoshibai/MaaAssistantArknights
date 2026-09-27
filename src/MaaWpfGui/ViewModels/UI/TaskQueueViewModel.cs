@@ -59,7 +59,6 @@ namespace MaaWpfGui.ViewModels.UI;
 /// The view model of task queue.
 /// </summary>
 // 通过 container.Get<TaskQueueViewModel>(); 实例化或获取实例
-// ReSharper disable once ClassNeverInstantiated.Global
 public class TaskQueueViewModel : Screen
 {
     private readonly RunningState _runningState;
@@ -747,11 +746,12 @@ public class TaskQueueViewModel : Screen
     {
         _runningState = RunningState.Instance;
         _runningState.StateChanged += (_, e) => {
-            // 回到空闲的变化沿时重置主任务进度（原 Idle 镜像置 true 的联动；
-            // 空闲期内其他状态字段的广播不重复触发）
+            // 回到空闲的变化沿时清零主任务进度分母并隐藏任务栏进度
+            // （空闲期内其他状态字段的广播不重复触发）
             if (!e.OldState.Idle && e.NewState.Idle)
             {
-                UpdateMainTasksProgress(0);
+                _mainTasksTotalCount = 0;
+                RefreshMainTasksProgress();
                 _ = GameAudioMuteManager.RestoreWhenCoreIdleAsync(Instances.AsstProxy.AsstRunning);
             }
 
@@ -1124,7 +1124,6 @@ public class TaskQueueViewModel : Screen
                 break;
             }
 
-            // ReSharper disable once InvertIf
             if (currentTime == startTime)
             {
                 timeToStart = true;
@@ -1291,7 +1290,8 @@ public class TaskQueueViewModel : Screen
             ConfigFactory.CurrentConfig.TaskQueue.Add(new RecruitTask());
             ConfigFactory.CurrentConfig.TaskQueue.Add(new MallTask());
             ConfigFactory.CurrentConfig.TaskQueue.Add(new AwardTask());
-            //ConfigFactory.CurrentConfig.TaskQueue.Add(new OperProgressTask());
+
+            // ConfigFactory.CurrentConfig.TaskQueue.Add(new OperProgressTask());
             ConfigFactory.CurrentConfig.TaskQueue.Add(new RoguelikeTask());
             ConfigFactory.CurrentConfig.TaskQueue.Add(new ReclamationTask());
             ConfigFactory.CurrentConfig.TaskQueue.Add(new UserDataUpdateTask());
@@ -1590,13 +1590,13 @@ public class TaskQueueViewModel : Screen
         Execute.OnUIThread(() => {
             if (needsBeforeSplit)
             {
-                createNewCard();
+                CreateNewCard();
             }
 
             // 确保至少有一个卡片（如果没有内容且不需要切割，也需要确保有卡片才能更新图片）
             if (LogCardViewModels.Count <= 0 && (!isEmpty || updateCardImage))
             {
-                createNewCard();
+                CreateNewCard();
             }
 
             if (LogCardViewModels.Count > 0)
@@ -1614,12 +1614,12 @@ public class TaskQueueViewModel : Screen
 
             if (needsAfterSplit)
             {
-                createNewCard();
+                CreateNewCard();
             }
         });
     }
 
-    private void createNewCard()
+    private void CreateNewCard()
     {
         if (LogCardViewModels.Count > 0 && LogCardViewModels[^1].Items.Count <= 0 && !LogCardViewModels[^1].IsDivider)
         {
@@ -1655,7 +1655,7 @@ public class TaskQueueViewModel : Screen
             // Card log style: render a real hc:Divider as its own card.
             var divider = new LogCardItemViewModel { IsDivider = true, Header = header };
             LogCardViewModels.Add(divider);
-            createNewCard();
+            CreateNewCard();
         });
     }
 
@@ -1857,6 +1857,28 @@ public class TaskQueueViewModel : Screen
     }
 
     /// <summary>
+    /// 从指定任务或其后第一个启用的任务开始运行。
+    /// </summary>
+    /// <param name="taskItem">任务项</param>
+    /// <returns>A <see cref="Task"/>representing the asynchronous operation.</returns>
+    [UsedImplicitly]
+    public async Task RunTasksFromHere(TaskItemViewModel taskItem)
+    {
+        if (taskItem == null || !_runningState.GetIdle())
+        {
+            return;
+        }
+
+        var taskQueue = ConfigFactory.CurrentConfig.TaskQueue;
+        if (taskItem.Index < 0 || taskItem.Index >= taskQueue.Count)
+        {
+            return;
+        }
+
+        await LinkStartWithTasks(taskQueue, taskItem.Index);
+    }
+
+    /// <summary>
     /// 复制任务
     /// </summary>
     /// <param name="taskItem">任务项</param>
@@ -1875,6 +1897,7 @@ public class TaskQueueViewModel : Screen
         }
 
         var oldTask = ConfigFactory.CurrentConfig.TaskQueue[index];
+
         // 开始唤醒任务至多一个，入口按钮禁用之外的行为兜底
         if (oldTask is StartUpTask && StartUpTaskCount >= 1)
         {
@@ -2173,33 +2196,33 @@ public class TaskQueueViewModel : Screen
         return false;
     }
 
-    public int MainTasksCompletedCount { get; set; }
-
-    public int MainTasksSelectedCount => TaskItemViewModels.Count(x => (x.IsEnable ?? true));
+    /// <summary>
+    /// 本轮参与条目的有效 chain 总数（LinkStart 序列化产出的 Core 任务 id 数，防御性排除非正 id），
+    /// 作为任务栏进度的分母；0 表示当前无产生进度的主任务轮次。
+    /// </summary>
+    private int _mainTasksTotalCount;
 
     /// <summary>
-    /// updates the main tasks progress.
+    /// Recomputes the main tasks progress from item statuses and pushes it to the taskbar.
+    /// 分子为各条目已处理（完成或出错）的 chain 数之和（未参与条目的 id 映射已在轮首清空，自然贡献 0）；
+    /// 分母为 0（无进行中的轮次）或分子走满时隐藏进度。
     /// </summary>
-    /// <param name="completedCount">已完成任务数，留空则代表 +1</param>
-    public void UpdateMainTasksProgress(int? completedCount = null)
+    public void RefreshMainTasksProgress()
     {
-        var rvm = (RootViewModel)this.Parent;
-        if (MainTasksSelectedCount == 0)
+        var rvm = (RootViewModel?)Parent;
+        if (rvm is null)
+        {
+            return;
+        }
+
+        if (_mainTasksTotalCount == 0)
         {
             rvm.TaskProgress = null;
             return;
         }
 
-        MainTasksCompletedCount = completedCount ?? ++MainTasksCompletedCount;
-
-        if (MainTasksCompletedCount >= MainTasksSelectedCount)
-        {
-            rvm.TaskProgress = null;
-        }
-        else
-        {
-            rvm.TaskProgress = (MainTasksCompletedCount, MainTasksSelectedCount);
-        }
+        var completedChainCount = TaskItemViewModels.Sum(x => x.CompletedChainCount);
+        rvm.TaskProgress = completedChainCount >= _mainTasksTotalCount ? null : (completedChainCount, _mainTasksTotalCount);
     }
 
     public bool ShowDebugTask { get => field; set => SetAndNotify(ref field, value); }
@@ -2275,7 +2298,7 @@ public class TaskQueueViewModel : Screen
     }
 #endif
 
-    public async Task LinkStartWithTasks(IEnumerable<BaseTask> tasks)
+    public async Task LinkStartWithTasks(IEnumerable<BaseTask> tasks, int? startIndex = null)
     {
         if (!_runningState.Idle)
         {
@@ -2329,7 +2352,7 @@ public class TaskQueueViewModel : Screen
         // GPU 相关提示在每次开始运行时重新输出，避免被 ClearLog 清空
         Instances.AsstProxy.LogGpuStatus();
 
-        MainTasksCompletedCount = 0;
+        _mainTasksTotalCount = 0;
         ResetTaskItemStatuses();
 
         // 所有提前 return 都要放在进入运行态之前，否则会导致无法再次点击开始
@@ -2373,6 +2396,7 @@ public class TaskQueueViewModel : Screen
 
         // 直接遍历TaskItemViewModels里面的内容，是排序后的
         int count = 0;
+        int participatingChainCount = 0;
         List<int> coreTaskIds = [];
         bool serializeFailed = false;
         foreach (var item in tasks)
@@ -2383,7 +2407,7 @@ public class TaskQueueViewModel : Screen
                 item.TaskType,
                 item.NameOrTaskType,
                 item.IsEnable);
-            if (!IsTaskEnable(item))
+            if ((startIndex is int firstTaskIndex && index < firstTaskIndex) || !IsTaskEnable(item))
             {
                 SetTaskStatus(index, TaskItemStatus.Skipped);
                 continue;
@@ -2396,8 +2420,19 @@ public class TaskQueueViewModel : Screen
                 {
                     case true:
                         ++count;
-                        coreTaskIds.AddRange(taskIds);
-                        Instances.TaskQueueViewModel.TaskItemViewModels.ElementAtOrDefault(index)?.SetTaskIds(taskIds);
+                        var taskIdList = taskIds.ToList();
+                        coreTaskIds.AddRange(taskIdList);
+
+                        // 进度分母按 Core chain 粒度累计，仅计有效任务 id（防御性过滤 id <= 0：
+                        // 无对应 Core 任务的 id 永无回调，若被计入则分子永远差格、进度走不满）；一图流-only 条目序列化成功但无 Core chain，
+                        // 贡献 0 格；index 为 -1 的临时任务如手动切账号不在配置队列，取不到条目，天然不计入；
+                        // count 另含这类临时任务，仍用于空任务判定与成就统计，两个计数不可合并
+                        if (Instances.TaskQueueViewModel.TaskItemViewModels.ElementAtOrDefault(index) is { } itemViewModel)
+                        {
+                            itemViewModel.SetTaskIds(taskIdList);
+                            participatingChainCount += taskIdList.Count(id => id > 0);
+                        }
+
                         break;
                     case false:
                         serializeFailed = true;
@@ -2432,6 +2467,10 @@ public class TaskQueueViewModel : Screen
             SetStopped();
             return;
         }
+
+        // 分母定死为本轮参与条目的有效 chain 总数（含仅一图流后台执行、无 Core 任务 id 的条目贡献的 0）；分母为 0 时不显示进度
+        _mainTasksTotalCount = participatingChainCount;
+        RefreshMainTasksProgress();
 
         if (coreTaskIds.Count == 0)
         {
@@ -2472,10 +2511,14 @@ public class TaskQueueViewModel : Screen
         }
     }
 
+    // 轮首清空各条目的 id 映射并重置显示状态：超时强制恢复的 SetStopped 不清 _taskIds，
+    // 上一轮残留的 id 映射会被迟到的 Core 回调继续写入（污染 chain 分子、改写条目标签）；
+    // 清空后未参与条目的 StatusList 为空、CompletedChainCount 恒 0，进度分子无需参与标记
     private void ResetTaskItemStatuses()
     {
         foreach (var item in TaskItemViewModels)
         {
+            item.SetTaskIds([]);
             item.StatusDisplay = TaskItemStatus.Idle;
         }
     }

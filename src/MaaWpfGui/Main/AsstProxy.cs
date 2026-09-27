@@ -11,6 +11,8 @@
 // but WITHOUT ANY WARRANTY
 // </copyright>
 
+#pragma warning disable SA1121, SA1300 // using 别名保留完整类型名，strlen 等 P/Invoke 函数名镜像 C 符号，对照 AsstCaller.h
+
 #nullable enable
 
 using System;
@@ -18,7 +20,6 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -719,7 +720,6 @@ public class AsstProxy
         }
 
         // TODO: 之后把这个 OnUIThread 拆出来
-        // ReSharper disable once AsyncVoidLambda
         Execute.OnUIThread(
             async () => {
                 bool runDirectly = SettingsViewModel.StartSettings.RunDirectly;
@@ -766,7 +766,6 @@ public class AsstProxy
                     return;
                 }
 
-                // ReSharper disable once InvertIf
                 if (runDirectly)
                 {
                     // 重置按钮状态，不影响LinkStart判断
@@ -1429,15 +1428,7 @@ public class AsstProxy
 
             case AsstMsg.TaskChainCompleted:
                 {
-                    // 判断 _latestTaskId 中是否有元素的值和 details["taskid"] 相等，如果有再判断这个 id 对应的任务是否在 _mainTaskTypes 中
                     UpdateTaskStatus(taskId, TaskStatus.Completed);
-                    if (_tasksStatus.TryGetValue(taskId, out var taskInfo))
-                    {
-                        if (_mainTaskTypes.Contains(taskInfo.Type))
-                        {
-                            Instances.TaskQueueViewModel.UpdateMainTasksProgress();
-                        }
-                    }
 
                     var taskIndex = Instances.TaskQueueViewModel.TaskItemViewModels.FirstOrDefault(i => i.TaskIds.Contains(taskId))?.Index ?? -1;
                     var task = taskIndex >= 0 && taskIndex < ConfigFactory.CurrentConfig.TaskQueue.Count
@@ -3475,20 +3466,6 @@ public class AsstProxy
         Custom,
     }
 
-    private readonly HashSet<TaskType> _mainTaskTypes =
-    [
-        TaskType.StartUp,
-        TaskType.Fight,
-        TaskType.OperProgress,
-        TaskType.Infrast,
-        TaskType.Recruit,
-        TaskType.Mall,
-        TaskType.Award,
-        TaskType.Roguelike,
-        TaskType.Reclamation,
-        TaskType.UserDataUpdate,
-    ];
-
     private readonly ObservableDictionary<AsstTaskId, (TaskType Type, TaskStatus Status)> _tasksStatus = [];
 
     public IReadOnlyDictionary<AsstTaskId, (TaskType Type, TaskStatus Status)> TasksStatus => new Dictionary<AsstTaskId, (TaskType, TaskStatus)>(_tasksStatus);
@@ -3821,7 +3798,6 @@ public class AsstProxy
 /// <summary>
 /// MaaCore 消息。
 /// </summary>
-[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public enum AsstMsg
 {
     /* Global Info */

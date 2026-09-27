@@ -1420,6 +1420,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="WindowUpdateInfoTip">点击立即更新</system:String>
     <system:String x:Key="Start">开始</system:String>
     <system:String x:Key="RunTaskOnce">单次运行</system:String>
+    <system:String x:Key="RunTasksFromHere">从此处运行</system:String>
     <system:String x:Key="VideoLink">视频链接</system:String>
     <system:String x:Key="CopilotFormationRequirement.Level">精{0} {1}</system:String>
     <system:String x:Key="CopilotSkill">技能</system:String>
@@ -1809,6 +1810,9 @@ C:\leidian\LDPlayer9
     <system:String x:Key="RoguelikeEncounterOptions">识别到 {0} 个选项:</system:String>
     <system:String x:Key="RoguelikeEncounterEnabledOption">可选选项: {0}</system:String>
     <system:String x:Key="RoguelikeEncounterDisabledOption">不可选选项: {0}</system:String>
+    <system:String x:Key="RoguelikeEventSelected">已选择: {0}</system:String>
+    <system:String x:Key="RoguelikeEventSelectedWithReason">已选择: {0}（{1}）</system:String>
+    <system:String x:Key="RoguelikeEventSelectedFallback">目标选项不可用，兜底选择: {0}</system:String>
     <system:String x:Key="EncounterOcrError">事件名识别错误</system:String>
     <system:String x:Key="FoldartalGainOcrNextLevel">预见:</system:String>
     <system:String x:Key="RoguelikeInvestment">已投资 {1}(+{0}), 存款: {2}</system:String>

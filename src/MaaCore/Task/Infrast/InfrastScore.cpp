@@ -25,11 +25,14 @@ struct CombinationScore
     std::unordered_set<std::string> only_need;
 };
 
-// 按心情阈值过滤干员
+// 按心情阈值过滤干员，并排除本轮已安排的已知身份干员
 std::vector<size_t> eligible_indices(const std::vector<ScoreOper>& opers, const ScoreContext& context)
 {
     std::vector<size_t> result;
     for (size_t index = 0; index < opers.size(); ++index) {
+        if (!opers[index].operator_id.empty() && context.selected_operator_ids.contains(opers[index].operator_id)) {
+            continue;
+        }
         if (opers[index].mood_ratio >= context.mood_threshold) {
             result.emplace_back(index);
         }
@@ -1136,7 +1139,7 @@ double processing_score(const ScoreOper& oper, const ScoreContext& context)
             // 训练有素：芯片副产品 +80%。
             score += 0.8;
         }
-        else if (icon == "bskill_hire_kalts2" || icon == "bskill_ws_p_kalts2") {
+        else if (icon == "bskill_ws_p_kalts2") {
             // “泰拉的方舟” / 理论革新：凯尔希·思衡托。
             score += 0.8;
         }
