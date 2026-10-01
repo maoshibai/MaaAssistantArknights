@@ -5,6 +5,7 @@
     xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
     xmlns:constants="clr-namespace:MaaWpfGui.Constants"
     xmlns:controls="clr-namespace:MaaWpfGui.Styles.Controls"
+    xmlns:converters="clr-namespace:MaaWpfGui.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:helper="clr-namespace:MaaWpfGui.Helper"
@@ -17,84 +18,118 @@
     d:DesignWidth="220"
     s:View.ActionTarget="{Binding}"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <converters:OperBadgeMultiConverter x:Key="OperBadgeMultiConverter" />
+        <converters:SubtractConverter x:Key="SubtractConverter" />
+    </UserControl.Resources>
     <StackPanel>
         <!--  常规设置  -->
         <StackPanel Visibility="{c:Binding '!EnableAdvancedSettings', Source={x:Static ui_vms:TaskQueueViewModel.TaskSettingVisibilities}}">
             <!--  在线编辑计划链接  -->
-            <controls:TextBlock Margin="0,0,0,8">
+            <controls:TextBlock>
                 <Hyperlink
                     Cursor="Hand"
                     NavigateUri="{Binding Source={x:Static constants:MaaUrls.ArknightsToolbox}}"
                     TextDecorations="None">
-                    <TextBlock Style="{StaticResource HyperlinkTextBlockStyle}" Text="{DynamicResource OperProgressOnlineEditor}" />
+                    <TextBlock
+                        Style="{StaticResource HyperlinkTextBlockStyle}"
+                        Text="{DynamicResource OperProgressOnlineEditor}"
+                        TextWrapping="Wrap" />
                 </Hyperlink>
             </controls:TextBlock>
 
-            <StackPanel
-                Margin="0,6,0,0"
-                HorizontalAlignment="Center"
-                Orientation="Horizontal">
-                <Button
-                    MinWidth="50"
-                    Margin="0"
-                    hc:BorderElement.CornerRadius="4,0,0,4"
-                    Command="{s:Action CollapseAll}"
-                    Content="{DynamicResource CollapseAll}" />
-                <Button
-                    MinWidth="50"
-                    Margin="-1,0,0,0"
-                    hc:BorderElement.CornerRadius="0"
-                    Command="{s:Action ClearPlan}"
-                    Content="{DynamicResource Clear}" />
-                <Button
-                    Margin="-1,0,0,0"
-                    HorizontalAlignment="Left"
-                    hc:BorderElement.CornerRadius="0,4,4,0"
-                    Command="{s:Action ParsePlan}"
-                    Content="{DynamicResource ParseClipboard}" />
+            <!--  固定区：操作按钮行与干员选择添加行；链接随外层面板滚动  -->
+            <StackPanel x:Name="FixedHeaderPanel">
+                <WrapPanel Margin="0,5,0,5" HorizontalAlignment="Center">
+                    <Button
+                        MinWidth="50"
+                        Margin="0,0,-1,0"
+                        hc:BorderElement.CornerRadius="4,0,0,4"
+                        Command="{s:Action CollapseAll}"
+                        Content="{DynamicResource CollapseAll}" />
+                    <Button
+                        MinWidth="50"
+                        Margin="0,0,-1,0"
+                        hc:BorderElement.CornerRadius="0"
+                        Command="{s:Action ClearPlan}"
+                        Content="{DynamicResource Clear}" />
+                    <Button
+                        Margin="0,0,-1,0"
+                        hc:BorderElement.CornerRadius="0,4,4,0"
+                        Command="{s:Action ParsePlan}"
+                        Content="{DynamicResource ParseClipboard}" />
+                </WrapPanel>
+                <!--  干员选择与添加培养目标  -->
+                <Grid Margin="0,5,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
+                    <hc:ComboBox
+                        Grid.Column="0"
+                        HorizontalContentAlignment="Stretch"
+                        hc:BorderElement.CornerRadius="4,0,0,4"
+                        IsEditable="True"
+                        IsTextSearchEnabled="False"
+                        ItemsSource="{Binding OperatorNames}"
+                        Loaded="{s:Action MakeComboBoxSearchable,
+                                          Target={x:Type ui_vms:SettingsViewModel}}"
+                        SelectedValue="{Binding OperSelect}"
+                        SelectedValuePath="Value">
+                        <hc:ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <ContentControl>
+                                    <ContentControl.Content>
+                                        <MultiBinding Converter="{StaticResource OperBadgeMultiConverter}">
+                                            <Binding Path="Value.Id" />
+                                            <Binding Path="Display" />
+                                        </MultiBinding>
+                                    </ContentControl.Content>
+                                </ContentControl>
+                            </DataTemplate>
+                        </hc:ComboBox.ItemTemplate>
+                    </hc:ComboBox>
+                    <Button
+                        x:Name="AddTargetButton"
+                        Grid.Column="1"
+                        MinWidth="60"
+                        Margin="-1,0,0,0"
+                        hc:BorderElement.CornerRadius="0,4,4,0"
+                        BorderThickness="0,1,1,1"
+                        Command="{s:Action AddOperator}"
+                        Content="{DynamicResource Add}" />
+                </Grid>
             </StackPanel>
-            <!--  干员选择与添加培养目标  -->
-            <Grid Margin="0,8,0,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
 
-                <hc:ComboBox
-                    Grid.Column="0"
-                    HorizontalContentAlignment="Stretch"
-                    DisplayMemberPath="Display"
-                    IsEditable="True"
-                    IsTextSearchEnabled="False"
-                    ItemsSource="{Binding OperatorNames}"
-                    Loaded="{s:Action MakeComboBoxSearchable,
-                                      Target={x:Type ui_vms:SettingsViewModel}}"
-                    SelectedValue="{Binding OperSelect}"
-                    SelectedValuePath="Value" />
-                <Button
-                    x:Name="AddTargetButton"
-                    Grid.Column="1"
-                    MinWidth="60"
-                    Margin="6,0,0,0"
-                    Command="{s:Action AddOperator}"
-                    Content="{DynamicResource Add}" />
-            </Grid>
-
-            <!--  干员计划列表：容器与交互对齐 DepotMaintainTaskUserControl 的 ListBox  -->
+            <!--
+                干员计划列表：容器与交互对齐 DepotMaintainTaskUserControl 的 ListBox。
+                宿主链最外层是设置面板的 ScrollViewer，经 SimpleStackPanel 透传给列表的高度约束无限，
+                MaxHeight 绑 ｢视口 - 固定区实际高度｣ 建立有界视口，虚拟化方能生效；
+                固定区随语言换行增高时列表自动收缩，固定区超出视口时列表归零、由外层面板滚动兜底
+            -->
             <ListBox
-                Margin="0,10,0,0"
+                Margin="0,5,0,0"
                 Padding="0"
-                VerticalAlignment="Top"
                 HorizontalContentAlignment="Stretch"
                 d:IsHitTestVisible="True"
+                hc:ScrollViewer.IsInertiaEnabled="True"
                 BorderThickness="0"
                 ClipToBounds="False"
                 IsHitTestVisible="{c:Binding !IsCurrentTaskRunning,
                                              Source={x:Static ui_vms:TaskQueueViewModel.TaskSettingVisibilities}}"
                 ItemsSource="{Binding PlanItems}"
                 PreviewMouseWheel="{s:Action RouteMouseWheelToParentExceptScrollable,
-                                             Target={x:Type helper:MouseWheelHelper}}">
+                                             Target={x:Type helper:MouseWheelHelper}}"
+                VirtualizingPanel.IsVirtualizing="True"
+                VirtualizingPanel.ScrollUnit="Pixel"
+                VirtualizingPanel.VirtualizationMode="Recycling">
+                <ListBox.MaxHeight>
+                    <MultiBinding Converter="{StaticResource SubtractConverter}">
+                        <Binding Path="ViewportHeight" RelativeSource="{RelativeSource AncestorType=ScrollViewer}" />
+                        <Binding ElementName="FixedHeaderPanel" Path="ActualHeight" />
+                    </MultiBinding>
+                </ListBox.MaxHeight>
                 <ListBox.ItemContainerStyle>
                     <Style BasedOn="{StaticResource NoSelectedHighlightListBoxItemStyle}" TargetType="{x:Type ListBoxItem}">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -109,19 +144,34 @@
                                 <Grid HorizontalAlignment="Stretch" Background="Transparent">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <controls:TextBlock VerticalAlignment="Center" Text="{c:Binding 'Index + 1'}" />
-                                    <controls:TextBlock
-                                        Grid.Column="1"
-                                        Margin="4,0"
-                                        HorizontalAlignment="Left"
-                                        Text="{Binding DisplayName}"
-                                        TextTrimming="CharacterEllipsis" />
-                                    <Grid Grid.Column="3" HorizontalAlignment="Right">
+                                    <DockPanel Grid.Column="1" Margin="4,0">
+                                        <Image
+                                            Width="18"
+                                            Height="18"
+                                            VerticalAlignment="Center"
+                                            DockPanel.Dock="Left"
+                                            Source="{Binding Avatar}" />
+                                        <TextBlock
+                                            Margin="4,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Text="{Binding DisplayName}" />
+                                    </DockPanel>
+                                    <Grid Grid.Column="2">
+                                        <Grid.Style>
+                                            <Style TargetType="Grid">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}" Value="True">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Grid.Style>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="Auto" />
@@ -131,9 +181,8 @@
                                         </Grid.ColumnDefinitions>
                                         <Image
                                             Grid.Column="0"
-                                            Width="18"
-                                            Height="18"
-                                            Margin="3"
+                                            Width="16"
+                                            Height="16"
                                             Source="{Binding EliteIconPath}"
                                             Stretch="Uniform"
                                             Visibility="{c:Binding IsEliteSelected}">
@@ -145,13 +194,10 @@
                                                     Color="Black" />
                                             </Image.Effect>
                                         </Image>
-                                        <Grid
-                                            Grid.Column="1"
-                                            Margin="3,2"
-                                            Visibility="{c:Binding 'IsMainSkillLevelSelected and !IsSpecializationSkill1Selected and !IsSpecializationSkill2Selected and !IsSpecializationSkill3Selected'}">
+                                        <Grid Grid.Column="1" Visibility="{c:Binding 'IsMainSkillLevelSelected and !IsSpecializationSkill1Selected and !IsSpecializationSkill2Selected and !IsSpecializationSkill3Selected'}">
                                             <Path
-                                                Width="18"
-                                                Height="18"
+                                                Width="16"
+                                                Height="16"
                                                 Data="M 0,14 L 0,0 L 14,0 M 34,0 L 48,0 L 48,14 M 0,34 L 0,48 L 14,48 M 34,48 L 48,48 L 48,34"
                                                 Stretch="Uniform"
                                                 Stroke="{DynamicResource PrimaryTextBrush}"
@@ -160,30 +206,26 @@
                                                 StrokeThickness="1.5" />
                                             <!--  中间数字  -->
                                             <controls:TextBlock
-                                                Margin="3,3,3,3"
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
                                                 FontSize="12"
                                                 FontWeight="Normal"
                                                 Text="{Binding MainSkillLevel}" />
                                         </Grid>
-                                        <StackPanel
-                                            Grid.Column="2"
-                                            Margin="0,3"
-                                            Orientation="Horizontal">
+                                        <StackPanel Grid.Column="2" Orientation="Horizontal">
                                             <Grid Visibility="{c:Binding IsSpecializationSkill1Selected}">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="Auto" />
                                                 </Grid.ColumnDefinitions>
                                                 <controls:SkillSpecializationIcon
-                                                    Width="18"
-                                                    Height="18"
+                                                    Width="16"
+                                                    Height="16"
                                                     Level="{Binding SpecializationSkill1}" />
                                                 <controls:TextBlock
-                                                    Margin="20,0,0,0"
+                                                    Margin="16,0,0,0"
                                                     HorizontalAlignment="Right"
                                                     VerticalAlignment="Top"
-                                                    FontSize="12"
+                                                    FontSize="11"
                                                     Text="1">
                                                     <controls:TextBlock.Effect>
                                                         <DropShadowEffect
@@ -199,14 +241,14 @@
                                                     <ColumnDefinition Width="Auto" />
                                                 </Grid.ColumnDefinitions>
                                                 <controls:SkillSpecializationIcon
-                                                    Width="18"
-                                                    Height="18"
+                                                    Width="16"
+                                                    Height="16"
                                                     Level="{Binding SpecializationSkill2}" />
                                                 <controls:TextBlock
-                                                    Margin="20,0,0,0"
+                                                    Margin="16,0,0,0"
                                                     HorizontalAlignment="Right"
                                                     VerticalAlignment="Top"
-                                                    FontSize="12"
+                                                    FontSize="11"
                                                     Text="2">
                                                     <controls:TextBlock.Effect>
                                                         <DropShadowEffect
@@ -222,14 +264,14 @@
                                                     <ColumnDefinition Width="Auto" />
                                                 </Grid.ColumnDefinitions>
                                                 <controls:SkillSpecializationIcon
-                                                    Width="18"
-                                                    Height="18"
+                                                    Width="16"
+                                                    Height="16"
                                                     Level="{Binding SpecializationSkill3}" />
                                                 <controls:TextBlock
-                                                    Margin="20,0,0,0"
+                                                    Margin="16,0,0,0"
                                                     HorizontalAlignment="Right"
                                                     VerticalAlignment="Top"
-                                                    FontSize="12"
+                                                    FontSize="11"
                                                     Text="3">
                                                     <controls:TextBlock.Effect>
                                                         <DropShadowEffect
@@ -244,7 +286,7 @@
                                         </StackPanel>
                                     </Grid>
                                     <Button
-                                        Grid.Column="4"
+                                        Grid.Column="3"
                                         Width="25"
                                         Height="25"
                                         Margin="0,0,-5,0"

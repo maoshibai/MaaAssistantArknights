@@ -739,6 +739,7 @@ To enable this mechanism, make sure the selected difficulty is N3 or higher (exc
     <system:String x:Key="OperBoxExportHeaderMainSkillLevel">Skill level</system:String>
     <system:String x:Key="OperBoxExportHeaderSkills">Skill masteries</system:String>
     <system:String x:Key="OperBoxExportHeaderEquips">Modules</system:String>
+    <system:String x:Key="OperBoxAvatarMode">Avatar View</system:String>
     <system:String x:Key="DrGrandet">Dr. Grandet Mode</system:String>
     <system:String x:Key="DrGrandetTip">Wait on the sanity confirmation screen until the current sanity recovers to 1 point, then confirm immediately.</system:String>
     <system:String x:Key="SocialPtShop">Credit shopping</system:String>
@@ -750,6 +751,13 @@ Please do not check it when the stage OF-1 is not unlocked.</system:String>
     <system:String x:Key="CreditFightWhenOF-1Warning">A ｢{key=Fight}｣ task has ｢{key=DefaultStage}｣ in its stage list, ｢{key=Mall}｣ task will skip the Combat with Support Unit in OF-1. Task: {0} (index: {1}), Stage index in list: {2}</system:String>
     <system:String x:Key="HighPriority">Whitelist (split by semicolon)</system:String>
     <system:String x:Key="Blacklist">Blacklist (split by semicolon)</system:String>
+    <system:String x:Key="MiniGame@EventShop@BlacklistTip">Checked items will be added to the blacklist</system:String>
+    <system:String x:Key="MiniGame@EventShop@CommonItemsTip">Select common items from the dropdown</system:String>
+    <system:String x:Key="MiniGame@EventShop@DataSupplementInstrument">Data Supplement Instrument</system:String>
+    <system:String x:Key="MiniGame@EventShop@DataSupplementStick">Data Supplement Stick</system:String>
+    <system:String x:Key="MiniGame@EventShop@Lmd">LMD</system:String>
+    <system:String x:Key="MiniGame@EventShop@FurniturePart">Furniture Part</system:String>
+    <system:String x:Key="MiniGame@EventShop@Other">Other custom items</system:String>
     <system:String x:Key="HighPriorityDefault">Recruitment Permit</system:String>
     <system:String x:Key="BlacklistDefault">Carbon;Furniture Part;Expedited Plan</system:String>
     <system:String x:Key="Drink">Would you like a drink🍷? doctor</system:String>
@@ -835,6 +843,7 @@ Only supports Official(CN), Bilibili, Traditional Chinese and YostarKR servers. 
     <system:String x:Key="ConnectionPreset">Connection Preset</system:String>
     <system:String x:Key="ScreenshotTest">Screenshot test</system:String>
     <system:String x:Key="WindowRestore">Window restore</system:String>
+    <system:String x:Key="WindowMinimize">Minimize window</system:String>
     <system:String x:Key="MuMu12ExtrasEnabled">Enable MuMu's screenshot enhancement mode</system:String>
     <system:String x:Key="MuMuExtrasTouchEnabled">Enable MuMu touch enhancement (experimental, requires MuMu Emulator 6.3.2+, supports background keep-alive)</system:String>
     <system:String x:Key="MuMuEmulatorPathNotFound">MuMu Emulator path not found.</system:String>
@@ -970,6 +979,7 @@ If the game is launched in portrait mode and then switched to landscape, it may 
     <system:String x:Key="Hibernate">Hibernate</system:String>
     <system:String x:Key="HibernateTip">You need to enable the hibernate feature in Windows power options, otherwise this feature will be invalid.</system:String>
     <system:String x:Key="Sleep">Sleep</system:String>
+    <system:String x:Key="LockScreen">Lock Screen</system:String>
     <system:String x:Key="Shutdown">Shutdown</system:String>
     <system:String x:Key="Once">Only this time*</system:String>
     <system:String x:Key="PostActionOnceTip" xml:space="preserve">When checked, option changes will not be saved and will revert the next time MAA starts or after {key=LinkStart}
@@ -979,7 +989,7 @@ Right-clicking other options will check/uncheck this option simultaneously</syst
     <system:String x:Key="SkipPostActionOnErrorTip">When checked, all actions above will be skipped if one or more tasks in the task list failed.</system:String>
     <system:String x:Key="PostActionSkippedDueToError">Post actions skipped, due to error tasks</system:String>
     <system:String x:Key="IfNoOtherMaa">If no other running MAA</system:String>
-    <system:String x:Key="IfNoOtherMaaTip">When checked, Sleep/Hibernate/Shutdown will only run when no other MAA instance is running</system:String>
+    <system:String x:Key="IfNoOtherMaaTip">When checked, Lock Screen/Sleep/Hibernate/Shutdown will only run when no other MAA instance is running</system:String>
     <system:String x:Key="BackToAndroidHome">Return to home screen of emulator</system:String>
     <system:String x:Key="LinkStart">Link Start!</system:String>
     <system:String x:Key="Stop">Stop</system:String>
@@ -1134,6 +1144,8 @@ Do not adjust the proxy multiplier setting in the game</system:String>
     <system:String x:Key="SetSuccessfully">Set successfully</system:String>
     <system:String x:Key="SetFailed">Setting failed</system:String>
     <system:String x:Key="CloseArknightsFailed">Shutdown Arknights failed</system:String>
+    <system:String x:Key="LockScreenFailed">Failed to lock the screen</system:String>
+    <system:String x:Key="LockScreenTip">Tasks completed, about to lock the screen</system:String>
     <system:String x:Key="ExitEmulatorFailed">Emulator shutdown failed</system:String>
     <system:String x:Key="AboutToShutdown">All tasks have been completed: shutting down. Do you want to cancel?</system:String>
     <system:String x:Key="ShutdownPrompt">Tip</system:String>
@@ -1557,7 +1569,7 @@ Right-click to clear inactive jobs</system:String>
     <system:String x:Key="PenguinUploadUnknownDropType">Unknown drop type</system:String>
     <system:String x:Key="PenguinUploadUnknownDrops">Unknown drops</system:String>
     <system:String x:Key="GiveUpUploadingPenguins">Abort upload to Penguin Statistics</system:String>
-    <system:String x:Key="ReportSkippedForPcClient">The PC client cursor can obscure drop items and counts. This report was skipped to avoid polluting the data pool with inaccurate data</system:String>
+    <system:String x:Key="ReportSkippedForPcClient">The PC client cursor can obscure drop items and counts. This report to {0} was skipped to avoid polluting the data pool with inaccurate data</system:String>
     <system:String x:Key="TheEx">No bonus stage, stopped</system:String>
     <system:String x:Key="MissingOperators">None of the {key=Operator}s in the following groups are owned or satisfy the job requirements (only one is needed per group):\n{0}｢Favourite｣ marks may affect {key=Operator} recognition; if the {key=Operator}s are actually owned, you can remove the mark and retry, or turn off ｢{key=AutoSquad}｣ and add them manually. If they are really not owned, use ｢{key=SupportUnitUsage}｣ when only one group is missing, or use another job when two or more are missing.</system:String>
     <system:String x:Key="RecruitSupportOperator">Add support unit: {0}</system:String>

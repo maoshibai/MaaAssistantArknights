@@ -2868,9 +2868,16 @@ public class AsstProxy
             return;
         }
 
-        if (SettingsViewModel.ConnectSettings.IsPCConnectConfig && (subTask == "ReportToPenguinStats" || subTask == "ReportToYituliu"))
+        string? reportTargetKey = subTask switch {
+            "ReportToPenguinStats" => "ThirdPartyGroupPenguin",
+            "ReportToYituliu" => "ThirdPartyGroupYituliu",
+            _ => null,
+        };
+        if (SettingsViewModel.ConnectSettings.IsPCConnectConfig && reportTargetKey is not null)
         {
-            Instances.TaskQueueViewModel.AddLog(LocalizationHelper.GetString("ReportSkippedForPcClient"), UiLogColor.Warning);
+            Instances.TaskQueueViewModel.AddLog(
+                LocalizationHelper.GetStringFormat("ReportSkippedForPcClient", LocalizationHelper.GetString(reportTargetKey)),
+                UiLogColor.Warning);
             return;
         }
 
@@ -3073,6 +3080,27 @@ public class AsstProxy
             SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOZORDER | SET_WINDOW_POS_FLAGS.SWP_NOACTIVATE);
 
         _logger.Information("RestoreGameWindowPosition: moved window to screen center, hwnd: {Hwnd}", hwnd);
+    }
+
+    /// <summary>
+    /// Minimizes the attached game window without waiting for its UI thread.
+    /// </summary>
+    public void MinimizeGameWindow()
+    {
+        var hwnd = (HWND)_attachWindowHwnd;
+        if (_attachWindowHwnd == IntPtr.Zero || !PInvoke.IsWindow(hwnd))
+        {
+            _logger.Warning("Cannot minimize game window: no valid attached window, connect first");
+            return;
+        }
+
+        if (!PInvoke.ShowWindowAsync(hwnd, SHOW_WINDOW_CMD.SW_FORCEMINIMIZE))
+        {
+            _logger.Warning("Failed to request game window minimization for HWND {Hwnd}, error: {Error}", hwnd, Marshal.GetLastWin32Error());
+            return;
+        }
+
+        _logger.Information("Requested game window minimization for HWND {Hwnd}", hwnd);
     }
 
     /// <summary>
@@ -3608,21 +3636,44 @@ public class AsstProxy
     /// 小游戏。
     /// </summary>
     /// <param name="taskName">任务名（tasks.json 中的 key）</param>
-    /// <param name="useNormalToken">自动提升潜能：中坚信物不足时是否消耗普通信物（仅 AutoRaisePotential 生效）。</param>
+    /// <param name="eventShopBlackList">活动商店商品黑名单关键词。</param>
     /// <returns>是否成功。</returns>
-    public bool AsstMiniGame(string taskName, bool useNormalToken = false)
+    public bool AsstMiniGame(
+        string taskName,
+        IReadOnlyCollection<string>? eventShopBlackList = null)
     {
         var task = new AsstCustomTask() {
             CustomTasks = [taskName],
+            Params = taskName == "SS@Store@Begin" && eventShopBlackList?.Count > 0
+                ? JObject.FromObject(new {
+                    event_shop = new {
+                        blacklist = eventShopBlackList ?? Array.Empty<string>(),
+                    },
+                })
+                : null,
         };
-        if (useNormalToken)
-        {
-            task.Params = JObject.FromObject(new {
-                auto_raise_potential = new {
-                    use_normal_token = true,
-                },
-            });
-        }
+
+        var (type, param) = task.Serialize();
+        return AsstAppendTaskWithEncoding(TaskType.MiniGame, type, param) && AsstStart();
+    }
+
+    /// <summary>
+    /// 自动提升潜能（牛杂）。
+    /// </summary>
+    /// <param name="useNormalToken">中坚信物不足时是否消耗普通信物。</param>
+    /// <returns>是否成功启动。</returns>
+    public bool AsstAutoRaisePotential(bool useNormalToken = false)
+    {
+        var task = new AsstCustomTask {
+            CustomTasks = ["MiniGame@AutoRaisePotential@Begin"],
+            Params = useNormalToken
+                ? JObject.FromObject(new {
+                    auto_raise_potential = new {
+                        use_normal_token = true,
+                    },
+                })
+                : null,
+        };
 
         var (type, param) = task.Serialize();
         return AsstAppendTaskWithEncoding(TaskType.MiniGame, type, param) && AsstStart();
