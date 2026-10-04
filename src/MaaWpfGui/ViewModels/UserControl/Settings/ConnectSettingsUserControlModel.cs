@@ -1,6 +1,6 @@
 // <copyright file="ConnectSettingsUserControlModel.cs" company="MaaAssistantArknights">
 // Part of the MaaWpfGui project, maintained by the MaaAssistantArknights team (Maa Team)
-// Copyright (C) 2021-2025 MaaAssistantArknights Contributors
+// Copyright (C) 2021-2026 MaaAssistantArknights Contributors
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License v3.0 only as published by
@@ -582,8 +582,19 @@ public class ConnectSettingsUserControlModel : PropertyChangedBase
             return;
         }
 
-        TestLinkImage = await Instances.AsstProxy.AsstGetImageAsync(forceScreencap: true);
-        _runningState.SetIdle(true);
+        try
+        {
+            TestLinkImage = await Instances.AsstProxy.AsstGetImageAsync(forceScreencap: true);
+        }
+        finally
+        {
+            if (ShowWindowRestoreButton)
+            {
+                Instances.AsstProxy.RestoreGameWindowPosition();
+            }
+
+            _runningState.SetIdle(true);
+        }
 
         if (TestLinkImage is null)
         {

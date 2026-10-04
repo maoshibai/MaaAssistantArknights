@@ -1,6 +1,6 @@
 // <copyright file="DemoShotService.cs" company="MaaAssistantArknights">
 // Part of the MaaWpfGui project, maintained by the MaaAssistantArknights team (Maa Team)
-// Copyright (C) 2021-2025 MaaAssistantArknights Contributors
+// Copyright (C) 2021-2026 MaaAssistantArknights Contributors
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License v3.0 only as published by
@@ -414,6 +414,12 @@ public static class DemoShotService
         if (data.TaskQueue.Stages.Count > 0)
         {
             FightSettingsUserControlModel.Instance.InjectDemoStages(data.TaskQueue.Stages);
+        }
+
+        // 指定材料下拉的显示名由 RefreshDropName 随各语言材料列表自动本地化，重注入只负责写入选中项，幂等
+        if (!string.IsNullOrEmpty(data.TaskQueue.SpecifiedDrops))
+        {
+            FightSettingsUserControlModel.Instance.InjectDemoSpecifiedDrops(data.TaskQueue.SpecifiedDrops);
         }
 
         InjectTaskQueueLogs(data, lang, dataDir);
