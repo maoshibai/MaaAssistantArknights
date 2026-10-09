@@ -263,7 +263,10 @@ public partial class CopilotViewModel : Screen
                 UseCopilotList = false;
             }
 
-            SetAndNotify(ref _copilotTabIndex, value);
+            if (!SetAndNotify(ref _copilotTabIndex, value))
+            {
+                Loop = false;
+            }
         }
     }
 
@@ -702,9 +705,13 @@ public partial class CopilotViewModel : Screen
         public void RefreshLocalization() => NotifyOfPropertyChange(nameof(Module));
     }
 
-    private bool _useFormation;
-
-    public bool UseFormation { get => _useFormation; set => SetAndNotify(ref _useFormation, value); }
+    public bool UseFormation
+    {
+        get; set {
+            SetAndNotify(ref field, value);
+            ConfigFactory.CurrentConfig.Copilot.UseFormation = value;
+        }
+    } = ConfigFactory.CurrentConfig.Copilot.UseFormation;
 
     public List<GenericCombinedData<int>> FormationSelectList { get; } =
     [

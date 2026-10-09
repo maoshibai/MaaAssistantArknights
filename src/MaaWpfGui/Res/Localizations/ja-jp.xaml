@@ -56,6 +56,7 @@
     <system:String x:Key="ExternalNotificationSendWhenError">タスクが失敗したときに通知を送信</system:String>
     <system:String x:Key="ExternalNotificationSendWhenStalled">タスクログ出力停滞時に通知を送信</system:String>
     <system:String x:Key="ExternalNotificationSendWhenStalledTip">｢{key=GameSettings}｣ で ｢{key=StallTimeoutEnabled}｣ を有効にした場合にのみ有効になります</system:String>
+    <system:String x:Key="ExternalNotificationSendBeforeScheduledStart">定時実行前に通知を送信</system:String>
     <system:String x:Key="ExternalNotificationSendSuccess">正常に送信</system:String>
     <system:String x:Key="ExternalNotificationSendFail">送信に失敗しました</system:String>
     <system:String x:Key="ExternalNotificationSendTest">テストを送信する</system:String>
@@ -130,8 +131,6 @@
     <system:String x:Key="GuideConfirmCountdownSuffix">秒</system:String>
     <system:String x:Key="ToolTipGuide">マウスを乗せるとヒントあり</system:String>
     <system:String x:Key="TaskGuide">↑ タスク</system:String>
-    <system:String x:Key="OftenUsedGuide">↑ よく使われる</system:String>
-    <system:String x:Key="SometimesUsedGuide">あまり使われていない ↑</system:String>
     <system:String x:Key="LinkStartGuide">← タスクを開始</system:String>
     <system:String x:Key="HoverActionButtons">ホバーでコピー/名前変更/削除</system:String>
     <system:String x:Key="GearContextMenuTip">歯車を右クリックで操作一覧 ↓</system:String>
@@ -233,6 +232,9 @@
     <system:String x:Key="General">一般モード</system:String>
     <system:String x:Key="BlueStacks">BlueStacks</system:String>
     <system:String x:Key="MuMuEmulator12">MuMu Player</system:String>
+    <system:String x:Key="MuMuArm">MuMu エミュレータ（Windows ARM）</system:String>
+    <system:String x:Key="MuMuArmDetectAndTest">自動検出してテスト</system:String>
+    <system:String x:Key="MuMuArmConnectionNotReady">MuMu ARM の ADB アドレスを読み取れません。エミュレータの起動完了後に再試行するか、自動検出を無効にして接続アドレスを手動で入力してください。</system:String>
     <system:String x:Key="LDPlayer">LDPlayer</system:String>
     <system:String x:Key="AVD">Android Virtual Device (AVD)</system:String>
     <system:String x:Key="Androws">Androws</system:String>
@@ -381,6 +383,7 @@
     <system:String x:Key="EmulatorNotFound">エミュレータが検出されません\nエミュレータが起動していることを確認してください\nエミュレータが管理者権限で起動されている場合、本ソフトも管理者権限で起動してください\nそれでも検出できない場合は、手動で接続設定を行ってください</system:String>
     <system:String x:Key="EmulatorTooMany">複数のシミュレータが検出されたため\n不要なエミュレータを閉じるか\n手動で接続設定を行ってください</system:String>
     <system:String x:Key="EmulatorStartFailed">エミュレータの起動に失敗しました\n管理者権限でこのソフトウェアを開いていただくか\n手動でエミュレータを起動してください。</system:String>
+    <system:String x:Key="PcClientStartFailed">PC クライアントの起動に失敗しました\n管理者権限でこのソフトウェアを開くか\n手動でクライアントを起動してください。</system:String>
     <system:String x:Key="SwitchLanguage">言語を切り替える 🌐</system:String>
     <system:String x:Key="Language">言語</system:String>
     <system:String x:Key="LanguageChangedTip">言語設定が変更されました。一部のコンテンツは再起動後に完全に反映されます。</system:String>
@@ -414,6 +417,7 @@
     <system:String x:Key="TaskCopied">タスクをコピーしました: {0}</system:String>
     <system:String x:Key="StartGuideDemo">デモでは実際にタスクは実行されません</system:String>
     <system:String x:Key="GuideDemoTaskAddLimitTip">デモリストに追加できるタスクは最大 5 個です。追加する前に一部を削除してください</system:String>
+    <system:String x:Key="GuideDemoTaskRequiredTip">次に進むには、｢{key=AddTaskQueueTask}｣ ボタンでタスクを追加してください</system:String>
     <system:String x:Key="TaskCopyFailed">タスクのコピーに失敗しました</system:String>
     <system:String x:Key="HotKeyShowGui">[ホットキー] MAAの表示/最小化</system:String>
     <system:String x:Key="HotKeyLinkStart">[ホットキー] Link 開始/停止</system:String>
@@ -562,6 +566,13 @@ D:\
     <system:String x:Key="ShowWindowBeforeForceScheduledStartTip">起動前にメインウィンドウを表示し、最小化中にカウントダウンが見えないのを防ぎます</system:String>
     <system:String x:Key="TimerCustomConfig">カスタム構成オプション</system:String>
     <system:String x:Key="TimerCustomConfigTip">起動時刻の2分前にゲームを再起動して設定を切り替えます</system:String>
+    <system:String x:Key="NotifyBeforeScheduledStart">定時実行前にシステム通知を送信</system:String>
+    <system:String x:Key="NotifyBeforeScheduledStartTip" xml:space="preserve">設定したタイミングでシステム通知を送信します。&#10;外部通知は ｢{key=ExternalNotificationSettings}｣ で個別に有効にでき、通知するタイミングは共通です。</system:String>
+    <system:String x:Key="ScheduledStartNotificationMinutes">通知するタイミング（分前）</system:String>
+    <system:String x:Key="ScheduledStartNotificationTitle">まもなく定時タスクを実行します</system:String>
+    <system:String x:Key="ScheduledStartNotificationContent">タイマー {0} は {1}（{2} 分後）に実行開始予定です。ゲームのログイン状態にご注意ください。</system:String>
+    <system:String x:Key="ScheduledWakeUp">スケジュール起動前にコンピュータのスリープ解除と MAA の起動を試みる</system:String>
+    <system:String x:Key="ScheduledWakeUpTip" xml:space="preserve">この機能は Windows タスクスケジューラにタスクを登録し、有効化された各タイマーの 5 分前にコンピュータのスリープ解除と MAA の起動を試みます。その後はアプリ内の定時起動ロジックに引き継がれます。&#10;スリープ解除による起動時は、｢{key=StartupSettings}｣ の起動時自動実行項目（{key=RunTaskAfterLaunch}、{key=OpenEmulatorAfterLaunch}など）はスキップされます。&#10;MAA 終了後もタスクは保持され、このスイッチをオフにすると削除されます。&#10;タスク開始後の長時間実行はこの機能では保持されないため、実行時間が長いタスクでは、タスク実行中にシステムがスリープしないよう ｢{key=GameSettings}｣ の ｢{key=BlockSleep}｣ を有効にすることをおすすめします。&#10;休止状態からのスリープ解除はデバイスのファームウェア対応に依存し、一部のデバイスはスリープからの解除のみに対応しています。</system:String>
     <system:String x:Key="Timer">タイマー</system:String>
     <system:String x:Key="GlobalConfigTip">このオプション ページはグローバル設定用です</system:String>
     <system:String x:Key="MultiTasksShareTip">以下のオプションは複数のタスクで共有されます</system:String>
@@ -585,6 +596,8 @@ MAA は非インストール型のアプリケーションであり、レジス�
     <system:String x:Key="StartupAutoRunCountdownTaskOnly">まもなくタスクを自動実行します。キャンセルしますか？</system:String>
     <system:String x:Key="StartupAutoRunCountdownEmulatorOnly">まもなくエミュレータを自動起動します。キャンセルしますか？</system:String>
     <system:String x:Key="StartupAutoRunCountdownTaskAndEmulator">まもなくタスクを自動実行し、エミュレータを起動します。キャンセルしますか？</system:String>
+    <system:String x:Key="StartupAutoRunCountdownPcClientOnly">まもなく PC クライアントを自動起動します。キャンセルしますか？</system:String>
+    <system:String x:Key="StartupAutoRunCountdownTaskAndPcClient">まもなくタスクを自動実行し、PC クライアントを起動します。キャンセルしますか？</system:String>
     <system:String x:Key="MinimizeAfterLaunch">アプリの起動時に自動的に最小化</system:String>
     <system:String x:Key="ClientType">クライアントバージョン</system:String>
     <system:String x:Key="StartGameLaunchClient">起動時にクライアントを開始する</system:String>
@@ -597,10 +610,19 @@ MAA は非インストール型のアプリケーションであり、レジス�
     <system:String x:Key="HelpUsWithOverseasServersTip">グローバルサーバーの対応は非常に大変で、皆様の協力が必要です！プログラミングの知識は必要ありません。</system:String>
     <system:String x:Key="OpenEmulatorAfterLaunch">起動時にエミュレータ自動起動</system:String>
     <system:String x:Key="OpenEmulatorAfterLaunchTip">エミュレータは MAA 起動時に一度だけ起動され、｢{key=LinkStart}｣ をクリックするたびに起動されるわけではありません。\nそのような動作が必要な場合は ｢{key=RetryOnDisconnected}｣ を有効にしてください</system:String>
+    <system:String x:Key="OpenPcClientAfterLaunch">MAA 起動後に PC クライアントを起動</system:String>
+    <system:String x:Key="OpenPcClientAfterLaunchTip">PC クライアントは MAA 起動時に一度だけ起動されます。｢{key=LinkStart}｣ のたびに起動する場合は ｢{key=RetryOnPcDisconnected}｣ を有効にしてください</system:String>
     <system:String x:Key="WaitForEmulator">エミュレータを待つ時間（秒）</system:String>
+    <system:String x:Key="WaitForPcClient">PC クライアントの起動待機時間（秒）</system:String>
     <system:String x:Key="WaitForEmulatorFinish">待ち時間は終わりました</system:String>
     <system:String x:Key="EmulatorPath">エミュレータパス</system:String>
+    <system:String x:Key="PcClientPath">PC クライアントのパス</system:String>
     <system:String x:Key="SelectShortcutTip" xml:space="preserve">エミュレーター本体を選択（ ｢{key=AdditionCommand}｣ 起動パラメータでインスタンス指定可能）、または直接エミュレーター/ゲームのショートカットを選択できます。&#10; ｢{key=WakeUp}｣ タスクがエミュレーター起動遅延で失敗する場合、ゲームショートカットを使用し ｢{key=WaitForEmulator}｣ を延長することを推奨します。</system:String>
+    <system:String x:Key="SelectPcClientTip">PC クライアント本体またはショートカットを選択できます。｢{key=AdditionCommand}｣ で起動引数を追加できます。</system:String>
+    <system:String x:Key="PcClientAddCommandTip" xml:space="preserve">PC クライアント起動時に渡す追加引数です。&#10;対応する引数の形式は、クライアントまたはランチャーのドキュメントを参照してください。&#10;ショートカットを使用する場合は、そのショートカットに保存された引数が使用されます。</system:String>
+    <system:String x:Key="PcClientPathEmptyError">PC クライアントのパスが空です。先にクライアントを選択してください。</system:String>
+    <system:String x:Key="PcClientPathNotExist">PC クライアントのパスが存在しません</system:String>
+    <system:String x:Key="PcClientPathEmptyWarning">PC クライアントのパスが空です。｢{key=RetryOnPcDisconnected}｣ と ｢{key=OpenPcClientAfterLaunch}｣ のチェック状態がリセットされました</system:String>
     <system:String x:Key="EmulatorPathSelectionErrorPrompt">バーでバーを注文したいですか？</system:String>
     <system:String x:Key="EmulatorPathSelectionErrorImSure">確かに間違って選択していないと思います</system:String>
     <system:String x:Key="EmulatorPathSelectionErrorSelectAgain">はい、もう一度選択します</system:String>
@@ -905,6 +927,9 @@ C:\leidian\LDPlayer9
     <system:String x:Key="RetryOnDisconnected">ADB接続が失敗した場合、エミュレータの起動を試みる</system:String>
     <system:String x:Key="RetryOnDisconnectedTip">再接続に失敗した後、エミュレータを再起動してみてください，バックグラウンドのタイムドタスクを使用し、終了時にエミュレータを終了させるタスクを設定する場合は、必ずチェックを入れること</system:String>
     <system:String x:Key="RetryOnDisconnectedEmulatorPathEmptyError">エミュレータのパスが空です！ ｢{key=Settings} - {key=StartupSettings} - {key=EmulatorPath}｣ を入力してから再度選択してください。</system:String>
+    <system:String x:Key="RetryOnPcDisconnected">PC クライアントの接続失敗時にクライアントを起動</system:String>
+    <system:String x:Key="RetryOnPcDisconnectedTip">ウィンドウ接続に失敗した後、PC クライアントを起動して再接続します</system:String>
+    <system:String x:Key="RetryOnPcDisconnectedPathEmptyError">PC クライアントのパスが空です！ ｢{key=Settings} - {key=StartupSettings} - {key=PcClientPath}｣ を入力してから再度選択してください。</system:String>
     <system:String x:Key="AllowAdbRestart">接続失敗後にADBサーバーの再起動を試みる</system:String>
     <system:String x:Key="AllowAdbHardRestart">接続失敗後にADBプロセスの再起動を試みる</system:String>
     <!--  !設定  -->
@@ -1517,6 +1542,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="ResourceIntegrityCheckDesc">{0} 個のインストールファイルが欠落していることが検出されました（{1}）。一部の機能が使用できない可能性があります。ファイルがセキュリティソフトによってブロックまたは削除されたか、手動で削除された可能性があります。セキュリティソフトが原因の場合は、その隔離領域を確認してファイルを復元し、{key=SecuritySoftwareWhitelistTips}\n\n以下の説明に従って手動で再インストールすることもできます：\n\n{key=FullPackageUpgradeTips}</system:String>
     <system:String x:Key="ResourceIntegrityRepairYes">自動修復（完全パッケージをダウンロードし、再起動後に復元）</system:String>
     <system:String x:Key="ResourceIntegrityRepairNo">後で行う</system:String>
+    <system:String x:Key="CoreLoadingTip">MAA のコアは読み込み中です。少し待ってから再度お試しください。</system:String>
     <system:String x:Key="ResourceBrokenTaskBlocked">リソースが破損しているためタスクを開始できません。起動時の案内に従ってリソースを修復するか、完全なパッケージを再ダウンロードして MAA を再起動してください。</system:String>
     <system:String x:Key="ResourceIntegrityRepairDownloading">インストールを修復するため、完全パッケージをダウンロードしています…</system:String>
     <system:String x:Key="ResourceIntegrityRepairFailed">自動修復に失敗しました。表示された手順に従って手動で処理してください。\n\n{key=FullPackageUpgradeTips}</system:String>
@@ -1557,6 +1583,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="CombatError">戦闘エラー</system:String>
     <system:String x:Key="StartTask" xml:space="preserve">タスク開始: </system:String>
     <system:String x:Key="CompleteTask" xml:space="preserve">タスク完了: </system:String>
+    <system:String x:Key="TaskTime">\n(所要時間: {0})</system:String>
     <system:String x:Key="StartCombat" xml:space="preserve">戦闘開始: </system:String>
     <system:String x:Key="CompleteCombat">戦闘完了</system:String>
     <system:String x:Key="TaskCompletedWithErrors">タスクが終了しました。以下のタスクでエラーが発生しました！\n{0}\n({1} 後)</system:String>
@@ -1888,6 +1915,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="ConnectFailed">接続失敗</system:String>
     <system:String x:Key="TryToReconnectByAdb">再接続を試みています</system:String>
     <system:String x:Key="TryToStartEmulator">エミュレータを起動しようとしています</system:String>
+    <system:String x:Key="TryToStartPcClient">PC クライアントを起動しようとしています</system:String>
     <system:String x:Key="RestartAdb">ADBサーバーの再起動を試みています</system:String>
     <system:String x:Key="HardRestartAdb">ADBプロセスの再起動を試みています</system:String>
     <system:String x:Key="CheckSettings">｢接続設定を確認｣ → ｢エミュレーターとADBを再起動してみる｣ → ｢コンピュータを再起動｣ してください</system:String>
@@ -1895,6 +1923,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="AttachWindowMultipleFound">{0} 個の "{1}" ウィンドウが見つかりました。最初のものを使用します</system:String>
     <system:String x:Key="AttachWindowFound">ウィンドウ "{0}" が見つかりました</system:String>
     <system:String x:Key="Administrator">管理者</system:String>
+    <system:String x:Key="UiPreviewMode">UI プレビュー</system:String>
     <system:String x:Key="AttachWindowNeedAdmin">PC 接続には管理者権限が必要です。\n管理者として MAA を再起動しますか？</system:String>
     <system:String x:Key="RestartingAsAdmin">管理者として再起動しています…</system:String>
     <system:String x:Key="RestartAsAdminFailed">手動で管理者として MAA を実行してください。</system:String>
@@ -1931,6 +1960,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="AttachWindowInputPostWithCursor">PostMsg-CursorPos（半バックグラウンド、一時的にマウスを取得）</system:String>
     <system:String x:Key="AttachWindowInputSendWithWindowPosDisabled">SendMsg-WindowPos（遅延過大、無効）</system:String>
     <system:String x:Key="AttachWindowInputPostWithWindowPos">PostMsg-WindowPos（推奨、フルバックグラウンド、マウス不要、ウィンドウが動く可能性あり、PrintWindow のみ対応、最小化推奨）</system:String>
+    <system:String x:Key="AttachWindowInputAnchoredTouch">AnchoredTouch（フルバックグラウンド、マウス不要、合成タッチ注入、Win10 1809+ 必須、遮蔽時はウィンドウが一瞬点滅）</system:String>
     <system:String x:Key="AttachWindowInputSendMsg">SendMsg（安定）</system:String>
     <system:String x:Key="AttachWindowInputPostMsg">PostMsg（高効率）</system:String>
     <!--  !AsstProxy  -->

@@ -56,6 +56,7 @@
     <system:String x:Key="ExternalNotificationSendWhenError">任务出错时发送通知</system:String>
     <system:String x:Key="ExternalNotificationSendWhenStalled">任务日志输出停滞时发送通知</system:String>
     <system:String x:Key="ExternalNotificationSendWhenStalledTip">需在 ｢{key=GameSettings}｣ 中开启 ｢{key=StallTimeoutEnabled}｣ 后才会生效</system:String>
+    <system:String x:Key="ExternalNotificationSendBeforeScheduledStart">定时执行前发送通知</system:String>
     <system:String x:Key="ExternalNotificationSendSuccess">发送成功</system:String>
     <system:String x:Key="ExternalNotificationSendFail">发送失败</system:String>
     <system:String x:Key="ExternalNotificationSendTest">发送测试</system:String>
@@ -130,8 +131,6 @@
     <system:String x:Key="GuideConfirmCountdownSuffix" xml:space="preserve"> 秒</system:String>
     <system:String x:Key="ToolTipGuide">鼠标移至此处会有提示哦</system:String>
     <system:String x:Key="TaskGuide">↑ 任务</system:String>
-    <system:String x:Key="OftenUsedGuide">↑ 常用的</system:String>
-    <system:String x:Key="SometimesUsedGuide">不常用的 ↑</system:String>
     <system:String x:Key="LinkStartGuide">← 开始任务</system:String>
     <system:String x:Key="HoverActionButtons">悬停显示 复制/重命名/删除</system:String>
     <system:String x:Key="GearContextMenuTip">右键齿轮显示更多操作 ↓</system:String>
@@ -233,6 +232,9 @@
     <system:String x:Key="General">通用模式</system:String>
     <system:String x:Key="BlueStacks">蓝叠模拟器</system:String>
     <system:String x:Key="MuMuEmulator12">MuMu 模拟器</system:String>
+    <system:String x:Key="MuMuArm">MuMu 模拟器（Windows ARM）</system:String>
+    <system:String x:Key="MuMuArmDetectAndTest">自动检测并测试</system:String>
+    <system:String x:Key="MuMuArmConnectionNotReady">无法读取 MuMu ARM 的 ADB 地址。请等待模拟器启动完成后重试，或关闭自动检测并手动填写连接地址。</system:String>
     <system:String x:Key="AVD">Android 虚拟设备（AVD）</system:String>
     <system:String x:Key="LDPlayer">雷电模拟器</system:String>
     <system:String x:Key="Androws">应用宝模拟器</system:String>
@@ -381,6 +383,7 @@
     <system:String x:Key="EmulatorNotFound">未检测到任何模拟器\n请确认已启动模拟器\n如模拟器是以管理员权限启动，需以管理员权限启动本软件\n如仍无法检测，请手动设置连接</system:String>
     <system:String x:Key="EmulatorTooMany">检测到多个模拟器\n请关闭不需要的模拟器\n或手动设置连接</system:String>
     <system:String x:Key="EmulatorStartFailed">未能成功启动模拟器\n请使用管理员权限打开本软件\n或手动启动模拟器。</system:String>
+    <system:String x:Key="PcClientStartFailed">未能成功启动 PC 客户端\n请使用管理员权限打开本软件\n或手动启动客户端。</system:String>
     <system:String x:Key="SwitchLanguage">切换语言 🌐</system:String>
     <system:String x:Key="Language">语言</system:String>
     <system:String x:Key="LanguageChangedTip">语言设置已更改，部分内容可能需要重启才能完全生效。</system:String>
@@ -414,6 +417,7 @@
     <system:String x:Key="TaskCopied">已复制任务: {0}</system:String>
     <system:String x:Key="StartGuideDemo">演示中不会真的运行任务</system:String>
     <system:String x:Key="GuideDemoTaskAddLimitTip">演示列表最多容纳 5 个任务，可先删除部分后再添加</system:String>
+    <system:String x:Key="GuideDemoTaskRequiredTip">先通过 ｢{key=AddTaskQueueTask}｣ 按钮添加一个任务，再进入下一步</system:String>
     <system:String x:Key="TaskCopyFailed">任务复制失败</system:String>
     <system:String x:Key="HotKeyShowGui">[热键] 显示/收起 MAA</system:String>
     <system:String x:Key="HotKeyLinkStart">[热键] Link start/stop</system:String>
@@ -561,6 +565,13 @@ D:\
     <system:String x:Key="ShowWindowBeforeForceScheduledStartTip">定时启动前显示主窗口，避免最小化时看不到倒计时</system:String>
     <system:String x:Key="TimerCustomConfig">自定义配置选择</system:String>
     <system:String x:Key="TimerCustomConfigTip">定时启动前两分钟重启游戏并切换配置</system:String>
+    <system:String x:Key="NotifyBeforeScheduledStart">定时执行前发送系统通知</system:String>
+    <system:String x:Key="NotifyBeforeScheduledStartTip" xml:space="preserve">按提前时间发送系统通知。&#10;外部推送可在 ｢{key=ExternalNotificationSettings}｣ 中单独开启，两者共用提前时间。</system:String>
+    <system:String x:Key="ScheduledStartNotificationMinutes">提前时间（分钟）</system:String>
+    <system:String x:Key="ScheduledStartNotificationTitle">定时任务即将执行</system:String>
+    <system:String x:Key="ScheduledStartNotificationContent">定时 {0} 计划于 {1}（{2} 分钟后）开始执行，请留意游戏登录状态。</system:String>
+    <system:String x:Key="ScheduledWakeUp">定时启动前尝试唤醒计算机并启动 MAA</system:String>
+    <system:String x:Key="ScheduledWakeUpTip" xml:space="preserve">该功能通过在 Windows 任务计划程序中注册计划任务实现，在每个启用的定时项前 5 分钟尝试唤醒计算机并启动 MAA，由定时启动逻辑接管。&#10;唤醒启动时将跳过 ｢{key=StartupSettings}｣ 中的启动自动运行项（如{key=RunTaskAfterLaunch}、{key=OpenEmulatorAfterLaunch}）。&#10;MAA 退出后计划任务仍会保留，关闭本开关时删除。&#10;任务开始后的长时间运行不再由本功能保持唤醒，若任务耗时较长，建议在 ｢{key=GameSettings}｣ 中开启 ｢{key=BlockSleep}｣，避免任务执行期间系统睡眠。&#10;休眠状态的定时唤醒依赖设备固件支持，部分设备仅支持从睡眠唤醒。</system:String>
     <system:String x:Key="Timer">定时</system:String>
     <system:String x:Key="GlobalConfigTip">此选项页为全局配置</system:String>
     <system:String x:Key="MultiTasksShareTip">以下选项为多任务共用</system:String>
@@ -584,6 +595,8 @@ D:\
     <system:String x:Key="StartupAutoRunCountdownTaskOnly">即将自动运行任务，是否取消？</system:String>
     <system:String x:Key="StartupAutoRunCountdownEmulatorOnly">即将自动启动模拟器，是否取消？</system:String>
     <system:String x:Key="StartupAutoRunCountdownTaskAndEmulator">即将自动运行任务并启动模拟器，是否取消？</system:String>
+    <system:String x:Key="StartupAutoRunCountdownPcClientOnly">即将自动启动 PC 客户端，是否取消？</system:String>
+    <system:String x:Key="StartupAutoRunCountdownTaskAndPcClient">即将自动运行任务并启动 PC 客户端，是否取消？</system:String>
     <system:String x:Key="MinimizeAfterLaunch">启动 MAA 后直接最小化</system:String>
     <system:String x:Key="ClientType">客户端类型</system:String>
     <system:String x:Key="StartGameLaunchClient">是否启动客户端</system:String>
@@ -596,10 +609,19 @@ D:\
     <system:String x:Key="HelpUsWithOverseasServersTip">外服适配滞销，帮帮我们！不会编程也可以。</system:String>
     <system:String x:Key="OpenEmulatorAfterLaunch">启动 MAA 后自动开启模拟器</system:String>
     <system:String x:Key="OpenEmulatorAfterLaunchTip">仅在启动 MAA 时开启一次模拟器，点击 ｢{key=LinkStart}｣ 时不会自动开启；\n如有此需求，请勾选 ｢{key=RetryOnDisconnected}｣</system:String>
+    <system:String x:Key="OpenPcClientAfterLaunch">启动 MAA 后自动开启 PC 客户端</system:String>
+    <system:String x:Key="OpenPcClientAfterLaunchTip">仅在启动 MAA 时开启一次 PC 客户端，点击 ｢{key=LinkStart}｣ 时不会自动开启；\n如有此需求，请勾选 ｢{key=RetryOnPcDisconnected}｣</system:String>
     <system:String x:Key="WaitForEmulator">等待模拟器启动时间（秒）</system:String>
+    <system:String x:Key="WaitForPcClient">等待 PC 客户端启动时间（秒）</system:String>
     <system:String x:Key="WaitForEmulatorFinish">等待结束</system:String>
     <system:String x:Key="EmulatorPath">模拟器路径</system:String>
+    <system:String x:Key="PcClientPath">PC 客户端路径</system:String>
     <system:String x:Key="SelectShortcutTip" xml:space="preserve">可选择模拟器本体（配合 ｢{key=AdditionCommand}｣ 启动参数可指定启动模拟器实例），也可直接选择模拟器或游戏的快捷方式。&#10;如因模拟器启动时间过长导致 ｢{key=WakeUp}｣ 任务失败，推荐填写游戏快捷方式并延长 ｢{key=WaitForEmulator}｣。</system:String>
+    <system:String x:Key="SelectPcClientTip">可选择 PC 客户端本体或其快捷方式，并可通过 ｢{key=AdditionCommand}｣ 补充启动参数。</system:String>
+    <system:String x:Key="PcClientAddCommandTip" xml:space="preserve">附加命令用于指定 PC 客户端的启动参数，具体格式请参考客户端或启动器文档。&#10;使用快捷方式时，将使用快捷方式中保存的参数。</system:String>
+    <system:String x:Key="PcClientPathEmptyError">PC 客户端路径为空，请先选择客户端程序。</system:String>
+    <system:String x:Key="PcClientPathNotExist">PC 客户端路径不存在</system:String>
+    <system:String x:Key="PcClientPathEmptyWarning">PC 客户端路径为空，｢{key=RetryOnPcDisconnected}｣ 与 ｢{key=OpenPcClientAfterLaunch}｣ 勾选状态已被还原</system:String>
     <system:String x:Key="EmulatorPathSelectionErrorPrompt">你也想在酒吧里点酒吧？</system:String>
     <system:String x:Key="EmulatorPathSelectionErrorImSure">我确定没选错</system:String>
     <system:String x:Key="EmulatorPathSelectionErrorSelectAgain">好的，我会重新选择</system:String>
@@ -902,6 +924,9 @@ C:\leidian\LDPlayer9
     <system:String x:Key="RetryOnDisconnected">ADB 连接失败时尝试启动模拟器</system:String>
     <system:String x:Key="RetryOnDisconnectedTip">重连失败后尝试重启模拟器，使用后台定时任务且设置任务完成关闭模拟器时请勾选</system:String>
     <system:String x:Key="RetryOnDisconnectedEmulatorPathEmptyError">模拟器路径为空！请填写 ｢{key=Settings} - {key=StartupSettings} - {key=EmulatorPath}｣ 后重新勾选。</system:String>
+    <system:String x:Key="RetryOnPcDisconnected">PC 客户端连接失败时尝试启动客户端</system:String>
+    <system:String x:Key="RetryOnPcDisconnectedTip">窗口连接失败后启动 PC 客户端，并再次尝试连接</system:String>
+    <system:String x:Key="RetryOnPcDisconnectedPathEmptyError">PC 客户端路径为空！请填写 ｢{key=Settings} - {key=StartupSettings} - {key=PcClientPath}｣ 后重新勾选。</system:String>
     <system:String x:Key="AllowAdbRestart">连接失败后尝试重启 ADB Server</system:String>
     <system:String x:Key="AllowAdbHardRestart">连接失败后尝试关闭并重启 ADB 进程</system:String>
     <!--  !设置  -->
@@ -1516,6 +1541,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="ResourceIntegrityCheckDesc">检测到 {0} 个安装文件缺失（{1}），部分功能可能无法使用。文件可能被某些安全软件拦截或删除，也可能被手动删除。若为安全软件导致，请前往对应软件的隔离区寻找并恢复文件，并{key=SecuritySoftwareWhitelistTips}\n\n也可按下方说明手动重装：\n\n{key=FullPackageUpgradeTips}</system:String>
     <system:String x:Key="ResourceIntegrityRepairYes">自动修复（下载完整包并在重启后恢复）</system:String>
     <system:String x:Key="ResourceIntegrityRepairNo">暂不处理，继续启动</system:String>
+    <system:String x:Key="CoreLoadingTip">MAA 内核尚未加载完成，请稍后再试。</system:String>
     <system:String x:Key="ResourceBrokenTaskBlocked">资源损坏，无法开始任务。请按启动时的提示修复资源，或重新下载完整安装包后重启 MAA。</system:String>
     <system:String x:Key="ResourceIntegrityRepairDownloading">正在下载完整包以修复安装…</system:String>
     <system:String x:Key="ResourceIntegrityRepairFailed">自动修复失败，请按提示手动处理。\n\n{key=FullPackageUpgradeTips}</system:String>
@@ -1556,6 +1582,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="CombatError">战斗出错</system:String>
     <system:String x:Key="StartTask" xml:space="preserve">开始任务: </system:String>
     <system:String x:Key="CompleteTask" xml:space="preserve">完成任务: </system:String>
+    <system:String x:Key="TaskTime">\n(用时 {0})</system:String>
     <system:String x:Key="StartCombat" xml:space="preserve">开始战斗: </system:String>
     <system:String x:Key="CompleteCombat">完成战斗</system:String>
     <system:String x:Key="TaskCompletedWithErrors">任务已结束，以下任务出现错误:\n{0}\n(用时 {1})</system:String>
@@ -1890,6 +1917,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="ConnectFailed">连接失败</system:String>
     <system:String x:Key="TryToReconnectByAdb">正在尝试重连</system:String>
     <system:String x:Key="TryToStartEmulator">正在尝试启动模拟器</system:String>
+    <system:String x:Key="TryToStartPcClient">正在尝试启动 PC 客户端</system:String>
     <system:String x:Key="RestartAdb">正在尝试重启 ADB Server</system:String>
     <system:String x:Key="HardRestartAdb">正在尝试关闭并重启 ADB 进程</system:String>
     <system:String x:Key="CheckSettings">请 ｢检查连接设置｣ → ｢尝试重启模拟器与 ADB｣ → ｢重启电脑｣</system:String>
@@ -1897,6 +1925,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="AttachWindowMultipleFound">找到 {0} 个 "{1}" 窗口，将使用第一个</system:String>
     <system:String x:Key="AttachWindowFound">找到窗口 "{0}"</system:String>
     <system:String x:Key="Administrator">管理员</system:String>
+    <system:String x:Key="UiPreviewMode">UI 预览</system:String>
     <system:String x:Key="AttachWindowNeedAdmin">PC 端连接需要管理员权限。\n是否以管理员身份重启 MAA？</system:String>
     <system:String x:Key="RestartingAsAdmin">正在以管理员身份重启…</system:String>
     <system:String x:Key="RestartAsAdminFailed">请手动以管理员身份运行 MAA</system:String>
@@ -1932,6 +1961,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="AttachWindowInputPostWithCursor">PostMsg-CursorPos（半后台，短暂抢鼠标）</system:String>
     <system:String x:Key="AttachWindowInputSendWithWindowPosDisabled">SendMsg-WindowPos（延迟过高，已停用）</system:String>
     <system:String x:Key="AttachWindowInputPostWithWindowPos">PostMsg-WindowPos（推荐，全后台，不抢鼠标，窗口会乱飞，截图方式仅 PrintWindow，建议最小化）</system:String>
+    <system:String x:Key="AttachWindowInputAnchoredTouch">AnchoredTouch（全后台，不抢鼠标，合成触控注入，需 Win10 1809+，被遮挡时窗口短暂闪烁）</system:String>
     <system:String x:Key="AttachWindowInputSendMsg">SendMsg（稳定）</system:String>
     <system:String x:Key="AttachWindowInputPostMsg">PostMsg（高效）</system:String>
     <!--  !AsstProxy  -->
