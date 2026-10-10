@@ -14,6 +14,12 @@
     <system:String x:Key="StartupSettings">啟動設定</system:String>
     <system:String x:Key="ScheduleSettings">定時執行</system:String>
     <system:String x:Key="UiSettings">介面設定</system:String>
+    <system:String x:Key="LanguageSettings">語言</system:String>
+    <system:String x:Key="ThemeAndAnimationSettings">主題與動畫</system:String>
+    <system:String x:Key="TitleBarSettings">標題列設定</system:String>
+    <system:String x:Key="LogDisplaySettings">日誌顯示設定</system:String>
+    <system:String x:Key="TraySettings">工作列</system:String>
+    <system:String x:Key="OperationGuideSettings">操作與指引</system:String>
     <system:String x:Key="BackgroundSettings">背景設定</system:String>
     <system:String x:Key="BackgroundImage">背景圖片</system:String>
     <system:String x:Key="BackgroundOpacity">背景不透明度</system:String>
@@ -48,15 +54,10 @@
     <system:String x:Key="ResourceVersion">資源版本</system:String>
     <system:String x:Key="ResourceDateTime">資源日期</system:String>
     <system:String x:Key="Off">關閉</system:String>
-    <system:String x:Key="ExternalNotificationTips">請注意：外部通知功能目前僅會發送 ｢所有任務完成｣ 的通知。</system:String>
     <system:String x:Key="ExternalNotificationSettings">外部通知</system:String>
-    <system:String x:Key="ExternalNotificationEnabled">啟用的通知設定</system:String>
-    <system:String x:Key="ExternalNotificationEnableDetails">輸出詳細資訊</system:String>
-    <system:String x:Key="ExternalNotificationSendWhenComplete">任務完成後發送通知</system:String>
-    <system:String x:Key="ExternalNotificationSendWhenError">任務出錯時發送通知</system:String>
-    <system:String x:Key="ExternalNotificationSendWhenStalled">任務日誌輸出停滯時發送通知</system:String>
-    <system:String x:Key="ExternalNotificationSendWhenStalledTip">需在 ｢{key=GameSettings}｣ 中開啟 ｢{key=StallTimeoutEnabled}｣ 後才會生效</system:String>
-    <system:String x:Key="ExternalNotificationSendBeforeScheduledStart">定時執行前傳送通知</system:String>
+    <system:String x:Key="ExternalNotificationEnabled">通知管道</system:String>
+    <system:String x:Key="ExternalNotificationSendBeforeScheduledStart">定時執行前</system:String>
+    <system:String x:Key="ExternalNotificationSendBeforeScheduledStartTip" xml:space="preserve">在定時任務開始前傳送外部通知。&#10;提前時間使用 ｢{key=ScheduleSettings}｣ 中的 ｢{key=ScheduledStartNotificationMinutes}｣ 設定。</system:String>
     <system:String x:Key="ExternalNotificationSendSuccess">發送成功</system:String>
     <system:String x:Key="ExternalNotificationSendFail">發送失敗</system:String>
     <system:String x:Key="ExternalNotificationSendTest">發送測試</system:String>
@@ -567,7 +568,8 @@ D:\
     <system:String x:Key="TimerCustomConfig">自訂設定檔選擇</system:String>
     <system:String x:Key="TimerCustomConfigTip">定時啟動前兩分鐘重新啟動遊戲並切換設定檔</system:String>
     <system:String x:Key="NotifyBeforeScheduledStart">定時執行前傳送系統通知</system:String>
-    <system:String x:Key="NotifyBeforeScheduledStartTip" xml:space="preserve">依提前時間傳送系統通知。&#10;外部推播可在 ｢{key=ExternalNotificationSettings}｣ 中單獨開啟，兩者共用提前時間。</system:String>
+    <system:String x:Key="NotifyBeforeScheduledStartTip" xml:space="preserve">依提前時間傳送系統通知。&#10;外部推播可在 ｢{key=Settings} - {key=NotificationSettings} - {key=ExternalNotificationSettings}｣ 中單獨開啟，兩者共用提前時間。</system:String>
+    <system:String x:Key="NotifyBeforeScheduledStartSharedTimeTip">外部推播與系統通知共用此提前時間。</system:String>
     <system:String x:Key="ScheduledStartNotificationMinutes">提前時間（分鐘）</system:String>
     <system:String x:Key="ScheduledStartNotificationTitle">定時任務即將執行</system:String>
     <system:String x:Key="ScheduledStartNotificationContent">定時 {0} 預計於 {1}（{2} 分鐘後）開始執行，請留意遊戲登入狀態。</system:String>
@@ -746,6 +748,7 @@ D:\
     <system:String x:Key="ThirdPartyGroupYituliu">一圖流</system:String>
     <system:String x:Key="YituliuOpenApiToken">OpenAPI Token</system:String>
     <system:String x:Key="YituliuTokenVerify">驗證</system:String>
+    <system:String x:Key="YituliuTokenLink">前往{key=ThirdPartyGroupYituliu}取得 Token</system:String>
     <system:String x:Key="YituliuTokenEmpty">請先填寫 Token</system:String>
     <system:String x:Key="YituliuTokenValid">Token 有效，共 {0} 名幹員</system:String>
     <system:String x:Key="YituliuTokenValidNoData">Token 有效，但帳號暫無幹員練度資料</system:String>
@@ -1207,6 +1210,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="Depot">{key=DepotRecognition}</system:String>
     <system:String x:Key="LastSyncTime">上次同步時間</system:String>
     <system:String x:Key="DepotRecognitionTip">該功能尚處於測試階段，請檢查結果是否準確再行使用。若有誤，歡迎打包 debug/depot 資料夾後向我們提交 issue ~</system:String>
+    <system:String x:Key="DepotTemplateLoadError">{key=DepotRecognition}範本載入失敗（{0}），已停止辨識。</system:String>
     <system:String x:Key="StartToDepotRecognition">開始辨識</system:String>
     <system:String x:Key="ExportToArkplanner">企鵝物流刷圖規劃</system:String>
     <system:String x:Key="ExportToLolicon">明日方舟工具箱</system:String>
@@ -1412,6 +1416,10 @@ C:\leidian\LDPlayer9
     <system:String x:Key="Copilot.IgnoreRequirements.Tip" xml:space="preserve">部分作業需要特定技能等級、模組等作為前置條件。
 勾選此項將跳過這些檢查，但可能導致作業無法正常執行。
 幹員精英化等級無法跳過；若跳過任何需求，戰鬥完成後將不再為作業自動點贊。</system:String>
+    <system:String x:Key="Copilot.UseOperBoxAssist">使用一圖流資料輔助編隊</system:String>
+    <system:String x:Key="Copilot.UseOperBoxAssist.Tip" xml:space="preserve">自動編隊前，按一圖流幹員練度資料（含技能與模組資訊）預先匹配作業編隊&#10;需先在 ｢{key=Settings} - {key=ThirdPartyServiceSettings}｣ 填寫一圖流 token、啟用 ｢{key=EnableOperBoxYituliuApi}｣ 並取得資料</system:String>
+    <system:String x:Key="Copilot.SyncOperBoxData">同步</system:String>
+    <system:String x:Key="Copilot.SyncOperBoxSuccess">已同步 {0} 名{key=Operator}的一圖流練度資料</system:String>
     <system:String x:Key="AddUserAdditional">追加自訂{key=Operator}</system:String>
     <system:String x:Key="AddUserAdditionalTip">點擊旁邊的設定按鈕開啟編輯視窗，點擊 ｢{key=UserAdditional.Add}｣ 逐條新增，按欄位填寫{key=Operator}名稱、技能與操作</system:String>
     <system:String x:Key="UserAdditional.OperatorName">{key=Operator}名稱</system:String>
@@ -1483,6 +1491,7 @@ C:\leidian\LDPlayer9
         • 遇到理智不足、戰鬥失敗、未能三星結算時將會自動中止。
     </system:String>
     <system:String x:Key="CopilotFileReadError">讀取檔案失敗！</system:String>
+    <system:String x:Key="CopilotStartFailed">作業啟動失敗</system:String>
     <system:String x:Key="CopilotNoFound">未找到對應作業！</system:String>
     <system:String x:Key="NetworkServiceError">網路服務請求錯誤！</system:String>
     <system:String x:Key="CopilotJsonError">解析作業檔案錯誤！</system:String>
@@ -1885,7 +1894,11 @@ C:\leidian\LDPlayer9
     <system:String x:Key="BattleFormationOperUnavailable.Level">等級不足</system:String>
     <system:String x:Key="BattleFormationOperUnavailable.SkillLevel">技能等級不足</system:String>
     <system:String x:Key="BattleFormationOperUnavailable.Module">所需模組未解鎖</system:String>
+    <system:String x:Key="BattleFormationOperbox1Unmatched" xml:space="preserve">{key=Operator}（組） {0} 沒有匹配的{key=Operator}，需要借助戰（預匹配建議 {1}，實際按助戰列表選擇）</system:String>
+    <system:String x:Key="BattleFormationOperboxMatched">預匹配的{key=Operator}（組）：</system:String>
     <system:String x:Key="CopilotUserAdditionalNameInvalid">追加自訂{key=Operator}名稱無效：{0}，請檢查拼寫</system:String>
+    <system:String x:Key="CopilotOperboxDataParseFailed">{key=OperBoxRecognition}資料解析失敗</system:String>
+    <system:String x:Key="CopilotOperboxAssistRequiresYituliuData">目前沒有可用的一圖流幹員資料，無法輔助編隊。請先從一圖流取得幹員資料，或關閉 ｢{key=Copilot.UseOperBoxAssist}｣ 。</system:String>
     <system:String x:Key="CurrentSteps">目前步驟：{0} {1}</system:String>
     <system:String x:Key="ElapsedTime">經過時間：{0}ms</system:String>
     <system:String x:Key="Deploy">部署</system:String>
@@ -2194,7 +2207,7 @@ DEBUG 目錄下儲存的圖片有數量限制，超出後會自動清理舊圖�
     <!-- <system:String x:Key="TaskTimeoutMinutes">任務逾時時間（分鐘）</system:String> -->
     <system:String x:Key="ReminderIntervalMinutes">通知間隔時間（分鐘）</system:String>
     <system:String x:Key="StallTimeoutMinutes">日誌輸出停滯逾時時間（分鐘）</system:String>
-    <system:String x:Key="StallTimeoutEnabled">啟用停滯偵測</system:String>
+    <system:String x:Key="StallTimeoutEnabled">啟用日誌更新停滯偵測</system:String>
     <system:String x:Key="TaskStallWarning">任務日誌輸出已超過 {0} 分鐘無更新（目前已停滯 {1} 分鐘）。請確認任務是否正常執行，若任務正常可忽略此提示，若無回應則可能需要手動干預。</system:String>
     <system:String x:Key="RunDurationLimitEnabled">限制單次運行時長</system:String>
     <system:String x:Key="RunDurationLimitMinutes">運行時長上限（分鐘）</system:String>
@@ -2628,7 +2641,7 @@ DEBUG 目錄下儲存的圖片有數量限制，超出後會自動清理舊圖�
 
     <system:String x:Key="Achievement.AllChannelBroadcast.Title">全頻道廣播</system:String>
     <system:String x:Key="Achievement.AllChannelBroadcast.Description">這下誰都別想錯過。</system:String>
-    <system:String x:Key="Achievement.AllChannelBroadcast.Conditions">同時啟用全部 ｢{key=ExternalNotificationSettings}｣ 頻道</system:String>
+    <system:String x:Key="Achievement.AllChannelBroadcast.Conditions">同時啟用全部 ｢{key=Settings} - {key=NotificationSettings} - {key=ExternalNotificationSettings}｣ 頻道</system:String>
 
     <system:String x:Key="Achievement.BackstageExplorer.Title">走進後台</system:String>
     <system:String x:Key="Achievement.BackstageExplorer.Description">讓我看看都記了點啥。</system:String>
@@ -2696,4 +2709,26 @@ DEBUG 目錄下儲存的圖片有數量限制，超出後會自動清理舊圖�
     <system:String x:Key="PleaseSelectItem">請選擇一項</system:String>
     <system:String x:Key="EmulatorSelectionCancelled">已取消選擇模擬器</system:String>
     <!--  !ItemSelection  -->
+    <system:String x:Key="NotificationSettings">通知設定</system:String>
+    <system:String x:Key="NotificationSettingsTimeMinutes">日誌有效時間（分鐘）</system:String>
+    <system:String x:Key="NotificationSettingsTimeMinutesTip" xml:space="preserve">超過有效時間的日誌不再附加至通知。&#10;為 0 時，不按時間篩選。</system:String>
+    <system:String x:Key="NotificationSettingsInvalidFilterTip" xml:space="preserve">正則表達式無效，請檢查篩選規則。</system:String>
+    <system:String x:Key="ExternalNotificationEnable">啟用外部通知</system:String>
+    <system:String x:Key="ExternalNotificationSendConditions">符合以下條件時傳送外部通知</system:String>
+    <system:String x:Key="ExternalNotificationWhenComplete">任務完成時</system:String>
+    <system:String x:Key="ExternalNotificationWhenError">任務出錯時</system:String>
+    <system:String x:Key="ExternalNotificationWhenStalled">任務日誌輸出停滯時</system:String>
+    <system:String x:Key="ExternalNotificationWhenStalledTip" xml:space="preserve">需在 ｢{key=NotificationSettings}｣ 中開啟 ｢{key=StallTimeoutEnabled}｣。&#10;超過設定時間沒有新增日誌時傳送。</system:String>
+    <system:String x:Key="ExternalNotificationNewLogCount">新增日誌條數</system:String>
+    <system:String x:Key="ExternalNotificationNewLogCountTip" xml:space="preserve">自上次觸發傳送外部通知後，每新增一條日誌就計數一次。&#10;累計到指定條數時傳送通知；任務完成、出錯等其他條件觸發通知後，也會重新計數。</system:String>
+    <system:String x:Key="ExternalNotificationContentMatches">日誌包含特定內容時</system:String>
+    <system:String x:Key="ExternalNotificationWhitelist">白名單（每行一條，支援正則）</system:String>
+    <system:String x:Key="ExternalNotificationWhitelistTip" xml:space="preserve">每行填寫一個正則表達式，任意一行符合目前日誌就觸發傳送。&#10;白名單為空時，此條件不會觸發通知。</system:String>
+    <system:String x:Key="ExternalNotificationIncludePreviousLogs">附帶先前日誌</system:String>
+    <system:String x:Key="ExternalNotificationIncludePreviousLogsTip" xml:space="preserve">勾選後，在目前日誌的基礎上附帶歷史日誌。&#10;附帶範圍由日誌數量及有效時間控制。</system:String>
+    <system:String x:Key="ExternalNotificationPreviousLogCount">附帶日誌數量</system:String>
+    <system:String x:Key="ExternalNotificationPreviousLogCountTip" xml:space="preserve">最多附帶指定條數的歷史日誌，不計目前日誌。&#10;為 0 時，僅傳送目前日誌。</system:String>
+    <system:String x:Key="ExternalNotificationFilterPreviousLogs">篩選附帶日誌內容</system:String>
+    <system:String x:Key="ExternalNotificationFilterPreviousLogsTip" xml:space="preserve">先排除符合黑名單的日誌，再依數量及有效時間選取最近的日誌。&#10;目前日誌始終保留。</system:String>
+    <system:String x:Key="ExternalNotificationBlacklist">黑名單（每行一條，支援正則）</system:String>
 </ResourceDictionary>

@@ -37,7 +37,7 @@ using MaaWpfGui.Extensions;
 using MaaWpfGui.Helper;
 using MaaWpfGui.Main;
 using MaaWpfGui.Models;
-using MaaWpfGui.Services.ExternalNotification;
+using MaaWpfGui.Services.Notification;
 using MaaWpfGui.States;
 using MaaWpfGui.Utilities;
 using MaaWpfGui.Utilities.ValueType;
@@ -747,7 +747,6 @@ public class TaskQueueViewModel : Screen
                 SettingsViewModel.GameSettings.EnableRunDurationLimit ??= false;
             }
         };
-        _runningState.StallOccurred += RunningState_Stalled;
 
         if (Instances.VersionUpdateDialogViewModel.IsDebugVersion() || File.Exists("DEBUG") || File.Exists("DEBUG.txt"))
         {
@@ -757,19 +756,6 @@ public class TaskQueueViewModel : Screen
         }
 
         UpdateTaskTypeBadges();
-    }
-
-    private void RunningState_Stalled(object? sender, string message)
-    {
-        AddLog(message, UiLogColor.Warning, notifyActivity: false);
-        ToastNotification.ShowDirect(message);
-        if (SettingsViewModel.ExternalNotificationSettings.ExternalNotificationSendWhenStalled)
-        {
-            var lastLogs = LogItemViewModels
-                .TakeLast(5)
-                .Aggregate(string.Empty, (current, logItem) => current + $"[{logItem.Time}][{logItem.Color}]{logItem.Content}\n");
-            ExternalNotificationService.Send(message, lastLogs);
-        }
     }
 
     protected override void OnInitialActivate()
@@ -1120,7 +1106,8 @@ public class TaskQueueViewModel : Screen
     {
         var settings = SettingsViewModel.TimerSettings;
         var notifyDesktop = settings.NotifyBeforeScheduledStart;
-        var notifyExternal = SettingsViewModel.ExternalNotificationSettings.ExternalNotificationSendBeforeScheduledStart;
+        var delivery = SettingsViewModel.ExternalNotificationSettings.DeliverySettings;
+        var notifyExternal = delivery.Enable && delivery.SendBeforeScheduledStart;
         if (!notifyDesktop && !notifyExternal)
         {
             return;
@@ -1152,7 +1139,7 @@ public class TaskQueueViewModel : Screen
 
             if (notifyExternal)
             {
-                ExternalNotificationService.Send(title, content);
+                Instances.NotificationService.NotifyScheduledStart(title, content);
             }
         }
     }
@@ -1590,6 +1577,20 @@ public class TaskQueueViewModel : Screen
             RunningState.Instance.NotifyOutputActivity();
         }
 
+        Instances.NotificationService.PublishLog(NotificationSource.TaskQueue, content,
+            () => DisplayLog(content, color, weight, toolTip, updateCardImage, fetchLatestImage, useCardImageAsToolTip, splitMode), color);
+    }
+
+    // Presentation only: mirrors and notification callbacks do not publish another event.
+    internal void DisplayLog(string? content,
+        string color = UiLogColor.Trace,
+        string weight = "Regular",
+        ToolTip? toolTip = null,
+        bool updateCardImage = false,
+        bool fetchLatestImage = false,
+        bool useCardImageAsToolTip = false,
+        LogCardSplitMode splitMode = LogCardSplitMode.None)
+    {
         bool isEmpty = string.IsNullOrEmpty(content);
         bool needsBeforeSplit = splitMode == LogCardSplitMode.Before || splitMode == LogCardSplitMode.Both;
         bool needsAfterSplit = splitMode == LogCardSplitMode.After || splitMode == LogCardSplitMode.Both;
@@ -1669,11 +1670,8 @@ public class TaskQueueViewModel : Screen
     {
         RunningState.Instance.NotifyOutputActivity();
         _logger.Information("{Header}", header);
-        Execute.OnUIThread(() => {
-            // Plain-text log style: either a decorated "-----{header}-----" line or the header verbatim.
-            var plainText = header is null
-                ? "-----"
-                : decoratePlainText ? $"-----{header}-----" : header;
+        var plainText = header is null ? "-----" : decoratePlainText ? $"-----{header}-----" : header;
+        Instances.NotificationService.PublishLog(NotificationSource.TaskQueue, plainText, () => {
             LogItemViewModels.Add(new LogItemViewModel(plainText));
 
             // Card log style: render a real hc:Divider as its own card.
@@ -1689,6 +1687,7 @@ public class TaskQueueViewModel : Screen
     public void ClearLog()
     {
         Execute.OnUIThread(() => {
+            Instances.NotificationService.Clear(NotificationSource.TaskQueue);
             LogItemViewModels.Clear();
             LogCardViewModels.Clear();
             DownloadLogItemViewModel = new(string.Empty);
@@ -1753,12 +1752,12 @@ public class TaskQueueViewModel : Screen
             new TaskTypeItem(LocalizationHelper.GetString("Recruit"), typeof(RecruitTask)),
             new TaskTypeItem(LocalizationHelper.GetString("Mall"), typeof(MallTask)),
             new TaskTypeItem(LocalizationHelper.GetString("Award"), typeof(AwardTask)),
-            new TaskTypeItem(LocalizationHelper.GetString("OperProgress"), typeof(OperProgressTask), introducedVersion: "6.19.0"),
+            new TaskTypeItem(LocalizationHelper.GetString("OperProgress"), typeof(OperProgressTask), introducedVersion: "6.19.0-beta.2"),
             new TaskTypeItem(LocalizationHelper.GetString("Roguelike"), typeof(RoguelikeTask)),
             new TaskTypeItem(LocalizationHelper.GetString("Reclamation"), typeof(ReclamationTask)),
             new TaskTypeItem(LocalizationHelper.GetString("UserDataUpdate"), typeof(UserDataUpdateTask)),
             new TaskTypeItem(LocalizationHelper.GetString("DepotMaintain"), typeof(DepotMaintainTask)),
-            new TaskTypeItem(LocalizationHelper.GetString("SwitchTheme"), typeof(SwitchThemeTask), introducedVersion: "6.19.0"),
+            new TaskTypeItem(LocalizationHelper.GetString("SwitchTheme"), typeof(SwitchThemeTask), introducedVersion: "6.19.0-beta.2"),
             new TaskTypeItem(LocalizationHelper.GetString("Custom"), typeof(CustomTask), isDebugOnly: true),
         ]);
 
@@ -1880,7 +1879,7 @@ public class TaskQueueViewModel : Screen
     // - 有基准：引入版本晚于基准即新（语义化版本的优先级比较，忽略 build 元数据）
     // - 空基准（首次启动，从未浏览过菜单）：按当前运行版本正常比较（视为已浏览过当前版本）；
     //   特判 v6.19——红点功能于 6.19.0-beta.2 上线，期间首启的用户属 6.19 系列，本系列
-    //   登记的任务（6.19.0）直接显示；6.20 及以后空基准无此豁免
+    //   登记的任务（6.19.0-beta.2）直接显示；6.20 及以后空基准无此豁免
     // 任一侧版本无法解析（如本地 dev 的 DEBUG_VERSION）时返回 false——宁可漏标不误标；
     // 例外是 dev 的当前版本解析失败时全亮，保持本地可测
     private static bool IsNewerThanBaseline(string introduced, string seen)

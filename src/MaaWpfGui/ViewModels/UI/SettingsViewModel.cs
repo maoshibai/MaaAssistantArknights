@@ -107,6 +107,11 @@ public class SettingsViewModel : Screen
     public static VersionUpdateSettingsUserControlModel VersionUpdateSettings { get; } = VersionUpdateSettingsUserControlModel.Instance;
 
     /// <summary>
+    /// Gets 通知设置 model
+    /// </summary>
+    public static NotificationSettingsUserControlModel NotificationSettings { get; } = new();
+
+    /// <summary>
     /// Gets 外部通知 model
     /// </summary>
     public static ExternalNotificationSettingsUserControlModel ExternalNotificationSettings { get; } = ExternalNotificationSettingsUserControlModel.Instance;
@@ -192,9 +197,7 @@ public class SettingsViewModel : Screen
 
     public SettingItemViewModel UiSettingsSetting => GetSettingItemByKey("UiSettings");
 
-    public SettingItemViewModel BackgroundSettingsSetting => GetSettingItemByKey("BackgroundSettings");
-
-    public SettingItemViewModel ExternalNotificationSettingsSetting => GetSettingItemByKey("ExternalNotificationSettings");
+    public SettingItemViewModel NotificationSettingsSetting => GetSettingItemByKey("NotificationSettings");
 
     public SettingItemViewModel ThirdPartyServiceSettingsSetting => GetSettingItemByKey("ThirdPartyServiceSettings");
 
@@ -215,6 +218,8 @@ public class SettingsViewModel : Screen
         var tempOrderList = new List<SettingItemViewModel?>();
 
         bool isAdded = false;
+
+        // 已删除设置项的死键由 SettingsPageReorgMigrationConverter 在反序列化前的 JsonNode 层剔除
         var orderList = ConfigFactory.Root.Gui.SettingOrders.ToList();
         foreach (var key in keyList.Where(k => !orderList.Any(o => o == k)))
         {
@@ -754,8 +759,7 @@ public class SettingsViewModel : Screen
         GuideConfirmEnabled = false;
         GuideConfirmCountdown = GuideConfirmDelaySeconds;
         var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
-        timer.Tick += (_, _) =>
-        {
+        timer.Tick += (_, _) => {
             if (--GuideConfirmCountdown <= 0)
             {
                 timer.Stop();
@@ -933,8 +937,7 @@ public class SettingsViewModel : Screen
         var dialog = new Views.Dialogs.TextDialogView(
             LocalizationHelper.GetString("RenameTask"),
             LocalizationHelper.GetString("RenameTaskPrompt"),
-            taskItem.Name)
-        {
+            taskItem.Name) {
             Owner = Application.Current.MainWindow,
         };
 
@@ -1104,11 +1107,6 @@ public class SettingsViewModel : Screen
     {
         get => _scrollOffset;
         set {
-            if (!AllowScrollOffsetChange)
-            {
-                return;
-            }
-
             // 平滑滚动动画落地的回写（ScrollViewerBinding 在动画结束后把目标值路由回绑定源）：
             // 与动画目标一致说明本次滚动源于导航定位，同步值即可，不反向重算导航高亮——
             // 目标偏移被 ScrollViewer 钳制时（分节下方内容不足一屏，实际停不到目标），
@@ -1160,8 +1158,6 @@ public class SettingsViewModel : Screen
             }
         }
     }
-
-    public bool AllowScrollOffsetChange { get; set; } = true;
 
     private double _scrollAnimationTarget = double.NaN;
 
@@ -1242,16 +1238,10 @@ public class SettingsViewModel : Screen
         set => SetExpanderState(SettingKey.UiSettings, value);
     }
 
-    public bool IsBackgroundSettingsExpanded
+    public bool IsNotificationSettingsExpanded
     {
-        get => GetExpanderState(SettingKey.BackgroundSettings);
-        set => SetExpanderState(SettingKey.BackgroundSettings, value);
-    }
-
-    public bool IsExternalNotificationSettingsExpanded
-    {
-        get => GetExpanderState(SettingKey.ExternalNotificationSettings);
-        set => SetExpanderState(SettingKey.ExternalNotificationSettings, value);
+        get => GetExpanderState(SettingKey.NotificationSettings);
+        set => SetExpanderState(SettingKey.NotificationSettings, value);
     }
 
     public bool IsThirdPartyServiceSettingsExpanded

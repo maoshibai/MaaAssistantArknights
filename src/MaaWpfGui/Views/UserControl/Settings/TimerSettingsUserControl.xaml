@@ -75,22 +75,23 @@
                 Margin="10,5"
                 HorizontalAlignment="Center"
                 Orientation="Horizontal">
+                <controls:TooltipBlock Visibility="Hidden" />
                 <CheckBox
                     VerticalContentAlignment="Center"
                     Content="{DynamicResource NotifyBeforeScheduledStart}"
                     IsChecked="{Binding NotifyBeforeScheduledStart}" />
-                <controls:TooltipBlock VerticalAlignment="Center" TooltipText="{DynamicResource NotifyBeforeScheduledStartTip}" />
                 <hc:NumericUpDown
                     Height="30"
-                    Margin="10,-10"
+                    Margin="10,-10,0,-10"
                     VerticalAlignment="Center"
                     hc:InfoElement.Title="{DynamicResource ScheduledStartNotificationMinutes}"
                     hc:TitleElement.TitlePlacement="Left"
                     InputMethod.IsInputMethodEnabled="False"
                     Maximum="1439"
                     Minimum="1"
-                    Visibility="{c:Binding NotifyBeforeScheduledStart}"
+                    Visibility="{c:Binding 'NotifyBeforeScheduledStart || (ExternalNotificationSettings.DeliverySettings.Enable &amp;&amp; ExternalNotificationSettings.DeliverySettings.SendBeforeScheduledStart &amp;&amp; ExternalNotificationSettings.ConfigCount > 0)'}"
                     Value="{Binding ScheduledStartNotificationMinutes}" />
+                <controls:TooltipBlock VerticalAlignment="Center" TooltipText="{DynamicResource NotifyBeforeScheduledStartTip}" />
             </StackPanel>
 
             <StackPanel
@@ -104,14 +105,12 @@
                     IsChecked="{Binding CustomConfig}" />
                 <controls:TooltipBlock TooltipText="{DynamicResource TimerCustomConfigTip}" />
             </StackPanel>
-
         </Grid>
 
         <!--  定时项区数据驱动：模板绑 TimerList 各项  -->
         <ItemsControl
             Grid.Row="2"
             Width="500"
-            Margin="0,5,0,0"
             d:ItemsSource="{d:SampleData ItemCount=8}"
             ItemsSource="{Binding TimerList}">
             <ItemsControl.ItemsPanel>

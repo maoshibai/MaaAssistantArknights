@@ -14,6 +14,12 @@
     <system:String x:Key="StartupSettings">Startup</system:String>
     <system:String x:Key="ScheduleSettings">Schedule</system:String>
     <system:String x:Key="UiSettings">GUI</system:String>
+    <system:String x:Key="LanguageSettings">Language</system:String>
+    <system:String x:Key="ThemeAndAnimationSettings">Theme and Animations</system:String>
+    <system:String x:Key="TitleBarSettings">Title Bar Settings</system:String>
+    <system:String x:Key="LogDisplaySettings">Log Display Settings</system:String>
+    <system:String x:Key="TraySettings">Tray</system:String>
+    <system:String x:Key="OperationGuideSettings">Operations and Guide</system:String>
     <system:String x:Key="BackgroundSettings">Background Setting</system:String>
     <system:String x:Key="BackgroundImage">Background Image</system:String>
     <system:String x:Key="BackgroundOpacity">Background Opacity</system:String>
@@ -48,15 +54,10 @@
     <system:String x:Key="ResourceVersion">Resource Version</system:String>
     <system:String x:Key="ResourceDateTime">Resource Date</system:String>
     <system:String x:Key="Off">Off</system:String>
-    <system:String x:Key="ExternalNotificationTips">Please note: The external notification feature currently only sends ｢All tasks completed｣ notifications.</system:String>
     <system:String x:Key="ExternalNotificationSettings">External notifications</system:String>
-    <system:String x:Key="ExternalNotificationEnabled">Enabled configuration</system:String>
-    <system:String x:Key="ExternalNotificationEnableDetails">Output Detailed Information</system:String>
-    <system:String x:Key="ExternalNotificationSendWhenComplete">Send notification when complete</system:String>
-    <system:String x:Key="ExternalNotificationSendWhenError">Send notification when task fails</system:String>
-    <system:String x:Key="ExternalNotificationSendWhenStalled">Send notification when task log output stalls</system:String>
-    <system:String x:Key="ExternalNotificationSendWhenStalledTip">Only takes effect after enabling ｢{key=StallTimeoutEnabled}｣ in ｢{key=GameSettings}｣</system:String>
-    <system:String x:Key="ExternalNotificationSendBeforeScheduledStart">Send notification before scheduled start</system:String>
+    <system:String x:Key="ExternalNotificationEnabled">Notification Channels</system:String>
+    <system:String x:Key="ExternalNotificationSendBeforeScheduledStart">Before scheduled start</system:String>
+    <system:String x:Key="ExternalNotificationSendBeforeScheduledStartTip" xml:space="preserve">Sends an external notification before a scheduled task starts.&#10;Uses the ｢{key=ScheduledStartNotificationMinutes}｣ setting in ｢{key=ScheduleSettings}｣.</system:String>
     <system:String x:Key="ExternalNotificationSendSuccess">Send successfully</system:String>
     <system:String x:Key="ExternalNotificationSendFail">Send failed</system:String>
     <system:String x:Key="ExternalNotificationSendTest">Send Test</system:String>
@@ -567,7 +568,8 @@ Continue only after you have verified the directory layout and finished a manual
     <system:String x:Key="TimerCustomConfig">Custom config</system:String>
     <system:String x:Key="TimerCustomConfigTip">Restart the game and switch the configuration two minutes before the scheduled start</system:String>
     <system:String x:Key="NotifyBeforeScheduledStart">Send system notification before scheduled start</system:String>
-    <system:String x:Key="NotifyBeforeScheduledStartTip" xml:space="preserve">Send a system notification at the configured advance notice time.&#10;External notifications can be enabled separately in ｢{key=ExternalNotificationSettings}｣ and use the same advance notice time.</system:String>
+    <system:String x:Key="NotifyBeforeScheduledStartTip" xml:space="preserve">Send a system notification at the configured advance notice time.&#10;External notifications can be enabled separately in ｢{key=Settings} - {key=NotificationSettings} - {key=ExternalNotificationSettings}｣ and use the same advance notice time.</system:String>
+    <system:String x:Key="NotifyBeforeScheduledStartSharedTimeTip">External notifications share this advance notice time.</system:String>
     <system:String x:Key="ScheduledStartNotificationMinutes">Advance notice (minutes)</system:String>
     <system:String x:Key="ScheduledStartNotificationTitle">Scheduled task starting soon</system:String>
     <system:String x:Key="ScheduledStartNotificationContent">Timer {0} is scheduled to start at {1} (in {2} minutes). Please be aware that this may affect your game login.</system:String>
@@ -747,6 +749,7 @@ To enable this mechanism, make sure the selected difficulty is N3 or higher (exc
     <system:String x:Key="ThirdPartyGroupYituliu">Yituliu</system:String>
     <system:String x:Key="YituliuOpenApiToken">OpenAPI token</system:String>
     <system:String x:Key="YituliuTokenVerify">Verify</system:String>
+    <system:String x:Key="YituliuTokenLink">Get a token from {key=ThirdPartyGroupYituliu}</system:String>
     <system:String x:Key="YituliuTokenEmpty">Please enter a token first</system:String>
     <system:String x:Key="YituliuTokenValid">Token is valid, {0} operators found</system:String>
     <system:String x:Key="YituliuTokenValidNoData">Token is valid, but the account has no operator data yet</system:String>
@@ -1207,6 +1210,7 @@ Right Click: Select Target Process</system:String>
     <system:String x:Key="Depot">{key=DepotRecognition}</system:String>
     <system:String x:Key="LastSyncTime">Last Sync Time</system:String>
     <system:String x:Key="DepotRecognitionTip">This function is still in testing. If you encounter any unexpected results, please zip the ｢debug/depot｣ folder in the installation path and submit an issue on GitHub</system:String>
+    <system:String x:Key="DepotTemplateLoadError">{key=DepotRecognition} templates failed to load ({0}). Recognition has been stopped.</system:String>
     <system:String x:Key="StartToDepotRecognition">Start to Identify</system:String>
     <system:String x:Key="ExportToArkplanner">Arkplanner</system:String>
     <system:String x:Key="ExportToLolicon">Arkntools</system:String>
@@ -1411,6 +1415,10 @@ Only level rewards can be farmed; to get the Engraved Medal, all ｢Key Objectiv
     <system:String x:Key="Copilot.IgnoreRequirements.Tip" xml:space="preserve">Some jobs require specific skill levels, Modules or other prerequisites.
 Enabling this will skip these checks, but may cause the job to fail.
 Operators' Elite level CANNOT be ignored. If any requirements are ignored, the operation will no longer be automatically rated after the battle.</system:String>
+    <system:String x:Key="Copilot.UseOperBoxAssist">Assist formation with Yituliu data</system:String>
+    <system:String x:Key="Copilot.UseOperBoxAssist.Tip" xml:space="preserve">Pre-matches the operation squad against Yituliu operator data (including skills and modules) before auto-formation&#10;Requires a Yituliu token: fill it in under ｢{key=Settings} - {key=ThirdPartyServiceSettings}｣, enable ｢{key=EnableOperBoxYituliuApi}｣, then fetch data</system:String>
+    <system:String x:Key="Copilot.SyncOperBoxData">Sync</system:String>
+    <system:String x:Key="Copilot.SyncOperBoxSuccess">Synced Yituliu data for {0} operators</system:String>
     <system:String x:Key="AddUserAdditional">Add custom {key=Operator}s</system:String>
     <system:String x:Key="AddUserAdditionalTip">Click the settings button next to it to open the editing window, then click ｢{key=UserAdditional.Add}｣ to add entries one by one, and fill in the {key=Operator} name, skill, and action in each column</system:String>
     <system:String x:Key="UserAdditional.OperatorName">{key=Operator} Name</system:String>
@@ -1482,6 +1490,7 @@ Right-click to clear inactive jobs</system:String>
         • Execution will stop automatically when sanity is insufficient, battle fails, or fails to achieve a 3★ clear.
     </system:String>
     <system:String x:Key="CopilotFileReadError">Failed to read file!</system:String>
+    <system:String x:Key="CopilotStartFailed">Failed to start the copilot task</system:String>
     <system:String x:Key="CopilotNoFound">No corresponding file found!</system:String>
     <system:String x:Key="NetworkServiceError">Network service error!</system:String>
     <system:String x:Key="CopilotJsonError">Copilot JSON Error!</system:String>
@@ -1887,7 +1896,11 @@ Right-click to clear inactive jobs</system:String>
     <system:String x:Key="BattleFormationOperUnavailable.Level">Level too low</system:String>
     <system:String x:Key="BattleFormationOperUnavailable.SkillLevel">Skill level too low</system:String>
     <system:String x:Key="BattleFormationOperUnavailable.Module">Required module not unlocked</system:String>
+    <system:String x:Key="BattleFormationOperbox1Unmatched" xml:space="preserve">{key=Operator} (group) {0} has no matching {key=Operator}, a support unit is needed (pre-matching suggests {1}; the actual pick follows the support unit list)</system:String>
+    <system:String x:Key="BattleFormationOperboxMatched">Pre-matched {key=Operator} (groups):</system:String>
     <system:String x:Key="CopilotUserAdditionalNameInvalid">Additional custom {key=Operator} name invalid: {0}, please check spelling</system:String>
+    <system:String x:Key="CopilotOperboxDataParseFailed">{key=OperBoxRecognition} data parse failed</system:String>
+    <system:String x:Key="CopilotOperboxAssistRequiresYituliuData">No Yituliu operator data is available for formation assist. Fetch operator data from Yituliu first, or disable ｢{key=Copilot.UseOperBoxAssist}｣.</system:String>
     <system:String x:Key="CurrentSteps">Step: {0} {1}</system:String>
     <system:String x:Key="ElapsedTime">Elapsed time: {0}ms</system:String>
     <system:String x:Key="Deploy">Deploy</system:String>
@@ -2196,7 +2209,7 @@ These directories are not suitable places to keep MAA; files there can be easily
     <!-- <system:String x:Key="TaskTimeoutMinutes">Task timeout duration (minutes)</system:String> -->
     <system:String x:Key="ReminderIntervalMinutes">Reminder interval (minutes)</system:String>
     <system:String x:Key="StallTimeoutMinutes">Log output stall timeout (min)</system:String>
-    <system:String x:Key="StallTimeoutEnabled">Enable stall detection</system:String>
+    <system:String x:Key="StallTimeoutEnabled">Detect stalled log updates</system:String>
     <system:String x:Key="TaskStallWarning">Task log output has not been updated for {0} minutes (currently stalled for {1} minutes). Please check whether the task is still running; if so, you can ignore this warning. If the task is unresponsive, manual intervention may be required.</system:String>
     <system:String x:Key="RunDurationLimitEnabled">Limit run duration</system:String>
     <system:String x:Key="RunDurationLimitMinutes">Run duration limit (min)</system:String>
@@ -2630,7 +2643,7 @@ These directories are not suitable places to keep MAA; files there can be easily
 
     <system:String x:Key="Achievement.AllChannelBroadcast.Title">Broadcast on All Platforms</system:String>
     <system:String x:Key="Achievement.AllChannelBroadcast.Description">Now nobody gets to miss it.</system:String>
-    <system:String x:Key="Achievement.AllChannelBroadcast.Conditions">Enable all platforms in ｢{key=ExternalNotificationSettings}｣ at the same time</system:String>
+    <system:String x:Key="Achievement.AllChannelBroadcast.Conditions">Enable all platforms in ｢{key=Settings} - {key=NotificationSettings} - {key=ExternalNotificationSettings}｣ at the same time</system:String>
 
     <system:String x:Key="Achievement.BackstageExplorer.Title">Backstage Explorer</system:String>
     <system:String x:Key="Achievement.BackstageExplorer.Description">Let me see what's written back there.</system:String>
@@ -2698,4 +2711,26 @@ These directories are not suitable places to keep MAA; files there can be easily
     <system:String x:Key="PleaseSelectItem">Please select an item</system:String>
     <system:String x:Key="EmulatorSelectionCancelled">Emulator selection cancelled</system:String>
     <!--  !ItemSelection  -->
+    <system:String x:Key="NotificationSettings">Notifications</system:String>
+    <system:String x:Key="NotificationSettingsTimeMinutes">Log Validity (Minutes)</system:String>
+    <system:String x:Key="NotificationSettingsTimeMinutesTip" xml:space="preserve">Expired logs are no longer attached to notifications.&#10;Set to 0 to disable time filtering.</system:String>
+    <system:String x:Key="NotificationSettingsInvalidFilterTip" xml:space="preserve">Invalid regular expression. Check the filter rules.</system:String>
+    <system:String x:Key="ExternalNotificationEnable">Enable External Notifications</system:String>
+    <system:String x:Key="ExternalNotificationSendConditions">Send external notifications when</system:String>
+    <system:String x:Key="ExternalNotificationWhenComplete">Tasks complete</system:String>
+    <system:String x:Key="ExternalNotificationWhenError">A task fails</system:String>
+    <system:String x:Key="ExternalNotificationWhenStalled">Task log output stalls</system:String>
+    <system:String x:Key="ExternalNotificationWhenStalledTip" xml:space="preserve">Enable ｢{key=StallTimeoutEnabled}｣ in ｢{key=NotificationSettings}｣.&#10;Sends a notification when no new logs appear within the configured timeout.</system:String>
+    <system:String x:Key="ExternalNotificationNewLogCount">New log entries</system:String>
+    <system:String x:Key="ExternalNotificationNewLogCountTip" xml:space="preserve">Counts each new log entry after the last external notification was triggered.&#10;Sends when the specified count is reached; notifications triggered by task completion, errors or other conditions also reset this count.</system:String>
+    <system:String x:Key="ExternalNotificationContentMatches">Log contains specific content</system:String>
+    <system:String x:Key="ExternalNotificationWhitelist">Whitelist (one regex per line)</system:String>
+    <system:String x:Key="ExternalNotificationWhitelistTip" xml:space="preserve">Enter one regular expression per line; a match on any line against the current log triggers a notification.&#10;An empty whitelist does not trigger this condition.</system:String>
+    <system:String x:Key="ExternalNotificationIncludePreviousLogs">Include previous logs</system:String>
+    <system:String x:Key="ExternalNotificationIncludePreviousLogsTip" xml:space="preserve">Includes previous logs alongside the current log.&#10;The log count and validity period control which previous logs are included.</system:String>
+    <system:String x:Key="ExternalNotificationPreviousLogCount">Included log count</system:String>
+    <system:String x:Key="ExternalNotificationPreviousLogCountTip" xml:space="preserve">Includes up to this many previous log entries, excluding the current log.&#10;Set to 0 to send only the current log.</system:String>
+    <system:String x:Key="ExternalNotificationFilterPreviousLogs">Filter attached log content</system:String>
+    <system:String x:Key="ExternalNotificationFilterPreviousLogsTip" xml:space="preserve">Removes logs matching the blacklist, then selects the most recent logs within the count and age limits.&#10;The current log is always kept.</system:String>
+    <system:String x:Key="ExternalNotificationBlacklist">Blacklist (one regex per line)</system:String>
 </ResourceDictionary>

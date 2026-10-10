@@ -43,7 +43,7 @@ using MaaWpfGui.Models;
 using MaaWpfGui.Models.AsstTasks;
 using MaaWpfGui.Models.EmulatorConnectionExtra;
 using MaaWpfGui.Services;
-using MaaWpfGui.Services.ExternalNotification;
+using MaaWpfGui.Services.Notification;
 using MaaWpfGui.Services.Web;
 using MaaWpfGui.States;
 using MaaWpfGui.Utilities;
@@ -694,29 +694,7 @@ public class AsstProxy
                     MessageBoxImage.Error);
             }
 
-            // Show 内部自行切 UI 线程，此处阻塞后台任务直至用户选择
-            var repair = MessageBoxHelper.Show(
-                LocalizationHelper.GetString("ResourceBroken"),
-                LocalizationHelper.GetString("Error"),
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Error,
-                iconKey: ResourceToken.FatalGeometry,
-                iconBrushKey: ResourceToken.DangerBrush,
-                yes: LocalizationHelper.GetString("ResourceIntegrityRepairYes"),
-                no: LocalizationHelper.GetString("ResourceIntegrityRepairNo"));
-            if (repair == MessageBoxResult.Yes)
-            {
-                _logger.Information("User chose auto repair on resource-broken dialog");
-
-                // 修复流程需要 UI 上下文；期间应用保持运行（任务启动已被标志拦截），
-                // 另一入口已在修复时由防重入兜底直接返回
-                _ = Execute.OnUIThreadAsync(() => _ = Instances.VersionUpdateDialogViewModel.RunIntegrityRepairAsync());
-            }
-            else
-            {
-                // 暂不处理：保持运行，保留拖入本地完整包等后续更新途径；任务入口已被标志拦截
-                _logger.Information("User declined auto repair on resource-broken dialog, continuing");
-            }
+            ShowResourceBrokenPrompt();
         }
 
         AsstSetInstanceOption(InstanceOptionKey.TouchMode, SettingsViewModel.ConnectSettings.TouchMode.ToCustomString());
@@ -805,6 +783,33 @@ public class AsstProxy
                     await Instances.TaskQueueViewModel.LinkStart();
                 }
             });
+    }
+
+    private static void ShowResourceBrokenPrompt()
+    {
+        // Show 内部自行切 UI 线程，此处阻塞后台任务直至用户选择
+        var repair = MessageBoxHelper.Show(
+            LocalizationHelper.GetString("ResourceBroken"),
+            LocalizationHelper.GetString("Error"),
+            MessageBoxButton.YesNo,
+            MessageBoxImage.Error,
+            iconKey: ResourceToken.FatalGeometry,
+            iconBrushKey: ResourceToken.DangerBrush,
+            yes: LocalizationHelper.GetString("ResourceIntegrityRepairYes"),
+            no: LocalizationHelper.GetString("ResourceIntegrityRepairNo"));
+        if (repair == MessageBoxResult.Yes)
+        {
+            _logger.Information("User chose auto repair on resource-broken dialog");
+
+            // 修复流程需要 UI 上下文；期间应用保持运行（任务启动已被标志拦截），
+            // 另一入口已在修复时由防重入兜底直接返回
+            _ = Execute.OnUIThreadAsync(() => _ = Instances.VersionUpdateDialogViewModel.RunIntegrityRepairAsync());
+        }
+        else
+        {
+            // 暂不处理：保持运行，保留拖入本地完整包等后续更新途径；任务入口已被标志拦截
+            _logger.Information("User declined auto repair on resource-broken dialog, continuing");
+        }
     }
 
     /// <summary>
@@ -1401,39 +1406,25 @@ public class AsstProxy
                 {
                     _taskChainStartTimes.Remove(taskId);
                     UpdateTaskStatus(taskId, TaskStatus.Error);
-                    _tasksStatus.TryGetValue(taskId, out var value);
-
-                    // 只统计主任务队列轮次的失败（工具箱 / Copilot / 小游戏各有独立归属），
-                    // Copilot / 小工具（如公招识别）的报错不应阻止完成后动作。
-                    // 归属不能按 TaskIds 反查判定：RemoteControlService 启动的轮次不填充 TaskIds，反查恒落空会使跳过静默失效
-                    if (_runningState.Owner == RunOwner.TaskQueue)
-                    {
-                        var failedIndex = Instances.TaskQueueViewModel.TaskItemViewModels.FirstOrDefault(i => i.TaskIds.Contains(taskId))?.Index ?? -1;
-                        var failedTask = failedIndex >= 0 && failedIndex < ConfigFactory.CurrentConfig.TaskQueue.Count
-                            ? ConfigFactory.CurrentConfig.TaskQueue[failedIndex]
-                            : null;
-
-                        // 以 Core 任务 id 为准去重记录；任务名只是出错当时的快照（取不到时以任务链名兜底），仅用于日志
-                        var failedTaskName = failedTask?.NameOrTaskType ?? $"({LocalizationHelper.GetString(taskChain)})";
-                        failedTaskName += GetMultiChainTaskNameSuffix(failedTask, taskChain, taskId);
-                    }
 
                     // details.error 为 Core 侧 TaskExceptionKind 名（如 OutOfMemory），普通识别错误无此字段
                     var log = details["error"]?.ToString() == "OutOfMemory"
                         ? LocalizationHelper.GetStringFormat("OutOfMemoryError", LocalizationHelper.GetString(taskChain))
                         : LocalizationHelper.GetString("TaskError") + LocalizationHelper.GetString(taskChain);
-                    Instances.TaskQueueViewModel.AddLog(log, UiLogColor.Error, updateCardImage: true, fetchLatestImage: true, useCardImageAsToolTip: true);
+                    void DisplayErrorLog() => Instances.TaskQueueViewModel.DisplayLog(log, UiLogColor.Error,
+                        updateCardImage: true, fetchLatestImage: true, useCardImageAsToolTip: true);
 
-                    ToastNotification.ShowDirect(log);
-                    if (SettingsViewModel.ExternalNotificationSettings.ExternalNotificationSendWhenError)
+                    if (isCopilotTaskChain)
                     {
-                        ExternalNotificationService.Send(log, log);
-                    }
-
-                    if (value is { Type: TaskType.Copilot })
-                    {
-                        Instances.CopilotViewModel.AddLog(LocalizationHelper.GetString("CombatError"), UiLogColor.Error);
+                        DisplayErrorLog();
+                        Instances.NotificationService.Notify(NotificationSource.Copilot, new(NotificationKind.TaskError, log, log),
+                            UiLogColor.Error, logContent: LocalizationHelper.GetString("CombatError"));
                         AchievementTrackerHelper.Instance.Unlock(AchievementIds.CopilotError);
+                    }
+                    else
+                    {
+                        Instances.NotificationService.Notify(NotificationSource.TaskQueue, new(NotificationKind.TaskError, log, log),
+                            UiLogColor.Error, display: DisplayErrorLog);
                     }
 
                     break;
@@ -1609,22 +1600,16 @@ public class AsstProxy
                             _sanityRecoveryTimer.Start();
                         }
                     }
-                    AddTaskCompletionLog(allTaskCompleteLog, hasTaskErrors);
 
                     // 出错时保留完成上下文（时间/配置等）再附错误清单，避免通知正文只剩清单
                     var allTaskCompleteContent = hasTaskErrors
                         ? allTaskCompleteMessage + Environment.NewLine + BuildTaskErrorSummaryLog(failedTaskNames)
                         : allTaskCompleteMessage;
-                    ExternalNotificationService.Event.AllTaskComplete(allTaskCompleteTitle, allTaskCompleteContent, sanityReport);
-                    using (var toast = new ToastNotification(allTaskCompleteTitle))
-                    {
-                        if (FightSetting.SanityReport is not null)
-                        {
-                            toast.AppendContentText(sanityReport);
-                        }
-
-                        toast.Show();
-                    }
+                    var notificationContent = string.IsNullOrEmpty(sanityReport)
+                        ? allTaskCompleteContent
+                        : allTaskCompleteContent + Environment.NewLine + sanityReport;
+                    AddTaskCompletionLog(allTaskCompleteLog, hasTaskErrors,
+                        new(NotificationKind.TaskComplete, allTaskCompleteTitle, notificationContent));
 
                     if (DateTime.UtcNow.ToYjDate().IsAprilFoolsDay())
                     {
@@ -1645,7 +1630,8 @@ public class AsstProxy
                 }
                 else if (runOwner == RunOwner.Copilot)
                 {
-                    ToastNotification.ShowDirect(LocalizationHelper.GetString("CompleteTask") + LocalizationHelper.GetString(taskChain));
+                    var message = LocalizationHelper.GetString("CompleteTask") + LocalizationHelper.GetString(taskChain);
+                    Instances.NotificationService.Notify(NotificationSource.Copilot, new(NotificationKind.TaskComplete, message, message));
                 }
 
                 if (buyWine)
@@ -1805,6 +1791,28 @@ public class AsstProxy
                 Instances.TaskQueueViewModel.AddLog(LocalizationHelper.GetString("DropRecognitionError"), UiLogColor.Error);
                 break;
 
+            case "DepotRecognitionTask":
+                {
+                    if (details["what"]?.ToString() != "DepotTemplateLoadError")
+                    {
+                        break;
+                    }
+
+                    var itemIds = details["details"]?["item_ids"]?.Values<string>().Where(id => !string.IsNullOrEmpty(id)) ?? [];
+                    Instances.TaskQueueViewModel.AddLog(
+                        LocalizationHelper.GetStringFormat("DepotTemplateLoadError", string.Join(", ", itemIds)),
+                        UiLogColor.Error);
+
+                    // 模板损坏按资源损坏处理：先置标志拦截任务，再弹修复弹窗
+                    if (!Bootstrapper.IsResourceBroken)
+                    {
+                        Bootstrapper.MarkResourceBroken();
+                        _ = Task.Run(ShowResourceBrokenPrompt);
+                    }
+
+                    break;
+                }
+
             case "ReportToPenguinStats":
                 {
                     var why = details["why"]!.ToString();
@@ -1853,7 +1861,7 @@ public class AsstProxy
                             }
                         }
 
-                        Instances.CopilotViewModel.AddLog(LocalizationHelper.GetStringFormat("MissingOperators", str.ToString()), UiLogColor.Error);
+                        Instances.CopilotViewModel.AddLog(LocalizationHelper.GetStringFormat("MissingOperators", str.ToString()), UiLogColor.Error, showTime: false);
 
                         if (missingOpers is not null && missingOpers.Count >= 2)
                         {
@@ -1868,7 +1876,20 @@ public class AsstProxy
                     if (what == "UserAdditionalOperInvalid")
                     {
                         var operName = details["details"]?["name"]?.ToString();
-                        Instances.CopilotViewModel.AddLog(LocalizationHelper.GetStringFormat("CopilotUserAdditionalNameInvalid", operName ?? string.Empty), UiLogColor.Error);
+                        Instances.CopilotViewModel.AddLog(LocalizationHelper.GetStringFormat("CopilotUserAdditionalNameInvalid", operName ?? string.Empty), UiLogColor.Error, showTime: false);
+                    }
+                    if (what == "CopilotFileReadError")
+                    {
+                        Instances.CopilotViewModel.AddLog(LocalizationHelper.GetString("CopilotFileReadError"), UiLogColor.Error, showTime: false);
+                    }
+                    if (what == "CopilotStageNotSupported")
+                    {
+                        var stageName = details["details"]?["stage_name"]?.ToString();
+                        Instances.CopilotViewModel.AddLog(LocalizationHelper.GetStringFormat("UnsupportedStages", stageName ?? string.Empty), UiLogColor.Error, showTime: false);
+                    }
+                    if (what == "OperboxDataParseFailed")
+                    {
+                        Instances.CopilotViewModel.AddLog(LocalizationHelper.GetString("CopilotOperboxDataParseFailed"), UiLogColor.Error, showTime: false);
                     }
                     break;
                 }
@@ -1951,8 +1972,8 @@ public class AsstProxy
                             break;
 
                         case "FightMissionFailedAndStop":
-                            Instances.TaskQueueViewModel.AddLog(LocalizationHelper.GetString("FightMissionFailedAndStop"), UiLogColor.Error);
-                            ToastNotification.ShowDirect(LocalizationHelper.GetString("FightMissionFailedAndStop"));
+                            var fightError = LocalizationHelper.GetString("FightMissionFailedAndStop");
+                            Instances.NotificationService.Notify(NotificationSource.TaskQueue, new(NotificationKind.TaskError, fightError, fightError), UiLogColor.Error);
                             break;
 
                         case "CheckEncounter-Uncollected":
@@ -1960,14 +1981,8 @@ public class AsstProxy
                                 var title = LocalizationHelper.GetString("MiniGame@InteractiveExhibition@UncollectedNotificationTitle");
                                 var content = LocalizationHelper.GetString("MiniGame@InteractiveExhibition@UncollectedNotificationContent");
 
-                                Instances.TaskQueueViewModel.AddLog(content, UiLogColor.Warning, updateCardImage: true);
-
-                                ToastNotification.ShowDirect($"{title}\n{content}");
-
-                                if (SettingsViewModel.ExternalNotificationSettings.ExternalNotificationSendWhenComplete)
-                                {
-                                    ExternalNotificationService.Send(title, content);
-                                }
+                                Instances.NotificationService.Notify(NotificationSource.TaskQueue, new(NotificationKind.TaskComplete, title, content),
+                                    UiLogColor.Warning, display: () => Instances.TaskQueueViewModel.DisplayLog(content, UiLogColor.Warning, updateCardImage: true));
 
                                 break;
                             }
@@ -2049,12 +2064,7 @@ public class AsstProxy
                             }
 
                             var log = LocalizationHelper.GetString("GameDrop");
-                            Instances.TaskQueueViewModel.AddLog(log, UiLogColor.Error);
-                            ToastNotification.ShowDirect(log);
-                            if (SettingsViewModel.ExternalNotificationSettings.ExternalNotificationSendWhenError)
-                            {
-                                ExternalNotificationService.Send(log, log);
-                            }
+                            Instances.NotificationService.Notify(NotificationSource.TaskQueue, new(NotificationKind.TaskError, log, log), UiLogColor.Error);
                             _ = Instances.TaskQueueViewModel.Stop();
                             break;
 
@@ -2510,7 +2520,7 @@ public class AsstProxy
                 break;
 
             case "BattleFormationParseFailed":
-                Instances.CopilotViewModel.AddLog(LocalizationHelper.GetString("BattleFormationParseFailed"));
+                Instances.CopilotViewModel.AddLog(LocalizationHelper.GetString("BattleFormationParseFailed"), showTime: false);
                 break;
 
             case "BattleFormationSelected":
@@ -2551,7 +2561,32 @@ public class AsstProxy
                             break;
                     }
 
-                    Instances.CopilotViewModel.AddLog(LocalizationHelper.GetStringFormat("BattleFormationOperUnavailable", oper_name ?? string.Empty, type), isError ? UiLogColor.Error : UiLogColor.Warning);
+                    Instances.CopilotViewModel.AddLog(LocalizationHelper.GetStringFormat("BattleFormationOperUnavailable", oper_name ?? string.Empty, type), isError ? UiLogColor.Error : UiLogColor.Warning, showTime: false);
+                    break;
+                }
+
+            case "BattleFormationOperboxMatched":
+                {
+                    var matchedGroups = subTaskDetails!["matched_groups"]?.ToObject<List<JObject>>() ?? [];
+                    var sb = new StringBuilder();
+                    sb.AppendLine(LocalizationHelper.GetString("BattleFormationOperboxMatched"));
+                    foreach (var group in matchedGroups)
+                    {
+                        var gn = group["group_name"]?.ToString() ?? string.Empty;
+                        var on = DataHelper.GetLocalizedCharacterName(group["oper_name"]?.ToString());
+                        sb.AppendLine($"{gn} => {on}");
+                    }
+                    Instances.CopilotViewModel.AddLog(sb.ToString().TrimEnd(), UiLogColor.Info, showTime: false);
+                    break;
+                }
+
+            case "BattleFormationOperbox1Unmatched":
+                {
+                    // 仅借战模拟成功路径会带 may_borrow_oper 上报；无建议的失败统一走 OperatorMissing 协议
+                    var groupName = subTaskDetails!["group_name"]?.ToString() ?? "Unknown Group";
+                    var operName = DataHelper.GetLocalizedCharacterName(subTaskDetails["may_borrow_oper"]?.ToString()) ?? string.Empty;
+                    Instances.CopilotViewModel.AddLog(
+                        LocalizationHelper.GetStringFormat("BattleFormationOperbox1Unmatched", groupName, operName), UiLogColor.Warning, showTime: false);
                     break;
                 }
 
@@ -3582,24 +3617,27 @@ public class AsstProxy
         return string.Join('\n', failedTaskNames.Prepend(LocalizationHelper.GetString("TaskErrorSummaryTitle")));
     }
 
-    private void AddTaskCompletionLog(string completionLog, bool hasTaskErrors)
+    private static void AddTaskCompletionLog(string completionLog, bool hasTaskErrors, NotificationMessage notification)
     {
         // 有错误时标题行标红单独成段，理智报告等后续内容留在下一段，避免整卡变红
-        if (!hasTaskErrors)
-        {
-            Instances.TaskQueueViewModel.AddLog(completionLog, splitMode: TaskQueueViewModel.LogCardSplitMode.Both);
-            return;
-        }
+        // 完成事件只发布一次，分段显示不能再次进入通知触发和历史记录。
+        Instances.NotificationService.Notify(NotificationSource.TaskQueue, notification,
+            hasTaskErrors ? UiLogColor.Error : UiLogColor.Trace, logContent: completionLog, display: () => {
+                if (!hasTaskErrors)
+                {
+                    Instances.TaskQueueViewModel.DisplayLog(completionLog, splitMode: TaskQueueViewModel.LogCardSplitMode.Both);
+                    return;
+                }
 
-        var (errorHeadline, extraContent) = SplitTaskCompletionLog(completionLog);
-        if (string.IsNullOrWhiteSpace(extraContent))
-        {
-            Instances.TaskQueueViewModel.AddLog(errorHeadline, UiLogColor.Error, splitMode: TaskQueueViewModel.LogCardSplitMode.Both);
-            return;
-        }
-
-        Instances.TaskQueueViewModel.AddLog(errorHeadline, UiLogColor.Error, splitMode: TaskQueueViewModel.LogCardSplitMode.Before);
-        Instances.TaskQueueViewModel.AddLog(extraContent, splitMode: TaskQueueViewModel.LogCardSplitMode.After);
+                var (errorHeadline, extraContent) = SplitTaskCompletionLog(completionLog);
+                var hasExtraContent = !string.IsNullOrWhiteSpace(extraContent);
+                Instances.TaskQueueViewModel.DisplayLog(errorHeadline, UiLogColor.Error,
+                    splitMode: hasExtraContent ? TaskQueueViewModel.LogCardSplitMode.Before : TaskQueueViewModel.LogCardSplitMode.Both);
+                if (hasExtraContent)
+                {
+                    Instances.TaskQueueViewModel.DisplayLog(extraContent, splitMode: TaskQueueViewModel.LogCardSplitMode.After);
+                }
+            });
     }
 
     private static (string ErrorHeadline, string ExtraContent) SplitTaskCompletionLog(string completionLog)
@@ -3609,14 +3647,14 @@ public class AsstProxy
             return (string.Empty, string.Empty);
         }
 
-        int firstLineEnd = completionLog.LastIndexOf('\n');
-        if (firstLineEnd < 0)
+        int lastLineEnd = completionLog.LastIndexOf('\n');
+        if (lastLineEnd < 0)
         {
             return (completionLog, string.Empty);
         }
 
-        string errorHeadline = completionLog[..firstLineEnd].TrimEnd('\r');
-        string extraContent = completionLog[(firstLineEnd + 1)..].TrimStart('\r', '\n');
+        string errorHeadline = completionLog[..lastLineEnd].TrimEnd('\r');
+        string extraContent = completionLog[(lastLineEnd + 1)..].TrimStart('\r', '\n');
         return (errorHeadline, extraContent);
     }
 

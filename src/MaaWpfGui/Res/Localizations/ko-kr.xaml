@@ -14,6 +14,12 @@
     <system:String x:Key="StartupSettings">시작 설정</system:String>
     <system:String x:Key="ScheduleSettings">예약 설정</system:String>
     <system:String x:Key="UiSettings">UI 설정</system:String>
+    <system:String x:Key="LanguageSettings">언어</system:String>
+    <system:String x:Key="ThemeAndAnimationSettings">테마 및 애니메이션</system:String>
+    <system:String x:Key="TitleBarSettings">제목 표시줄 설정</system:String>
+    <system:String x:Key="LogDisplaySettings">로그 표시 설정</system:String>
+    <system:String x:Key="TraySettings">트레이</system:String>
+    <system:String x:Key="OperationGuideSettings">조작 및 가이드</system:String>
     <system:String x:Key="UiTheme">UI 테마</system:String>
     <system:String x:Key="TransitionSpeed">전환 애니메이션</system:String>
     <system:String x:Key="TransitionSpeedNormal">기본</system:String>
@@ -48,15 +54,10 @@
     <system:String x:Key="ResourceVersion">리소스 버전</system:String>
     <system:String x:Key="ResourceDateTime">리소스 날짜</system:String>
     <system:String x:Key="Off">끄기</system:String>
-    <system:String x:Key="ExternalNotificationTips">팁: 외부 알림 기능은 현재 ｢모든 작업 완료｣ 알림만 보냅니다.</system:String>
     <system:String x:Key="ExternalNotificationSettings">외부 알림</system:String>
-    <system:String x:Key="ExternalNotificationEnabled">알림 구성 사용</system:String>
-    <system:String x:Key="ExternalNotificationEnableDetails">상세 정보 출력</system:String>
-    <system:String x:Key="ExternalNotificationSendWhenComplete">작업 완료 시 알림 전송</system:String>
-    <system:String x:Key="ExternalNotificationSendWhenError">작업 실패 시 알림 전송</system:String>
-    <system:String x:Key="ExternalNotificationSendWhenStalled">작업 로그 출력 정지 시 알림 전송</system:String>
-    <system:String x:Key="ExternalNotificationSendWhenStalledTip">｢{key=GameSettings}｣에서 ｢{key=StallTimeoutEnabled}｣를 활성화해야만 적용됩니다</system:String>
-    <system:String x:Key="ExternalNotificationSendBeforeScheduledStart">예약 실행 전 알림 전송</system:String>
+    <system:String x:Key="ExternalNotificationEnabled">알림 채널</system:String>
+    <system:String x:Key="ExternalNotificationSendBeforeScheduledStart">예약 실행 전</system:String>
+    <system:String x:Key="ExternalNotificationSendBeforeScheduledStartTip" xml:space="preserve">예약 작업이 시작되기 전에 외부 알림을 전송합니다.&#10;｢{key=ScheduleSettings}｣의 ｢{key=ScheduledStartNotificationMinutes}｣ 설정을 사용합니다.</system:String>
     <system:String x:Key="ExternalNotificationSendSuccess">전송 성공</system:String>
     <system:String x:Key="ExternalNotificationSendFail">전송 실패</system:String>
     <system:String x:Key="ExternalNotificationSendTest">테스트</system:String>
@@ -567,7 +568,8 @@ D:\
     <system:String x:Key="TimerCustomConfig">커스텀 구성 옵션</system:String>
     <system:String x:Key="TimerCustomConfigTip">예약 시작 2분 전에 게임을 재실행하고 설정을 전환합니다</system:String>
     <system:String x:Key="NotifyBeforeScheduledStart">예약 실행 전 시스템 알림 전송</system:String>
-    <system:String x:Key="NotifyBeforeScheduledStartTip" xml:space="preserve">설정된 사전 알림 시간에 시스템 알림을 보냅니다.&#10;외부 알림은 ｢{key=ExternalNotificationSettings}｣에서 별도로 활성화할 수 있으며 사전 알림 시간을 공유합니다.</system:String>
+    <system:String x:Key="NotifyBeforeScheduledStartTip" xml:space="preserve">설정된 사전 알림 시간에 시스템 알림을 보냅니다.&#10;외부 알림은 ｢{key=Settings} - {key=NotificationSettings} - {key=ExternalNotificationSettings}｣에서 별도로 활성화할 수 있으며 사전 알림 시간을 공유합니다.</system:String>
+    <system:String x:Key="NotifyBeforeScheduledStartSharedTimeTip">외부 알림은 이 사전 알림 시간을 공유합니다.</system:String>
     <system:String x:Key="ScheduledStartNotificationMinutes">사전 알림 시간(분)</system:String>
     <system:String x:Key="ScheduledStartNotificationTitle">예약 작업이 곧 시작됩니다</system:String>
     <system:String x:Key="ScheduledStartNotificationContent">예약 {0}은(는) {1}({2}분 후)에 시작될 예정입니다. 게임 로그인 상태에 주의해 주세요.</system:String>
@@ -747,6 +749,7 @@ MAA는 비설치형 응용 프로그램으로, 삭제 시 레지스트리 항목
     <system:String x:Key="ThirdPartyGroupYituliu">Yituliu</system:String>
     <system:String x:Key="YituliuOpenApiToken">OpenAPI 토큰</system:String>
     <system:String x:Key="YituliuTokenVerify">확인</system:String>
+    <system:String x:Key="YituliuTokenLink">{key=ThirdPartyGroupYituliu}에서 토큰 받기</system:String>
     <system:String x:Key="YituliuTokenEmpty">먼저 토큰을 입력해 주세요</system:String>
     <system:String x:Key="YituliuTokenValid">토큰이 유효합니다. 총 {0}명의 오퍼레이터</system:String>
     <system:String x:Key="YituliuTokenValidNoData">토큰은 유효하지만 계정에 아직 오퍼레이터 데이터가 없습니다</system:String>
@@ -1208,6 +1211,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="Depot">{key=DepotRecognition}</system:String>
     <system:String x:Key="LastSyncTime">마지막 동기화 시간</system:String>
     <system:String x:Key="DepotRecognitionTip">이 기능은 현재 테스트 중입니다. 내보내기 전 인식 결과가 맞는지 확인 후 사용하세요\n만약 오류가 있다면 MAA 경로 내 debug 폴더 안의 depot 폴더 전체를 압축해서 Github의 issue로 올려주세요</system:String>
+    <system:String x:Key="DepotTemplateLoadError">{key=DepotRecognition} 템플릿을 불러오지 못했습니다({0}). 인식을 중단했습니다.</system:String>
     <system:String x:Key="StartToDepotRecognition">인식 시작</system:String>
     <system:String x:Key="ExportToArkplanner">Arkplanner</system:String>
     <system:String x:Key="ExportToLolicon">Arkntools</system:String>
@@ -1413,6 +1417,10 @@ C:\leidian\LDPlayer9
     <system:String x:Key="Copilot.IgnoreRequirements.Tip" xml:space="preserve">일부 작업은 특정 스킬 레벨, 모듈 또는 기타 요구 사항이 필요합니다.
 이 옵션을 활성화하면 해당 검사를 건너뛰지만, 작업이 정상적으로 동작하지 않을 수 있습니다.
 오퍼레이터의 정예화 등급은 무시할 수 없습니다. 요구 사항을 하나라도 무시할 경우, 전투 종료 후 자동으로 '좋아요'를 남기지 않습니다.</system:String>
+    <system:String x:Key="Copilot.UseOperBoxAssist">Yituliu 데이터로 편성 지원</system:String>
+    <system:String x:Key="Copilot.UseOperBoxAssist.Tip" xml:space="preserve">자동 편성 전 Yituliu 오퍼레이터 육성 데이터(스킬 및 모듈 정보 포함)로 편성을 사전 매칭합니다&#10;｢{key=Settings} - {key=ThirdPartyServiceSettings}｣에서 Yituliu 토큰을 입력하고 ｢{key=EnableOperBoxYituliuApi}｣을(를) 활성화하여 데이터를 가져와야 합니다</system:String>
+    <system:String x:Key="Copilot.SyncOperBoxData">동기화</system:String>
+    <system:String x:Key="Copilot.SyncOperBoxSuccess">Yituliu 오퍼레이터 데이터 {0}명을 동기화했습니다</system:String>
     <system:String x:Key="AddUserAdditional">커스텀 {key=Operator} 추가</system:String>
     <system:String x:Key="AddUserAdditionalTip">옆의 설정 버튼을 클릭해 편집 창을 연 후 ｢{key=UserAdditional.Add}｣를 클릭해 한 항목씩 추가하고, 각 열에 {key=Operator} 이름, 스킬, 작업을 입력합니다</system:String>
     <system:String x:Key="UserAdditional.OperatorName">{key=Operator} 이름</system:String>
@@ -1484,6 +1492,7 @@ C:\leidian\LDPlayer9
         • 이성 부족, 작전 실패, 또는 3성 클리어 실패 시 작전이 자동으로 중지됩니다.
     </system:String>
     <system:String x:Key="CopilotFileReadError">파일을 읽지 못했습니다!</system:String>
+    <system:String x:Key="CopilotStartFailed">작업 시작에 실패했습니다</system:String>
     <system:String x:Key="CopilotNoFound">해당 파일을 찾을 수 없습니다!</system:String>
     <system:String x:Key="NetworkServiceError">네트워크 요청 중 오류가 발생했습니다!</system:String>
     <system:String x:Key="CopilotJsonError">Copilot 파일 분석 중 오류가 발생했습니다!</system:String>
@@ -1886,7 +1895,11 @@ C:\leidian\LDPlayer9
     <system:String x:Key="BattleFormationOperUnavailable.Level">레벨이 너무 낮음</system:String>
     <system:String x:Key="BattleFormationOperUnavailable.SkillLevel">스킬 레벨이 너무 낮음</system:String>
     <system:String x:Key="BattleFormationOperUnavailable.Module">필요한 모듈이 잠금 해제되지 않음</system:String>
+    <system:String x:Key="BattleFormationOperbox1Unmatched" xml:space="preserve">{key=Operator}(그룹) {0}에 일치하는 {key=Operator} 없음, 지원 유닛이 필요합니다(사전 매칭 추천: {1}, 실제 선택은 지원 유닛 목록에 따름)</system:String>
+    <system:String x:Key="BattleFormationOperboxMatched">사전 매칭된 {key=Operator}(그룹):</system:String>
     <system:String x:Key="CopilotUserAdditionalNameInvalid">추가된 커스텀 {key=Operator} 이름이 유효하지 않음: {0}, 철자를 확인하세요</system:String>
+    <system:String x:Key="CopilotOperboxDataParseFailed">{key=OperBoxRecognition} 데이터 분석 실패</system:String>
+    <system:String x:Key="CopilotOperboxAssistRequiresYituliuData">사용 가능한 Yituliu 오퍼레이터 데이터가 없어 편성을 지원할 수 없습니다. 먼저 Yituliu에서 오퍼레이터 데이터를 가져오거나 ｢{key=Copilot.UseOperBoxAssist}｣을 비활성화하세요.</system:String>
     <system:String x:Key="CurrentSteps">현재 단계: {0} {1}</system:String>
     <system:String x:Key="ElapsedTime">경과 시간: {0}ms</system:String>
     <system:String x:Key="Deploy">배치</system:String>
@@ -2194,7 +2207,7 @@ MAA를 독립된 새 폴더에 압축 해제하거나, MAA에 속하지 않는 D
     <!-- <system:String x:Key="TaskTimeoutMinutes">작업 타임아웃 시간 (분)</system:String> -->
     <system:String x:Key="ReminderIntervalMinutes">알림 간격 (분)</system:String>
     <system:String x:Key="StallTimeoutMinutes">로그 출력 정지 타임아웃 (분)</system:String>
-    <system:String x:Key="StallTimeoutEnabled">정지 감지 활성화</system:String>
+    <system:String x:Key="StallTimeoutEnabled">로그 업데이트 정지 감지 활성화</system:String>
     <system:String x:Key="TaskStallWarning">작업 로그 출력이 {0}분 동안 업데이트되지 않았습니다(현재 {1}분 정지). 작업이 정상적으로 실행 중인지 확인하세요. 정상이라면 이 경고를 무시해도 됩니다. 응답이 없으면 수동 개입이 필요할 수 있습니다.</system:String>
     <system:String x:Key="RunDurationLimitEnabled">1회 실행 시간 제한</system:String>
     <system:String x:Key="RunDurationLimitMinutes">실행 시간 상한 (분)</system:String>
@@ -2628,7 +2641,7 @@ MAA를 독립된 새 폴더에 압축 해제하거나, MAA에 속하지 않는 D
 
     <system:String x:Key="Achievement.AllChannelBroadcast.Title">전 채널 방송</system:String>
     <system:String x:Key="Achievement.AllChannelBroadcast.Description">이제 누구도 못 놓치겠네요.</system:String>
-    <system:String x:Key="Achievement.AllChannelBroadcast.Conditions">모든 ｢{key=ExternalNotificationSettings}｣ 채널을 동시에 활성화</system:String>
+    <system:String x:Key="Achievement.AllChannelBroadcast.Conditions">모든 ｢{key=Settings} - {key=NotificationSettings} - {key=ExternalNotificationSettings}｣ 채널을 동시에 활성화</system:String>
 
     <system:String x:Key="Achievement.BackstageExplorer.Title">백스테이지 탐험가</system:String>
     <system:String x:Key="Achievement.BackstageExplorer.Description">뒤에서 뭘 기록했는지 좀 볼까요?</system:String>
@@ -2696,4 +2709,26 @@ MAA를 독립된 새 폴더에 압축 해제하거나, MAA에 속하지 않는 D
     <system:String x:Key="PleaseSelectItem">항목을 선택하세요</system:String>
     <system:String x:Key="EmulatorSelectionCancelled">에뮬레이터 선택이 취소되었습니다</system:String>
     <!--  !ItemSelection  -->
+    <system:String x:Key="NotificationSettings">알림 설정</system:String>
+    <system:String x:Key="NotificationSettingsTimeMinutes">로그 유효 시간 (분)</system:String>
+    <system:String x:Key="NotificationSettingsTimeMinutesTip" xml:space="preserve">유효 시간이 지난 로그는 알림에 첨부하지 않습니다.&#10;0이면 시간으로 필터링하지 않습니다.</system:String>
+    <system:String x:Key="NotificationSettingsInvalidFilterTip" xml:space="preserve">올바르지 않은 정규식입니다. 필터 규칙을 확인해 주세요.</system:String>
+    <system:String x:Key="ExternalNotificationEnable">외부 알림 활성화</system:String>
+    <system:String x:Key="ExternalNotificationSendConditions">다음 조건에서 외부 알림 전송</system:String>
+    <system:String x:Key="ExternalNotificationWhenComplete">작업 완료 시</system:String>
+    <system:String x:Key="ExternalNotificationWhenError">작업 오류 발생 시</system:String>
+    <system:String x:Key="ExternalNotificationWhenStalled">작업 로그 출력 정지 시</system:String>
+    <system:String x:Key="ExternalNotificationWhenStalledTip" xml:space="preserve">｢{key=NotificationSettings}｣에서 ｢{key=StallTimeoutEnabled}｣를 활성화하세요.&#10;설정한 시간 동안 새 로그가 없으면 알림을 전송합니다.</system:String>
+    <system:String x:Key="ExternalNotificationNewLogCount">새 로그 개수</system:String>
+    <system:String x:Key="ExternalNotificationNewLogCountTip" xml:space="preserve">마지막 외부 알림이 발생한 이후 새 로그 항목을 셉니다.&#10;지정한 개수에 도달하면 전송하며, 작업 완료나 오류 등 다른 조건으로 알림이 발생해도 개수를 초기화합니다.</system:String>
+    <system:String x:Key="ExternalNotificationContentMatches">로그에 특정 내용이 있을 때</system:String>
+    <system:String x:Key="ExternalNotificationWhitelist">화이트리스트 (줄마다 정규식 하나)</system:String>
+    <system:String x:Key="ExternalNotificationWhitelistTip" xml:space="preserve">줄마다 정규식을 입력하며, 현재 로그가 어느 한 줄과 일치하면 알림을 전송합니다.&#10;빈 화이트리스트에서는 이 조건이 동작하지 않습니다.</system:String>
+    <system:String x:Key="ExternalNotificationIncludePreviousLogs">이전 로그 첨부</system:String>
+    <system:String x:Key="ExternalNotificationIncludePreviousLogsTip" xml:space="preserve">현재 로그와 함께 이전 로그를 첨부합니다.&#10;로그 개수와 유효 시간으로 첨부할 범위를 정합니다.</system:String>
+    <system:String x:Key="ExternalNotificationPreviousLogCount">첨부 로그 개수</system:String>
+    <system:String x:Key="ExternalNotificationPreviousLogCountTip" xml:space="preserve">현재 로그를 제외하고 지정한 개수까지 이전 로그를 첨부합니다.&#10;0이면 현재 로그만 전송합니다.</system:String>
+    <system:String x:Key="ExternalNotificationFilterPreviousLogs">첨부 로그 내용 필터링</system:String>
+    <system:String x:Key="ExternalNotificationFilterPreviousLogsTip" xml:space="preserve">블랙리스트와 일치하는 로그를 제외한 뒤 개수와 유효 시간 범위 내에서 가장 최근 로그를 선택합니다.&#10;현재 로그는 항상 유지합니다.</system:String>
+    <system:String x:Key="ExternalNotificationBlacklist">블랙리스트 (줄마다 정규식 하나)</system:String>
 </ResourceDictionary>

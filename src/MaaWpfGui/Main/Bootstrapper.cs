@@ -38,6 +38,7 @@ using MaaWpfGui.Properties;
 using MaaWpfGui.Services;
 using MaaWpfGui.Services.HotKeys;
 using MaaWpfGui.Services.Managers;
+using MaaWpfGui.Services.Notification;
 using MaaWpfGui.Services.RemoteControl;
 using MaaWpfGui.Services.Web;
 using MaaWpfGui.States;
@@ -459,7 +460,7 @@ public class Bootstrapper : Bootstrapper<RootViewModel>
 
         ApplyDemoModeConfigOverrides();
 
-        if (ConfigFactory.Root.Gui.IgnoreBadModulesAndUseSoftwareRendering)
+        if (ConfigFactory.Root.Gui.Performance.IgnoreBadModulesAndUseSoftwareRendering)
         {
             RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
             _logger.Information("Using software rendering mode due to user preference (bad modules detected)");
@@ -1132,6 +1133,8 @@ public class Bootstrapper : Bootstrapper<RootViewModel>
 
         builder.Bind<IHttpService>().To<HttpService>().InSingletonScope();
         builder.Bind<IMaaApiService>().To<MaaApiService>().InSingletonScope();
+
+        builder.Bind<NotificationService>().ToSelf().InSingletonScope();
 
         builder.Bind<OverlayViewModel>().ToSelf().InSingletonScope();
     }
