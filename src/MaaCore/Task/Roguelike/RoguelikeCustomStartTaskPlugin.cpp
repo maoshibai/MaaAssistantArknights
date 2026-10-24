@@ -47,7 +47,8 @@ bool asst::RoguelikeCustomStartTaskPlugin::verify(AsstMsg msg, const json::value
         return false;
     }
     if (m_waiting_to_run == RoguelikeCustomType::Reward) {
-        return true;
+        // 黑流的支援页按策略顺序选，由黑流生命周期插件处理
+        return m_config->get_theme() != RoguelikeTheme::BlackFlow;
     }
     if (m_waiting_to_run == RoguelikeCustomType::Squad) {
         if (m_config->get_run_for_collectible()) { // 烧水分队
@@ -56,10 +57,14 @@ bool asst::RoguelikeCustomStartTaskPlugin::verify(AsstMsg msg, const json::value
         }
         return true;
     }
+    if (m_config->get_mode() == RoguelikeMode::BlackFlowStartRun && !m_config->get_run_for_collectible()) {
+        // 目标局在选择支援页由黑流生命周期插件判断后就结束，不选职业组和开局干员。
+        return false;
+    }
     if (m_waiting_to_run == RoguelikeCustomType::CoreChar) {
         // 点刺投资直接放弃招募，无需按指定干员选择招募券。
-        if (m_config->get_theme() == RoguelikeTheme::Sarkaz &&
-            m_config->get_mode() == RoguelikeMode::Investment && m_config->get_squad() == "点刺成锭分队") {
+        if (m_config->get_theme() == RoguelikeTheme::Sarkaz && m_config->get_mode() == RoguelikeMode::Investment &&
+            m_config->get_squad() == "点刺成锭分队") {
             return false;
         }
 
@@ -81,7 +86,8 @@ bool asst::RoguelikeCustomStartTaskPlugin::verify(AsstMsg msg, const json::value
 bool asst::RoguelikeCustomStartTaskPlugin::load_params(const json::value& params)
 {
     m_squad = params.get("squad", "");
-    if (m_config->get_mode() == RoguelikeMode::Collectible) {
+    if (m_config->get_mode() == RoguelikeMode::Collectible ||
+        m_config->get_mode() == RoguelikeMode::BlackFlowStartRun) {
         m_collectible_mode_squad = params.get("collectible_mode_squad", m_squad);
     }
 

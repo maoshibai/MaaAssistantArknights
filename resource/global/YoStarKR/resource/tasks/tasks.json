@@ -267,8 +267,7 @@
         "roi": [70, 80, 90, 150]
     },
     "SpecialAccessActivitiesConfirm": {
-        "text": ["수령", "하기"],
-        "postDelay": 500
+        "text": ["수령하기"]
     },
     "SignInEventEnter": {
         "text": ["출석", "로그인"]
@@ -396,7 +395,8 @@
         "text": ["배치코스트"]
     },
     "BattleQuickFormationRole-All-OCR": {
-        "text": ["전체"]
+        "text": ["전체", "ALL"],
+        "ocrReplace": [["^A[LlI1\\[]{2}$", "ALL"]]
     },
     "BattleStartPre": {
         "ocrReplace": [

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include <cstdint>
 #include <functional>
 #include <optional>
@@ -14,6 +15,12 @@
 
 namespace asst::blackflow
 {
+// 选择支援页的六种普通奖励。下标与刷开局 blackflow_start_rewards 的低六位一致；
+// 策略里的支援顺序必须是它们的一个排列，少一种就可能一张都点不中。
+inline constexpr std::array<std::string_view, 6> LastRewardNames {
+    "未编号物", "调查预付款", "空间租赁", "退行补偿", "林间代步", "巢寄生",
+};
+
 using FactValue = std::variant<bool, std::int64_t, std::string, std::vector<std::string>>;
 
 enum class FactType
@@ -371,6 +378,8 @@ struct PolicyProfile
     // 按层声明而非整体开关：策略可能只在部分层这样收工，例如只打第二、四层的追猎，
     // 区间表达不了这种层集合。必须抵达终点的层一律不要列进来。
     std::unordered_set<int> no_AP_is_terminal_floors;
+    // 选择支援页的选取顺序，引用策略文件顶层 last_reward_orders 里的名字。
+    std::string last_reward_order = "default";
 };
 
 struct ResolvedPolicy
@@ -455,6 +464,7 @@ enum class DecisionReasonCategory
     StrategyEnd,
     ResourceReserve,
     PreferredGoal,
+    RouteCost,
     Development,
     RiskAvoidance,
     SafetyFallback,
@@ -473,9 +483,12 @@ struct PolicyDecision
     std::size_t total_candidates = 0;
     std::size_t eligible_candidates = 0;
     DecisionReasonCategory reason_category = DecisionReasonCategory::TieBreak;
+    // 第一名与第二名第一个分出胜负的比较项，来自策略规则、路线指标或第一名多推进的目标，三者只填其一。
     std::string decisive_rule_id;
-    std::string decisive_milestone_id;
+    std::string decisive_metric;
     std::vector<std::string> decisive_milestone_ids;
+    // 同一比较项里第二名推进得更多、第一名放弃的目标。
+    std::vector<std::string> forgone_milestone_ids;
     // 因为无法满足而被放弃的资源预留。放弃它们是为了不让本轮变成无路可走。
     std::vector<std::string> released_reserve_ids;
     std::string reason;

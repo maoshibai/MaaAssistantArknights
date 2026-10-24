@@ -17,6 +17,21 @@
         "template": "BlackFlow@Roguelike@Recruit.png"
     },
     "BlackFlow@StartExplore@Roguelike@RecruitWithoutButton": {},
+    "BlackFlowReenter@BlackFlow@Roguelike@InventoryCleanupFailed": {
+        "next": ["BlackFlow@Roguelike@RecoveryFailed"]
+    },
+    "BlackFlowReenter@BlackFlow@Roguelike@InventoryCleanupRequired": {
+        "next": ["BlackFlow@Roguelike@RecoveryFailed"]
+    },
+    "BlackFlowReenter@BlackFlow@Roguelike@MovePreviewConfirmCompletedDone": {
+        "next": ["BlackFlow@Roguelike@StartAction"]
+    },
+    "BlackFlowReenter@BlackFlow@Roguelike@MovePreviewConfirmExceeded": {
+        "next": ["BlackFlow@Roguelike@RecoveryFailed"]
+    },
+    "BlackFlowReenter@BlackFlow@Roguelike@MovePreviewConfirmSucceeded": {
+        "next": ["BlackFlowReenter@BlackFlow@Roguelike@MovePreviewConfirmCompleted"]
+    },
     "BlackFlow@Roguelike@Abandon": {
         "template": "BlackFlow@Roguelike@Abandon.png"
     },
@@ -99,11 +114,11 @@
         "next": ["BlackFlow@Roguelike@ChooseOperConfirm", "BlackFlow@Roguelike@ChooseOperConfirm#next"]
     },
     "BlackFlow@Roguelike@ChooseOperConfirm": {
-        "template": "BlackFlow@Roguelike@ChooseOperConfirm.png",
+        "template": ["BlackFlow@Roguelike@ChooseOperConfirm.png", "BlackFlow@Roguelike@ChooseOperConfirmWithBuff.png"],
         "roi": [1016, 602, 264, 118]
     },
     "BlackFlow@Roguelike@ChooseOperFlag": {
-        "template": "BlackFlow@Roguelike@ChooseOperConfirm.png",
+        "template": ["BlackFlow@Roguelike@ChooseOperConfirm.png", "BlackFlow@Roguelike@ChooseOperConfirmWithBuff.png"],
         "roi": [1016, 602, 264, 118]
     },
     "BlackFlow@Roguelike@ClickToDrops": {
@@ -159,9 +174,11 @@
         "baseTask": "BlackFlow@Roguelike@RecoveryFailed"
     },
     "BlackFlow@Roguelike@CultivateBuyConfirm": {
+        "Doc": "扣款后右上角源石锭逐个滚到余额，16 锭约 0.7 秒才停，等滚动动画完成再回到决策读余额。",
         "template": "BlackFlow@Roguelike@CultivateBuyConfirm.png",
         "roi": [442, 361, 725, 179],
         "action": "ClickSelf",
+        "postDelay": 500,
         "next": ["#self", "BlackFlow@Roguelike@CultivateBuyDecision"]
     },
     "BlackFlow@Roguelike@CultivateBuyConfirm-Enter": {
@@ -246,9 +263,11 @@
         "next": ["BlackFlow@Roguelike@CultivateBuyDecision"]
     },
     "BlackFlow@Roguelike@CultivateRefreshConfirm": {
+        "Doc": "刷新同样扣款，与 CultivateBuyConfirm 一样等源石锭滚动动画完成。",
         "template": "BlackFlow@Roguelike@CultivateRefreshConfirm.png",
         "roi": [751, 409, 483, 157],
         "action": "ClickSelf",
+        "postDelay": 500,
         "next": ["#self", "BlackFlow@Roguelike@CultivateRefreshCompleted"]
     },
     "BlackFlow@Roguelike@CultivateSellAction": {
@@ -478,7 +497,7 @@
     "BlackFlow@Roguelike@EnteredPageClassification": {
         "algorithm": "OcrDetect",
         "roi": [0, 420, 500, 115],
-        "text": ["险路尽头", "坎诺特", "机械师", "佩德洛"],
+        "text": ["险路尽头", "三重身", "溯源", "坎诺特", "机械师", "佩德洛"],
         "ocrReplace": [["^古怪商人\\s*坎诺特$", "坎诺特"]],
         "fullMatch": true
     },
@@ -770,6 +789,7 @@
     },
     "BlackFlow@Roguelike@InventoryCleanupReady": {
         "template": "BlackFlow@Roguelike@InventoryFullFlag.png",
+        "templThreshold": 0.7,
         "roi": [569, 65, 253, 82],
         "next": ["BlackFlow@Roguelike@InventoryCleanupRequired"]
     },
@@ -807,13 +827,17 @@
         "exceededNext": ["BlackFlow@Roguelike@InventoryCleanupFailed"]
     },
     "BlackFlow@Roguelike@InventoryFullFlag": {
+        "templThreshold": 0.7,
         "roi": [569, 65, 253, 82]
     },
     "BlackFlow@Roguelike@LastReward": {
+        "Doc": "退行补偿·消耗2目标生命值上限，获得1件随机收藏品",
         "baseTask": "Roguelike@LastReward",
+        "roi": [82, 145, 1116, 310],
         "template": "BlackFlow@Roguelike@LastReward.png"
     },
     "BlackFlow@Roguelike@LastReward-EnterPoint": {
+        "roi": [82, 145, 1116, 310],
         "template": [
             "BlackFlow@Roguelike@LastReward.png",
             "BlackFlow@Roguelike@LastReward2.png",
@@ -823,42 +847,39 @@
             "BlackFlow@Roguelike@LastReward6.png"
         ]
     },
-    "BlackFlow@Roguelike@LastReward-Strategy": {
-        "next": [
-            "BlackFlow@Roguelike@LastReward",
-            "BlackFlow@Roguelike@LastReward2",
-            "BlackFlow@Roguelike@LastReward3",
-            "BlackFlow@Roguelike@LastReward4",
-            "BlackFlow@Roguelike@LastReward5",
-            "BlackFlow@Roguelike@LastReward6"
-        ]
-    },
     "BlackFlow@Roguelike@LastReward2": {
-        "baseTask": "Roguelike@LastReward",
+        "Doc": "林间代步·获得1件加工品",
+        "baseTask": "BlackFlow@Roguelike@LastReward",
         "template": "BlackFlow@Roguelike@LastReward2.png"
     },
     "BlackFlow@Roguelike@LastReward3": {
-        "baseTask": "Roguelike@LastReward",
+        "Doc": "巢寄生·零件箱容量-1，获得1件稀有收藏品",
+        "baseTask": "BlackFlow@Roguelike@LastReward",
         "template": "BlackFlow@Roguelike@LastReward3.png"
     },
     "BlackFlow@Roguelike@LastReward4": {
-        "baseTask": "Roguelike@LastReward",
+        "Doc": "未编号物·获得1件普通收藏品",
+        "baseTask": "BlackFlow@Roguelike@LastReward",
         "template": "BlackFlow@Roguelike@LastReward4.png"
     },
     "BlackFlow@Roguelike@LastReward5": {
-        "baseTask": "Roguelike@LastReward",
+        "Doc": "调查预付款·获得8源石锭",
+        "baseTask": "BlackFlow@Roguelike@LastReward",
         "template": "BlackFlow@Roguelike@LastReward5.png"
     },
     "BlackFlow@Roguelike@LastReward6": {
-        "baseTask": "Roguelike@LastReward",
+        "Doc": "空间租赁·消耗6源石锭，零件箱容量+2",
+        "baseTask": "BlackFlow@Roguelike@LastReward",
         "template": "BlackFlow@Roguelike@LastReward6.png"
     },
     "BlackFlow@Roguelike@LastRewardConfirm": {
-        "Doc": "base 的 next 里裸引用了 CloseCollection，黑流那个是 #next 型的，必须换成 A@(B) 形式。",
+        "Doc": "base 的 next 里裸引用了 CloseCollection，黑流那个是 #next 型的，必须换成 A@(B) 形式。带襁褓三头犬时支援可选两次，确认后仍停在支援页，回到入口再选一张。",
         "template": "BlackFlow@Roguelike@LastRewardConfirm.png",
+        "roi": [0, 474, 1280, 205],
         "next": [
             "BlackFlow@Roguelike@RolesDefault",
             "BlackFlow@Roguelike@LastRewardConfirm@(BlackFlow@Roguelike@CloseCollection)",
+            "BlackFlow@Roguelike@LastReward-EnterPoint",
             "BlackFlow@Roguelike@RecruitMain",
             "BlackFlow@Roguelike@Stages#next"
         ]
@@ -985,6 +1006,7 @@
         "postDelay": 600,
         "reduceOtherTimes": ["BlackFlow@Roguelike@MovePreviewConfirm*4"],
         "next": [
+            "BlackFlow@Roguelike@MovePreviewConfirmCompleted@(BlackFlow@Roguelike@CloseCollectionContinue)",
             "BlackFlow@Roguelike@MovePreviewConfirmCompleted@(BlackFlow@Roguelike@CloseCollection)",
             "BlackFlow@Roguelike@MovePreviewConfirmCompletedDone"
         ]
@@ -1035,7 +1057,8 @@
         "withoutDet": false,
         "ocrReplace": [
             ["^秘必境行商$", "秘境行商"],
-            ["^必境行商$", "秘境行商"]
+            ["^必境行商$", "秘境行商"],
+            ["^.*据点$", "据点"]
         ],
         "fullMatch": true,
         "text": []
@@ -1101,6 +1124,10 @@
             "坎诺特的触须",
             "结构性原理",
             "简易遥控器",
+            "紧急逃生座椅",
+            "力反馈方向盘",
+            "鸣笛",
+            "坎诺特特快",
             "装载中"
         ],
         "fullMatch": true
@@ -1166,6 +1193,22 @@
         "template": "BlackFlow@Roguelike@Movement-M11.png",
         "roi": [1162, 88, 94, 94]
     },
+    "BlackFlow@Roguelike@MovementLoaded-M13": {
+        "template": "BlackFlow@Roguelike@Movement-M13.png",
+        "roi": [1162, 88, 94, 94]
+    },
+    "BlackFlow@Roguelike@MovementLoaded-M14": {
+        "template": "BlackFlow@Roguelike@Movement-M14.png",
+        "roi": [1162, 88, 94, 94]
+    },
+    "BlackFlow@Roguelike@MovementLoaded-M15": {
+        "template": "BlackFlow@Roguelike@Movement-M15.png",
+        "roi": [1162, 88, 94, 94]
+    },
+    "BlackFlow@Roguelike@MovementLoaded-M16": {
+        "template": "BlackFlow@Roguelike@Movement-M16.png",
+        "roi": [1162, 88, 94, 94]
+    },
     "BlackFlow@Roguelike@MovementLoaded-Walk": {
         "template": "BlackFlow@Roguelike@Movement-Walk.png",
         "roi": [1162, 88, 94, 94]
@@ -1174,10 +1217,17 @@
         "algorithm": "JustReturn",
         "sub": ["BlackFlow@Roguelike@MovementPanelBackClickOnce*2", "BlackFlow@Roguelike@MovementPanelBackClickWait"]
     },
+    "BlackFlow@Roguelike@MovementPanelBackClickLoaded": {
+        "algorithm": "JustReturn"
+    },
     "BlackFlow@Roguelike@MovementPanelBackClickOnce": {
         "algorithm": "JustReturn",
         "action": "ClickRect",
-        "specificRect": [18, 138, 20, 293]
+        "specificRect": [18, 138, 20, 293],
+        "next": [
+            "BlackFlow@Roguelike@MovementPanelBackClickOnce@LoadingText",
+            "BlackFlow@Roguelike@MovementPanelBackClickLoaded"
+        ]
     },
     "BlackFlow@Roguelike@MovementPanelBackClickWait": {
         "algorithm": "JustReturn",
@@ -1203,6 +1253,10 @@
             "坎诺特的触须",
             "结构性原理",
             "简易遥控器",
+            "紧急逃生座椅",
+            "力反馈方向盘",
+            "鸣笛",
+            "坎诺特特快",
             "徒步跋涉",
             "装载中",
             "剩余1次",
@@ -1874,6 +1928,16 @@
         "template": "BlackFlow@Roguelike@CloseCollection.png",
         "roi": [1, 447, 1275, 166]
     },
+    "BlackFlow@Roguelike@StageEnterBattleAgain": {
+        "Doc": [
+            "编队后返回地图，再次进入战斗时改用前往按钮的模板匹配，避免基任务的固定坐标点到按钮上方",
+            "BlackFlowReenter 前缀用于复用确认和收尾流程，仅调整成功与失败出口，不影响正常选点"
+        ],
+        "algorithm": "JustReturn",
+        "action": "DoNothing",
+        "next": ["BlackFlow@Roguelike@StartAction", "BlackFlowReenter@BlackFlow@Roguelike@MovePreviewConfirm"],
+        "onErrorNext": ["BlackFlow@Roguelike@RecoveryFailed"]
+    },
     "BlackFlow@Roguelike@StageTraderInvest-Wallet": {
         "roi": [1136, 15, 124, 43]
     },
@@ -2005,6 +2069,11 @@
     "BlackFlow@Roguelike@StartExplore-EnterCheck": {
         "template": "BlackFlow@Roguelike@StartExplore.png",
         "roi": [958, 530, 322, 189]
+    },
+    "BlackFlow@Roguelike@StartRunSerpentRewardNames": {
+        "Doc": "刷开局目标局有羽蛇时的选择支援页，读取第一张蓝色卡的奖励名称；候选名称由生命周期插件传入。",
+        "algorithm": "OcrDetect",
+        "roi": [82, 364, 548, 201]
     },
     "BlackFlow@Roguelike@StrategyTerminalAction": {
         "baseTask": "BlackFlow@Roguelike@ExitThenAbandon-Enter"

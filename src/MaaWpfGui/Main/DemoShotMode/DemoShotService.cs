@@ -113,6 +113,9 @@ public static class DemoShotService
         {
             _logger.Fatal(e, "Demo shot service failed");
             Log.CloseAndFlush();
+
+            // Environment.Exit 不经过 WPF 关闭流程，须显式释放单实例互斥量
+            Bootstrapper.ReleaseInstanceMutex();
             Environment.Exit(1);
         }
     }
@@ -413,13 +416,13 @@ public static class DemoShotService
         // 候选关卡全语言共享（关卡代号语言无关），每个语言组重注入一次
         if (data.TaskQueue.Stages.Count > 0)
         {
-            FightSettingsUserControlModel.Instance.InjectDemoStages(data.TaskQueue.Stages);
+            FightTaskUserControlModel.Instance.InjectDemoStages(data.TaskQueue.Stages);
         }
 
         // 指定材料下拉的显示名由 RefreshDropName 随各语言材料列表自动本地化，重注入只负责写入选中项，幂等
         if (!string.IsNullOrEmpty(data.TaskQueue.SpecifiedDrops))
         {
-            FightSettingsUserControlModel.Instance.InjectDemoSpecifiedDrops(data.TaskQueue.SpecifiedDrops);
+            FightTaskUserControlModel.Instance.InjectDemoSpecifiedDrops(data.TaskQueue.SpecifiedDrops);
         }
 
         InjectTaskQueueLogs(data, lang, dataDir);
