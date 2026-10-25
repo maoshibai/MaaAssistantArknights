@@ -83,6 +83,14 @@ bool asst::RoguelikeRecruitTaskPlugin::_run()
         }
     }
 
+    // 烧水局只用非作战节点，开局三个干员用不上，照抄点刺成锭分队的写法直接放弃招募（不区分开局分队）；
+    // 目标局（run_for_collectible 已置回 false）不受影响，照常招募
+    if (theme == RoguelikeTheme::Sarkaz && mode == RoguelikeMode::Collectible && m_initail_recruit &&
+        m_config->get_run_for_collectible()) {
+        ProcessTask(*this, { "RoguelikeRecruit-GiveUp" }).run();
+        return true;
+    }
+
     // 精二机械师保证了结构性原理，整局都不必打架，多招干员只会拖慢开局。刷等级指定了结局策略就不飞，照常招募；
     // 刷开局只看准备局，目标局在支援页就退出，走不到招募。
     if (theme == RoguelikeTheme::BlackFlow && m_initail_recruit && m_recruit_count > 1 &&

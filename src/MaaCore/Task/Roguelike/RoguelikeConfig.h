@@ -142,6 +142,11 @@ public:
 
     const std::string& get_squad() const { return m_squad; }
 
+    // 开局/目标分队（烧水时 hijack_squad 会把 m_squad 覆盖成烧水分队，故需单独保留原始开局分队）
+    void set_start_squad(std::string squad) { m_start_squad = std::move(squad); }
+
+    const std::string& get_start_squad() const { return m_start_squad; }
+
     // ------------------ 开局 ------------------
     void set_start_with_elite_two(bool value) { m_start_with_elite_two = value; }
 
@@ -178,6 +183,7 @@ private:
     RoguelikeMode m_mode = RoguelikeMode::Exp; // 模式
     int m_difficulty = 0;                      // 难度
     std::string m_squad;                       // 分队
+    std::string m_start_squad;                 // 开局/目标分队（烧水时不会被 hijack_squad 覆盖）
 
     // ------------------ 开局 ------------------
     bool m_start_with_elite_two = false;      // 在刷开局模式下凹开局干员精二直升

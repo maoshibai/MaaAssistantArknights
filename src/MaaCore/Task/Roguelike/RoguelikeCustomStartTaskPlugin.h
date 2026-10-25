@@ -46,6 +46,7 @@ private:
     bool hijack_roles();
     bool hijack_core_char();
     std::vector<std::string> get_select_list() const;
+    bool is_blueprint_collectible_burn() const;
 
 private:
     RoguelikeStartSelect m_start_select; // 开局选择

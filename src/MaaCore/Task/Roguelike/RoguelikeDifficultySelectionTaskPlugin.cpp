@@ -25,7 +25,12 @@ bool asst::RoguelikeDifficultySelectionTaskPlugin::load_params([[maybe_unused]] 
             const std::string& theme = m_config->get_theme();
             const std::string& squad = params.get("squad", "");
             const std::string& collectible_mode_squad = params.get("collectible_mode_squad", squad);
-            if (theme == RoguelikeTheme::JieGarden && collectible_mode_squad == "指挥分队" &&
+            if (theme == RoguelikeTheme::Sarkaz) {
+                // 烧水保持在目标难度，不在 N0 与目标难度之间来回切换（不区分开局分队）
+                m_collectible_difficulty = m_config->get_difficulty();
+            }
+            else if (
+                theme == RoguelikeTheme::JieGarden && collectible_mode_squad == "指挥分队" &&
                 // 界园指挥分队可用 3 难快速烧水
                 m_config->get_difficulty() >= 3) {
                 m_collectible_difficulty = 3;

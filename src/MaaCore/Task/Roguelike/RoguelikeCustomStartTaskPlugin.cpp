@@ -67,6 +67,11 @@ bool asst::RoguelikeCustomStartTaskPlugin::verify(AsstMsg msg, const json::value
             m_config->get_squad() == "点刺成锭分队") {
             return false;
         }
+        // 烧水放弃开局招募（不区分开局分队），照抄点刺的处理，省掉找不到职业页的无效等待
+        if (m_config->get_theme() == RoguelikeTheme::Sarkaz && m_config->get_mode() == RoguelikeMode::Collectible &&
+            m_config->get_run_for_collectible()) {
+            return false;
+        }
 
         // hijack 在招募入口 SubTaskStart 触发，先于招募插件消耗顺位，当前顺位即本次招募的顺位
         return m_config->get_current_start_oper() != nullptr;
@@ -189,6 +194,13 @@ bool asst::RoguelikeCustomStartTaskPlugin::hijack_reward()
     PipelineAnalyzer analyzer(ctrler()->get_image());
     analyzer.set_tasks(list);
     if (auto ret = analyzer.analyze(); !ret) {
+        if (is_blueprint_collectible_burn()) {
+            // 蓝图测绘分队：不切换难度、不重开，按默认策略领奖后继续本局，
+            // 打到三层即达成烧水条件，随后由放弃流程接手
+            m_config->set_run_for_collectible(true);
+            ProcessTask(*this, { m_config->get_theme() + "@Roguelike@LastReward-Strategy" }).run();
+            return true;
+        }
         // 未获取到期望物品，设置烧水flag，重开
         m_config->set_run_for_collectible(true);
         m_control_ptr->exit_then_stop(true);
@@ -321,4 +333,10 @@ std::vector<std::string> asst::RoguelikeCustomStartTaskPlugin::get_select_list()
     }
 
     return list;
+}
+
+bool asst::RoguelikeCustomStartTaskPlugin::is_blueprint_collectible_burn() const
+{
+    return m_config->get_theme() == RoguelikeTheme::Sarkaz && m_config->get_mode() == RoguelikeMode::Collectible &&
+           m_config->get_start_squad() == "蓝图测绘分队";
 }

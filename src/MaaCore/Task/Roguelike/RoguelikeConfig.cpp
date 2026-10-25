@@ -63,6 +63,7 @@ bool asst::RoguelikeConfig::verify_and_load_params(const json::value& params)
     m_theme = theme;
     m_mode = mode;
     m_difficulty = params.get("difficulty", -1);
+    m_start_squad = params.get("squad", "");
 
     Log.info("Roguelike theme", m_theme, "| mode", static_cast<int>(m_mode), "| difficulty", m_difficulty);
 
@@ -105,6 +106,26 @@ bool asst::RoguelikeConfig::verify_and_load_params(const json::value& params)
                 Task.set_task_base(
                     "Sarkaz@Roguelike@StageBurdenOperation",
                     "Sarkaz@Roguelike@StageBurdenOperation-None");
+            }
+            else if (m_mode == RoguelikeMode::Collectible) {
+                // 烧水：不区分开局分队，一律启用这套选点策略。
+                // 前两层改用只走非作战节点的 Stages，被作战堵死时超时弃局重开。
+                // 只切换选点策略本身，不经过 RoguelikeRoutingTaskPlugin，不生成地图、不滑动视角
+                Task.set_task_base(strategy_task, "Sarkaz@Roguelike@StrategyChange-BlueprintCollectible");
+                // 思维负荷用红色变体：橙色（紊乱）时不丢构想，等红色才降负荷，避免开局浪费一个构想
+                Task.set_task_base(
+                    "Sarkaz@Roguelike@StageBurdenOperation",
+                    "Sarkaz@Roguelike@StageBurdenOperation-Start-RedOnly");
+                // 每次降负荷只丢一个构想然后收起面板：官方链路会在结果提示（检查/紊乱）后再丢一个，
+                // 直到负荷清空（掉到绿色），既多花构想又原地等待约 3 秒。
+                // 注意：DecreaseBurdenAbandon/AbandonThought 自身写死了 next，set_task_base 改不动，
+                // 必须切换其 #next 中转任务（与 StageBurdenOperation 同一套机制）
+                Task.set_task_base(
+                    "Sarkaz@Roguelike@DecreaseBurdenAbandon-Next",
+                    "Sarkaz@Roguelike@DecreaseBurdenAbandon-Next-BlueprintCollectible");
+                Task.set_task_base(
+                    "Sarkaz@Roguelike@DecreaseBurdenAbandonThought-Next",
+                    "Sarkaz@Roguelike@DecreaseBurdenAbandonThought-Next-BlueprintCollectible");
             }
             else {
                 // 启用前 2 层的 <思维负荷干员编队> 功能

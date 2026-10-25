@@ -13,35 +13,74 @@
     "Sarkaz@StartExplore@Roguelike@RecruitWithoutButton": {},
     "Sarkaz@Roguelike@Abandon": {
         "crop_doc": {
-            "roi": [1067, 255, 159, 154],
+            "roi": [
+                1067,
+                255,
+                159,
+                154
+            ],
             "mask": []
         }
     },
     "Sarkaz@Roguelike@CheckLevel": {
-        "text": ["假说辑录"]
+        "text": [
+            "假说辑录"
+        ]
     },
     "Sarkaz@Roguelike@ChooseBurdenOperator": {
-        "roi": [11, 493, 140, 143],
+        "roi": [
+            11,
+            493,
+            140,
+            143
+        ],
         "templThreshold": 0.9,
         "action": "ClickSelf",
-        "next": ["Sarkaz@Roguelike@ChooseBurdenOperatorSelect1"]
+        "next": [
+            "Sarkaz@Roguelike@ChooseBurdenOperatorSelect1"
+        ]
     },
     "Sarkaz@Roguelike@ChooseBurdenOperatorAtStart": {
-        "roi": [590, 620, 200, 50],
+        "roi": [
+            590,
+            620,
+            200,
+            50
+        ],
         "templThreshold": 0.9,
         "action": "ClickRect",
-        "specificRect": [600, 660, 220, 40],
+        "specificRect": [
+            600,
+            660,
+            220,
+            40
+        ],
         "postDelay": 500,
-        "next": ["Sarkaz@Roguelike@ChooseBurdenOperator", "Sarkaz@Roguelike@ChooseBurdenOperatorQuit"]
+        "next": [
+            "Sarkaz@Roguelike@ChooseBurdenOperator",
+            "Sarkaz@Roguelike@ChooseBurdenOperatorQuit"
+        ]
     },
     "Sarkaz@Roguelike@ChooseBurdenOperatorConfirm": {
-        "roi": [542, 551, 135, 134],
+        "roi": [
+            542,
+            551,
+            135,
+            134
+        ],
         "templThreshold": 0.9,
         "action": "ClickSelf",
-        "next": ["Sarkaz@Roguelike@ChooseBurdenOperatorQuit"]
+        "next": [
+            "Sarkaz@Roguelike@ChooseBurdenOperatorQuit"
+        ]
     },
     "Sarkaz@Roguelike@ChooseBurdenOperatorQuit": {
-        "roi": [0, 0, 150, 148],
+        "roi": [
+            0,
+            0,
+            150,
+            148
+        ],
         "templThreshold": 0.9,
         "action": "ClickSelf",
         "next": [
@@ -54,30 +93,66 @@
     "Sarkaz@Roguelike@ChooseBurdenOperatorSelect1": {
         "algorithm": "JustReturn",
         "action": "ClickRect",
-        "specificRect": [330, 240, 0, 0],
-        "next": ["Sarkaz@Roguelike@ChooseBurdenOperatorSelect2"]
+        "specificRect": [
+            330,
+            240,
+            0,
+            0
+        ],
+        "next": [
+            "Sarkaz@Roguelike@ChooseBurdenOperatorSelect2"
+        ]
     },
     "Sarkaz@Roguelike@ChooseBurdenOperatorSelect2": {
         "algorithm": "JustReturn",
         "action": "ClickRect",
-        "specificRect": [450, 240, 0, 0],
-        "next": ["Sarkaz@Roguelike@ChooseBurdenOperatorSelect3"]
+        "specificRect": [
+            450,
+            240,
+            0,
+            0
+        ],
+        "next": [
+            "Sarkaz@Roguelike@ChooseBurdenOperatorSelect3"
+        ]
     },
     "Sarkaz@Roguelike@ChooseBurdenOperatorSelect3": {
         "algorithm": "JustReturn",
         "action": "ClickRect",
-        "specificRect": [570, 240, 0, 0],
-        "next": ["Sarkaz@Roguelike@ChooseBurdenOperatorConfirm"]
+        "specificRect": [
+            570,
+            240,
+            0,
+            0
+        ],
+        "next": [
+            "Sarkaz@Roguelike@ChooseBurdenOperatorConfirm"
+        ]
     },
     "Sarkaz@Roguelike@ChooseDifficulty": {
-        "roi": [1086, 309, 194, 140]
+        "roi": [
+            1086,
+            309,
+            194,
+            140
+        ]
     },
     "Sarkaz@Roguelike@ChooseDifficultyEnter": {
         "action": "ClickRect",
-        "specificRect": [1119, 479, 80, 22],
+        "specificRect": [
+            1119,
+            479,
+            80,
+            22
+        ],
         "postDelay": 800,
         "template": "Sarkaz@Roguelike@StartExplore.png",
-        "roi": [958, 530, 322, 189]
+        "roi": [
+            958,
+            530,
+            322,
+            189
+        ]
     },
     "Sarkaz@Roguelike@ChooseOper": {
         "next": [
@@ -90,51 +165,111 @@
         ]
     },
     "Sarkaz@Roguelike@ClickToDrops": {
-        "specificRect": [600, 600, 1, 1]
+        "specificRect": [
+            600,
+            600,
+            1,
+            1
+        ]
     },
     "Sarkaz@Roguelike@ClickToStartPoint": {
-        "specificRect": [600, 600, 1, 1]
+        "specificRect": [
+            600,
+            600,
+            1,
+            1
+        ]
     },
     "Sarkaz@Roguelike@CloseCollection": {
         "Doc": "深入调查/月度小队会给个藏品，要先关掉",
         "method": "RGBCount",
         "colorScales": [
             [
-                [150, 150, 150],
-                [170, 170, 170]
+                [
+                    150,
+                    150,
+                    150
+                ],
+                [
+                    170,
+                    170,
+                    170
+                ]
             ]
         ],
-        "next": ["Sarkaz@Roguelike@LastReward-EnterPoint", "Sarkaz@Roguelike@RolesDefault"]
+        "next": [
+            "Sarkaz@Roguelike@LastReward-EnterPoint",
+            "Sarkaz@Roguelike@RolesDefault"
+        ]
     },
     "Sarkaz@Roguelike@CloseCollectionClose": {
         "action": "ClickSelf",
-        "roi": [572, 434, 144, 141],
+        "roi": [
+            572,
+            434,
+            144,
+            141
+        ],
         "method": "RGBCount",
         "colorScales": [
             [
-                [150, 150, 150],
-                [170, 170, 170]
+                [
+                    150,
+                    150,
+                    150
+                ],
+                [
+                    170,
+                    170,
+                    170
+                ]
             ]
         ],
-        "onErrorNext": ["#back"],
-        "next": ["#next"]
+        "onErrorNext": [
+            "#back"
+        ],
+        "next": [
+            "#next"
+        ]
     },
     "Sarkaz@Roguelike@CloseCollectionContinue": {
         "action": "ClickSelf",
-        "roi": [549, 440, 123, 130],
+        "roi": [
+            549,
+            440,
+            123,
+            130
+        ],
         "method": "RGBCount",
         "colorScales": [
             [
-                [110, 110, 110],
-                [130, 130, 130]
+                [
+                    110,
+                    110,
+                    110
+                ],
+                [
+                    130,
+                    130,
+                    130
+                ]
             ]
         ],
-        "onErrorNext": ["#back"],
-        "next": ["#next"]
+        "onErrorNext": [
+            "#back"
+        ],
+        "next": [
+            "#next"
+        ]
     },
     "Sarkaz@Roguelike@CloseEvent": {
         "action": "ClickRect",
-        "specificRect": [153, 79, 63, 29],
+        "specificRect": [
+            153,
+            79,
+            63,
+            29
+        ],
         "next": [
             "Sarkaz@Roguelike@StageEncounterEnter",
             "Sarkaz@Roguelike@CloseEvent@(Sarkaz@Roguelike@CloseCollectionContinue)",
@@ -151,8 +286,24 @@
     "Sarkaz@Roguelike@Continue": {},
     "Sarkaz@Roguelike@DecreaseBurdenAbandon": {
         "templThreshold": 0.9,
-        "roi": [499, 471, 167, 151],
+        "roi": [
+            499,
+            471,
+            167,
+            151
+        ],
         "action": "ClickSelf",
+        "next": [
+            "Sarkaz@Roguelike@DecreaseBurdenAbandon-Next#next"
+        ]
+    },
+    "Sarkaz@Roguelike@DecreaseBurdenAbandon-Next": {
+        "Doc": "舍弃构想后的走向中转。只写 baseTask、不写 next（否则 set_task_base 改不动），与 StageBurdenOperation 同一套机制。",
+        "baseTask": "Sarkaz@Roguelike@DecreaseBurdenAbandon-Next-Default"
+    },
+    "Sarkaz@Roguelike@DecreaseBurdenAbandon-Next-Default": {
+        "Doc": "官方默认行为：继续检查负荷状态，必要时再丢一个直到清空",
+        "algorithm": "JustReturn",
         "next": [
             "Sarkaz@Roguelike@DecreaseBurdenCheckRetardation",
             "Sarkaz@Roguelike@DecreaseBurdenCheckChaos",
@@ -160,16 +311,59 @@
             "Sarkaz@Roguelike@DecreaseBurdenAbandon"
         ]
     },
+    "Sarkaz@Roguelike@DecreaseBurdenAbandon-Next-BlueprintCollectible": {
+        "Doc": "蓝图测绘分队烧水专用：丢一个构想后立刻收起面板，不丢第二个",
+        "algorithm": "JustReturn",
+        "next": [
+            "Sarkaz@Roguelike@ChooseBurdenOperatorQuit"
+        ]
+    },
     "Sarkaz@Roguelike@DecreaseBurdenAbandonThought": {
         "template": "Sarkaz@Roguelike@DecreaseBurdenSwapUiToDefault1.png",
-        "roi": [1101, 51, 179, 137],
+        "roi": [
+            1101,
+            51,
+            179,
+            137
+        ],
         "templThreshold": 0.95,
         "action": "ClickRect",
-        "specificRect": [430, 215, 0, 0],
-        "next": ["Sarkaz@Roguelike@DecreaseBurdenAbandon", "Sarkaz@Roguelike@DecreaseBurdenSwapUiToDefault1"]
+        "specificRect": [
+            430,
+            215,
+            0,
+            0
+        ],
+        "next": [
+            "Sarkaz@Roguelike@DecreaseBurdenAbandonThought-Next#next"
+        ]
+    },
+    "Sarkaz@Roguelike@DecreaseBurdenAbandonThought-Next": {
+        "Doc": "收起/切换界面后的走向中转。只写 baseTask、不写 next。",
+        "baseTask": "Sarkaz@Roguelike@DecreaseBurdenAbandonThought-Next-Default"
+    },
+    "Sarkaz@Roguelike@DecreaseBurdenAbandonThought-Next-Default": {
+        "Doc": "官方默认行为：继续丢构想",
+        "algorithm": "JustReturn",
+        "next": [
+            "Sarkaz@Roguelike@DecreaseBurdenAbandon",
+            "Sarkaz@Roguelike@DecreaseBurdenSwapUiToDefault1"
+        ]
+    },
+    "Sarkaz@Roguelike@DecreaseBurdenAbandonThought-Next-BlueprintCollectible": {
+        "Doc": "蓝图测绘分队烧水专用：不再跑去丢第二个构想，直接收起面板",
+        "algorithm": "JustReturn",
+        "next": [
+            "Sarkaz@Roguelike@ChooseBurdenOperatorQuit"
+        ]
     },
     "Sarkaz@Roguelike@DecreaseBurdenChaos": {
-        "roi": [559, 608, 157, 112],
+        "roi": [
+            559,
+            608,
+            157,
+            112
+        ],
         "templThreshold": 0.9,
         "action": "ClickSelf",
         "next": [
@@ -182,21 +376,47 @@
     },
     "Sarkaz@Roguelike@DecreaseBurdenCheckChaos": {
         "templThreshold": 0.95,
-        "roi": [83, 66, 190, 135],
-        "next": ["Sarkaz@Roguelike@DecreaseBurdenAbandonThought"]
+        "roi": [
+            83,
+            66,
+            190,
+            135
+        ],
+        "next": [
+            "Sarkaz@Roguelike@DecreaseBurdenAbandonThought"
+        ]
     },
     "Sarkaz@Roguelike@DecreaseBurdenCheckClear": {
         "templThreshold": 0.95,
-        "roi": [83, 63, 194, 136],
-        "next": ["Sarkaz@Roguelike@ChooseBurdenOperatorQuit"]
+        "roi": [
+            83,
+            63,
+            194,
+            136
+        ],
+        "next": [
+            "Sarkaz@Roguelike@ChooseBurdenOperatorQuit"
+        ]
     },
     "Sarkaz@Roguelike@DecreaseBurdenCheckRetardation": {
         "templThreshold": 0.95,
-        "roi": [85, 64, 188, 137],
-        "next": ["Sarkaz@Roguelike@DecreaseBurdenAbandonThought"]
+        "roi": [
+            85,
+            64,
+            188,
+            137
+        ],
+        "next": [
+            "Sarkaz@Roguelike@DecreaseBurdenAbandonThought"
+        ]
     },
     "Sarkaz@Roguelike@DecreaseBurdenRetardation": {
-        "roi": [561, 607, 153, 113],
+        "roi": [
+            561,
+            607,
+            153,
+            113
+        ],
         "action": "ClickSelf",
         "next": [
             "Sarkaz@Roguelike@DecreaseBurdenSwapUiToDefault1",
@@ -207,10 +427,20 @@
         ]
     },
     "Sarkaz@Roguelike@DecreaseBurdenSwapUiToDefault1": {
-        "roi": [1101, 51, 179, 137],
+        "roi": [
+            1101,
+            51,
+            179,
+            137
+        ],
         "templThreshold": 0.9,
         "action": "ClickRect",
-        "specificRect": [1210, 120, 0, 0],
+        "specificRect": [
+            1210,
+            120,
+            0,
+            0
+        ],
         "next": [
             "Sarkaz@Roguelike@DecreaseBurdenSwapUiToDefault2",
             "Sarkaz@Roguelike@DecreaseBurdenSwapUiToDefault1@(Sarkaz@Roguelike@CloseCollectionContinue)",
@@ -219,10 +449,20 @@
         ]
     },
     "Sarkaz@Roguelike@DecreaseBurdenSwapUiToDefault2": {
-        "roi": [1101, 51, 179, 137],
+        "roi": [
+            1101,
+            51,
+            179,
+            137
+        ],
         "templThreshold": 0.9,
         "action": "ClickRect",
-        "specificRect": [1210, 120, 0, 0],
+        "specificRect": [
+            1210,
+            120,
+            0,
+            0
+        ],
         "next": [
             "Sarkaz@Roguelike@DecreaseBurdenSwapUiToDefault2@(Sarkaz@Roguelike@CloseCollectionContinue)",
             "Sarkaz@Roguelike@DecreaseBurdenSwapUiToDefault2@(Sarkaz@Roguelike@CloseCollectionClose)",
@@ -231,7 +471,12 @@
         ]
     },
     "Sarkaz@Roguelike@DecreaseBurdenUse": {
-        "roi": [734, 469, 168, 155],
+        "roi": [
+            734,
+            469,
+            168,
+            155
+        ],
         "templThreshold": 0.9,
         "action": "ClickSelf",
         "next": [
@@ -244,7 +489,12 @@
         ]
     },
     "Sarkaz@Roguelike@DecreaseBurdenUseButDuplicate": {
-        "roi": [771, 424, 143, 141],
+        "roi": [
+            771,
+            424,
+            143,
+            141
+        ],
         "templThreshold": 0.9,
         "action": "ClickSelf",
         "next": [
@@ -257,7 +507,12 @@
     "Sarkaz@Roguelike@DecreaseBurdenUseTheFirst": {
         "algorithm": "JustReturn",
         "action": "ClickRect",
-        "specificRect": [430, 215, 0, 0],
+        "specificRect": [
+            430,
+            215,
+            0,
+            0
+        ],
         "next": [
             "Sarkaz@Roguelike@DecreaseBurdenUse",
             "Sarkaz@Roguelike@DecreaseBurdenAbandon",
@@ -278,11 +533,15 @@
     },
     "Sarkaz@Roguelike@DialogSkip": {
         "template": "Roguelike@DialogSkip.png",
-        "next": ["Sarkaz@Roguelike@DialogSkipConfirm"]
+        "next": [
+            "Sarkaz@Roguelike@DialogSkipConfirm"
+        ]
     },
     "Sarkaz@Roguelike@DialogSkipConfirm": {
         "template": "Roguelike@DialogSkipConfirm.png",
-        "next": ["Sarkaz@Roguelike@Stages#next"]
+        "next": [
+            "Sarkaz@Roguelike@Stages#next"
+        ]
     },
     "Sarkaz@Roguelike@DropsFlag": {
         "template": "Roguelike@DropsFlag.png",
@@ -319,11 +578,17 @@
     "Sarkaz@Roguelike@EnterAfterRecruit": {},
     "Sarkaz@Roguelike@ExitThenAbandon": {
         "template": "Roguelike@ExitThenAbandon.png",
-        "next": ["Sarkaz@Roguelike@ExitThenAbandon", "Sarkaz@Roguelike@Abandon"]
+        "next": [
+            "Sarkaz@Roguelike@ExitThenAbandon",
+            "Sarkaz@Roguelike@Abandon"
+        ]
     },
     "Sarkaz@Roguelike@ExitThenAbandon_ToHardest": {
         "template": "Roguelike@ExitThenAbandon.png",
-        "next": ["Sarkaz@Roguelike@ExitThenAbandon_ToHardest", "Sarkaz@Roguelike@Abandon"]
+        "next": [
+            "Sarkaz@Roguelike@ExitThenAbandon_ToHardest",
+            "Sarkaz@Roguelike@Abandon"
+        ]
     },
     "Sarkaz@Roguelike@GamePass": {},
     "Sarkaz@Roguelike@GamePassSkip1": {},
@@ -336,7 +601,12 @@
     "Sarkaz@Roguelike@GetDrop2": {},
     "Sarkaz@Roguelike@GetDrop3": {},
     "Sarkaz@Roguelike@GetDropCompleted": {
-        "specificRect": [600, 600, 25, 25]
+        "specificRect": [
+            600,
+            600,
+            25,
+            25
+        ]
     },
     "Sarkaz@Roguelike@GetDropLeave": {},
     "Sarkaz@Roguelike@GetDropRecruit": {},
@@ -399,11 +669,23 @@
     "Sarkaz@Roguelike@LastRewardConfirm": {},
     "Sarkaz@Roguelike@LastRewardRand": {},
     "Sarkaz@Roguelike@MapObject": {
-        "roi": [257, 488, 189, 123],
-        "next": ["Sarkaz@StartExplore@Roguelike@RecruitOther"]
+        "roi": [
+            257,
+            488,
+            189,
+            123
+        ],
+        "next": [
+            "Sarkaz@StartExplore@Roguelike@RecruitOther"
+        ]
     },
     "Sarkaz@Roguelike@MissionFailedFlag": {
-        "roi": [505, 342, 265, 154]
+        "roi": [
+            505,
+            342,
+            265,
+            154
+        ]
     },
     "Sarkaz@Roguelike@MissionFailedFlag2": {},
     "Sarkaz@Roguelike@MonthlySquad": {
@@ -411,19 +693,47 @@
     },
     "Sarkaz@Roguelike@MonthlySquadComms": {
         "template": "Roguelike@MonthlySquadComms.png",
-        "roi": [560, 420, 190, 60]
+        "roi": [
+            560,
+            420,
+            190,
+            60
+        ]
     },
     "Sarkaz@Roguelike@MonthlySquadCommsCompleted": {
         "template": "Roguelike@CommsCompleted.png",
-        "roi": [390, 480, 160, 50]
+        "roi": [
+            390,
+            480,
+            160,
+            50
+        ]
     },
     "Sarkaz@Roguelike@MonthlySquadRewardCompleted": {
         "template": "Roguelike@RewardCompleted.png",
-        "specificRect": [490, 530, 45, 55]
+        "specificRect": [
+            490,
+            530,
+            45,
+            55
+        ]
     },
     "Sarkaz@Roguelike@NextLevel": {
-        "text": ["熔魂之始", "锻铁根须", "灰铸迷城", "或然歧域", "虚实疆界", "辉光天顶", "诡谲断章"],
-        "roi": [550, 564, 184, 64],
+        "text": [
+            "熔魂之始",
+            "锻铁根须",
+            "灰铸迷城",
+            "或然歧域",
+            "虚实疆界",
+            "辉光天顶",
+            "诡谲断章"
+        ],
+        "roi": [
+            550,
+            564,
+            184,
+            64
+        ],
         "next": [
             "Sarkaz@Roguelike@NextLevel@(Sarkaz@Roguelike@CloseCollectionContinue)",
             "Sarkaz@Roguelike@CloseInterview",
@@ -455,12 +765,19 @@
     },
     "Sarkaz@Roguelike@RolesDefault": {},
     "Sarkaz@Roguelike@SelectTheme": {
-        "text": ["假说辑录"]
+        "text": [
+            "假说辑录"
+        ]
     },
     "Sarkaz@Roguelike@SpecialValRecognition": {
         "Doc": "特殊值识别，构想数量",
         "text": [],
-        "roi": [848, 686, 46, 26]
+        "roi": [
+            848,
+            686,
+            46,
+            26
+        ]
     },
     "Sarkaz@Roguelike@SquadConfirm": {
         "doc": "注意：在部分深入调查条目（如傀影主题的 <地面推进>）中有可能跳过招募组合直接开始初始招募",
@@ -477,12 +794,20 @@
     "Sarkaz@Roguelike@StageBoons": {
         "Doc": "得偿所愿",
         "templThreshold": 0.95,
-        "next": ["Sarkaz@Roguelike@StageBoonsEnter", "Sarkaz@Roguelike@Stages#next"]
+        "next": [
+            "Sarkaz@Roguelike@StageBoonsEnter",
+            "Sarkaz@Roguelike@Stages#next"
+        ]
     },
     "Sarkaz@Roguelike@StageBoonsEnter": {
         "template": "Sarkaz@Roguelike@StageTraderEnter.png",
         "baseTask": "Sarkaz@Roguelike@StageEnter",
-        "next": ["Sarkaz@Roguelike@StageBoonsEnter", "Sarkaz@Roguelike@StageEncounterJudgeClick"]
+        "next": [
+            "Sarkaz@Roguelike@ChaosNodeDontPrompt",
+            "Sarkaz@Roguelike@ChaosNodeConfirmClick",
+            "Sarkaz@Roguelike@StageBoonsEnter",
+            "Sarkaz@Roguelike@StageEncounterJudgeClick"
+        ]
     },
     "Sarkaz@Roguelike@StageBoskyPassage": {
         "Doc": "思维边界",
@@ -490,22 +815,46 @@
         "method": "HSVCount",
         "colorScales": [
             [
-                [90, 2, 121],
-                [134, 142, 230]
+                [
+                    90,
+                    2,
+                    121
+                ],
+                [
+                    134,
+                    142,
+                    230
+                ]
             ]
         ],
-        "next": ["Sarkaz@Roguelike@StageBoskyPassageEnter", "Sarkaz@Roguelike@Stages#next"]
+        "next": [
+            "Sarkaz@Roguelike@StageBoskyPassageEnter",
+            "Sarkaz@Roguelike@Stages#next"
+        ]
     },
     "Sarkaz@Roguelike@StageBoskyPassageEnter": {
         "baseTask": "Sarkaz@Roguelike@StageEnter",
         "method": "HSVCount",
         "colorScales": [
             [
-                [137, 150, 40],
-                [138, 180, 180]
+                [
+                    137,
+                    150,
+                    40
+                ],
+                [
+                    138,
+                    180,
+                    180
+                ]
             ]
         ],
-        "next": ["Sarkaz@Roguelike@StageBoskyPassageEnter", "Sarkaz@Roguelike@StageEncounterJudgeClick"]
+        "next": [
+            "Sarkaz@Roguelike@ChaosNodeDontPrompt",
+            "Sarkaz@Roguelike@ChaosNodeConfirmClick",
+            "Sarkaz@Roguelike@StageBoskyPassageEnter",
+            "Sarkaz@Roguelike@StageEncounterJudgeClick"
+        ]
     },
     "Sarkaz@Roguelike@StageBurdenOperation": {
         "doc": "#next 放入 Sarkaz@Roguelike@Stages 系列任务中，通过 set_task_base 启用/禁用 <思维负荷干员编队功能>",
@@ -523,25 +872,86 @@
             "Sarkaz@Roguelike@DecreaseBurdenRetardation"
         ]
     },
+    "Sarkaz@Roguelike@StageBurdenOperation-Start-RedOnly": {
+        "Doc": "蓝图测绘分队烧水专用：橙色（DecreaseBurdenChaos）不触发降负荷，只留红色（DecreaseBurdenRetardation），把负荷余量用满再消耗构想；不做开局负荷干员编队，直接刷新节点走路",
+        "algorithm": "JustReturn",
+        "next": [
+            "Sarkaz@Roguelike@DecreaseBurdenRetardation"
+        ]
+    },
+    "Sarkaz@Roguelike@ChaosNodeDontPrompt": {
+        "Doc": "思维混乱进入节点弹窗：OCR 识别'本次探险不再提示'文字行并点击（该行任意位置可勾选；OCR 自适应分辨率；2026-10-25 13:12 从 1920x1080 实测截图测得文字行 frame y375-395 x565-720）",
+        "algorithm": "OcrDetect",
+        "action": "ClickSelf",
+        "text": [
+            "本次探险不再提示"
+        ],
+        "roi": [
+            480,
+            340,
+            360,
+            100
+        ],
+        "preDelay": 300,
+        "next": [
+            "Sarkaz@Roguelike@ChaosNodeConfirmClick"
+        ]
+    },
+    "Sarkaz@Roguelike@ChaosNodeConfirmClick": {
+        "Doc": "点弹窗红色确定按钮；点完续接 JudgeClick（复现正常进入节点后的走向）",
+        "template": "Sarkaz@Roguelike@ChaosNodeConfirm.png",
+        "templThreshold": 0.85,
+        "roi": [
+            700,
+            420,
+            520,
+            130
+        ],
+        "action": "ClickSelf",
+        "next": [
+            "Sarkaz@Roguelike@StageEncounterJudgeClick"
+        ]
+    },
     "Sarkaz@Roguelike@StageCanDeepen": {
         "baseTask": "Sarkaz@Roguelike@StageCanReconstruct",
         "Doc": "印象加深",
-        "next": ["Sarkaz@Roguelike@StageCanDeepenConfirm"]
+        "next": [
+            "Sarkaz@Roguelike@StageCanDeepenConfirm"
+        ]
     },
     "Sarkaz@Roguelike@StageCanDeepenConfirm": {
         "action": "ClickSelf",
-        "roi": [786, 594, 120, 114],
-        "next": ["Sarkaz@Roguelike@StageCanReconstructClose"]
+        "roi": [
+            786,
+            594,
+            120,
+            114
+        ],
+        "next": [
+            "Sarkaz@Roguelike@StageCanReconstructClose"
+        ]
     },
     "Sarkaz@Roguelike@StageCanReconstruct": {
         "Doc": "印象固化",
         "action": "ClickSelf",
-        "roi": [1092, 106, 178, 152],
-        "next": ["Sarkaz@Roguelike@StageCanReconstructConfirm"]
+        "roi": [
+            1092,
+            106,
+            178,
+            152
+        ],
+        "next": [
+            "Sarkaz@Roguelike@StageCanReconstructConfirm"
+        ]
     },
     "Sarkaz@Roguelike@StageCanReconstructClose": {
         "action": "ClickSelf",
-        "roi": [1144, 0, 136, 152],
+        "roi": [
+            1144,
+            0,
+            136,
+            152
+        ],
         "next": [
             "Sarkaz@Roguelike@StageTraderEnter",
             "Sarkaz@Roguelike@StageFilterTruthEnter",
@@ -556,15 +966,30 @@
             "Sarkaz@Roguelike@StageCanReconstructConfirmFilterTruth.png",
             "Sarkaz@Roguelike@StageCanReconstructConfirmSafeHouse.png"
         ],
-        "roi": [786, 594, 120, 114],
-        "next": ["Sarkaz@Roguelike@StageCanReconstructClose"]
+        "roi": [
+            786,
+            594,
+            120,
+            114
+        ],
+        "next": [
+            "Sarkaz@Roguelike@StageCanReconstructClose"
+        ]
     },
     "Sarkaz@Roguelike@StageCombatOps": {
         "method": "HSVCount",
         "colorScales": [
             [
-                [127, 80, 50],
-                [136, 200, 180]
+                [
+                    127,
+                    80,
+                    50
+                ],
+                [
+                    136,
+                    200,
+                    180
+                ]
             ]
         ],
         "postDelay": 600,
@@ -579,8 +1004,16 @@
         "method": "HSVCount",
         "colorScales": [
             [
-                [130, 130, 40],
-                [131, 180, 180]
+                [
+                    130,
+                    130,
+                    40
+                ],
+                [
+                    131,
+                    180,
+                    180
+                ]
             ]
         ]
     },
@@ -588,13 +1021,18 @@
         "Doc": "狭路相逢",
         "baseTask": "Sarkaz@Roguelike@Stage",
         "templThreshold": 0.95,
-        "next": ["Sarkaz@Roguelike@StageEncounterEnter", "Sarkaz@Roguelike@Stages#next"]
+        "next": [
+            "Sarkaz@Roguelike@StageEncounterEnter",
+            "Sarkaz@Roguelike@Stages#next"
+        ]
     },
     "Sarkaz@Roguelike@StageDreadfulFoe": {},
     "Sarkaz@Roguelike@StageDreadfulFoe-5": {
         "baseTask": "Sarkaz@Roguelike@Stage",
         "templThreshold": 0.85,
-        "exceededNext": ["RoguelikeControlTaskPlugin-Stop"],
+        "exceededNext": [
+            "RoguelikeControlTaskPlugin-Stop"
+        ],
         "next": [
             "Sarkaz@Roguelike@StageDreadfulFoe-5Enter",
             "Sarkaz@Roguelike@StageDreadfulFoeEnter",
@@ -624,16 +1062,35 @@
         "method": "HSVCount",
         "colorScales": [
             [
-                [15, 1, 93],
-                [93, 129, 141]
+                [
+                    15,
+                    1,
+                    93
+                ],
+                [
+                    93,
+                    129,
+                    141
+                ]
             ]
         ],
-        "next": ["Sarkaz@Roguelike@StageEncounterEnter", "Sarkaz@Roguelike@Stages#next"]
+        "next": [
+            "Sarkaz@Roguelike@StageEncounterEnter",
+            "Sarkaz@Roguelike@Stages#next"
+        ]
     },
     "Sarkaz@Roguelike@StageEncounter": {
         "templThreshold": 0.96
     },
-    "Sarkaz@Roguelike@StageEncounterEnter": {},
+    "Sarkaz@Roguelike@StageEncounterEnter": {
+        "next": [
+            "Sarkaz@Roguelike@ChaosNodeDontPrompt",
+            "Sarkaz@Roguelike@ChaosNodeConfirmClick",
+            "Sarkaz@Roguelike@StageVerticalConfirmEncounter",
+            "Sarkaz@Roguelike@StageEncounterEnter",
+            "Sarkaz@Roguelike@StageEncounterJudgeClick"
+        ]
+    },
     "Sarkaz@Roguelike@StageEncounterJudgeClick2": {
         "next": [
             "Sarkaz@Roguelike@StageEncounterJudgeClick2@(Sarkaz@Roguelike@CloseCollectionContinue)",
@@ -663,13 +1120,21 @@
     },
     "Sarkaz@Roguelike@StageEncounterSpecialClose": {},
     "Sarkaz@Roguelike@StageEnterBattleAgain": {
-        "specificRect": [1100, 558, 111, 50]
+        "specificRect": [
+            1100,
+            558,
+            111,
+            50
+        ]
     },
     "Sarkaz@Roguelike@StageFilterTruth": {
         "Doc": "去伪存真",
         "baseTask": "Sarkaz@Roguelike@Stage",
         "templThreshold": 0.95,
-        "next": ["Sarkaz@Roguelike@StageFilterTruthEnter", "Sarkaz@Roguelike@Stages#next"]
+        "next": [
+            "Sarkaz@Roguelike@StageFilterTruthEnter",
+            "Sarkaz@Roguelike@Stages#next"
+        ]
     },
     "Sarkaz@Roguelike@StageFilterTruthCR": {
         "Doc": "可重建",
@@ -685,30 +1150,62 @@
     "Sarkaz@Roguelike@StageFilterTruthCanCombine": {
         "action": "ClickSelf",
         "templThreshold": 0.95,
-        "roi": [750, 525, 188, 129],
-        "next": ["Sarkaz@Roguelike@StageFilterTruthChooseCollection", "Sarkaz@Roguelike@StageFilterTruthConfirm"]
+        "roi": [
+            750,
+            525,
+            188,
+            129
+        ],
+        "next": [
+            "Sarkaz@Roguelike@StageFilterTruthChooseCollection",
+            "Sarkaz@Roguelike@StageFilterTruthConfirm"
+        ]
     },
     "Sarkaz@Roguelike@StageFilterTruthCannotCombine": {
         "templThreshold": 0.95,
-        "roi": [279, 374, 155, 170],
-        "next": ["Sarkaz@Roguelike@StageFilterTruthLeave"]
+        "roi": [
+            279,
+            374,
+            155,
+            170
+        ],
+        "next": [
+            "Sarkaz@Roguelike@StageFilterTruthLeave"
+        ]
     },
     "Sarkaz@Roguelike@StageFilterTruthChooseCollection": {
         "Doc": "合成出现藏品二选一",
         "baseTask": "Sarkaz@Roguelike@GetDrop3",
-        "template": ["Sarkaz@Roguelike@GetDrop3.png", "Sarkaz@Roguelike@GetDrop4.png"],
-        "templThreshold": [0.85, 0.85],
-        "next": ["Sarkaz@Roguelike@StageFilterTruthTryCombine1", "Sarkaz@Roguelike@StageFilterTruthCannotCombine"]
+        "template": [
+            "Sarkaz@Roguelike@GetDrop3.png",
+            "Sarkaz@Roguelike@GetDrop4.png"
+        ],
+        "templThreshold": [
+            0.85,
+            0.85
+        ],
+        "next": [
+            "Sarkaz@Roguelike@StageFilterTruthTryCombine1",
+            "Sarkaz@Roguelike@StageFilterTruthCannotCombine"
+        ]
     },
     "Sarkaz@Roguelike@StageFilterTruthCloseCollection": {
         "baseTask": "Sarkaz@Roguelike@CloseCollectionClose",
         "template": "Sarkaz@Roguelike@CloseCollectionClose.png",
-        "next": ["Sarkaz@Roguelike@StageFilterTruthTryCombine1", "Sarkaz@Roguelike@StageFilterTruthLeave"]
+        "next": [
+            "Sarkaz@Roguelike@StageFilterTruthTryCombine1",
+            "Sarkaz@Roguelike@StageFilterTruthLeave"
+        ]
     },
     "Sarkaz@Roguelike@StageFilterTruthConfirm": {
         "action": "ClickSelf",
         "postDelay": 500,
-        "roi": [346, 560, 684, 66],
+        "roi": [
+            346,
+            560,
+            684,
+            66
+        ],
         "next": [
             "#self",
             "Sarkaz@Roguelike@StageFilterTruthTryCombine1",
@@ -720,12 +1217,22 @@
         "method": "HSVCount",
         "colorScales": [
             [
-                [23, 150, 40],
-                [25, 230, 150]
+                [
+                    23,
+                    150,
+                    40
+                ],
+                [
+                    25,
+                    230,
+                    150
+                ]
             ]
         ],
         "postDelay": 1500,
         "next": [
+            "Sarkaz@Roguelike@ChaosNodeDontPrompt",
+            "Sarkaz@Roguelike@ChaosNodeConfirmClick",
             "Sarkaz@Roguelike@StageFilterTruthCloseCollection",
             "Sarkaz@Roguelike@StageFilterTruthTryCombine1",
             "Sarkaz@Roguelike@StageFilterTruthEnter",
@@ -736,11 +1243,19 @@
         "Doc": "已深化",
         "baseTask": "Sarkaz@Roguelike@Stage",
         "templThreshold": 0.95,
-        "next": ["Sarkaz@Roguelike@StageFilterTruthEnter", "Sarkaz@Roguelike@Stages#next"]
+        "next": [
+            "Sarkaz@Roguelike@StageFilterTruthEnter",
+            "Sarkaz@Roguelike@Stages#next"
+        ]
     },
     "Sarkaz@Roguelike@StageFilterTruthLeave": {
         "action": "ClickSelf",
-        "roi": [1046, 443, 234, 204],
+        "roi": [
+            1046,
+            443,
+            234,
+            204
+        ],
         "next": [
             "Sarkaz@Roguelike@StageFilterTruthCloseCollection",
             "Sarkaz@Roguelike@StageFilterTruthLeaveConfirm",
@@ -749,25 +1264,57 @@
     },
     "Sarkaz@Roguelike@StageFilterTruthLeaveConfirm": {
         "action": "ClickSelf",
-        "roi": [985, 447, 295, 203],
-        "next": ["Sarkaz@Roguelike@Stages#next"]
+        "roi": [
+            985,
+            447,
+            295,
+            203
+        ],
+        "next": [
+            "Sarkaz@Roguelike@Stages#next"
+        ]
     },
     "Sarkaz@Roguelike@StageFilterTruthTryCombine1": {
         "action": "ClickRect",
-        "roi": [777, 147, 12, 10],
-        "specificRect": [803, 186, 29, 23],
-        "next": ["Sarkaz@Roguelike@StageFilterTruthTryCombine2"]
+        "roi": [
+            777,
+            147,
+            12,
+            10
+        ],
+        "specificRect": [
+            803,
+            186,
+            29,
+            23
+        ],
+        "next": [
+            "Sarkaz@Roguelike@StageFilterTruthTryCombine2"
+        ]
     },
     "Sarkaz@Roguelike@StageFilterTruthTryCombine2": {
         "algorithm": "JustReturn",
         "action": "ClickRect",
-        "specificRect": [907, 188, 22, 20],
-        "next": ["Sarkaz@Roguelike@StageFilterTruthCanCombine", "Sarkaz@Roguelike@StageFilterTruthTryCombine3"]
+        "specificRect": [
+            907,
+            188,
+            22,
+            20
+        ],
+        "next": [
+            "Sarkaz@Roguelike@StageFilterTruthCanCombine",
+            "Sarkaz@Roguelike@StageFilterTruthTryCombine3"
+        ]
     },
     "Sarkaz@Roguelike@StageFilterTruthTryCombine3": {
         "algorithm": "JustReturn",
         "action": "ClickRect",
-        "specificRect": [810, 330, 24, 13],
+        "specificRect": [
+            810,
+            330,
+            24,
+            13
+        ],
         "next": [
             "Sarkaz@Roguelike@StageFilterTruthCanCombine",
             "Sarkaz@Roguelike@StageFilterTruthCannotCombine",
@@ -778,7 +1325,10 @@
         "Doc": "兴致盎然",
         "baseTask": "Sarkaz@Roguelike@Stage",
         "templThreshold": 0.95,
-        "next": ["Sarkaz@Roguelike@StageEncounterEnter", "Sarkaz@Roguelike@Stages#next"]
+        "next": [
+            "Sarkaz@Roguelike@StageEncounterEnter",
+            "Sarkaz@Roguelike@Stages#next"
+        ]
     },
     "Sarkaz@Roguelike@StageProphecy": {
         "Doc": "命运所指",
@@ -786,47 +1336,115 @@
         "method": "HSVCount",
         "colorScales": [
             [
-                [18, 1, 94],
-                [93, 173, 109]
+                [
+                    18,
+                    1,
+                    94
+                ],
+                [
+                    93,
+                    173,
+                    109
+                ]
             ]
         ],
-        "next": ["Sarkaz@Roguelike@StageEncounterEnter", "Sarkaz@Roguelike@Stages#next"]
+        "next": [
+            "Sarkaz@Roguelike@StageEncounterEnter",
+            "Sarkaz@Roguelike@Stages#next"
+        ]
     },
     "Sarkaz@Roguelike@StageRefresh": {
         "action": "ClickSelf",
         "method": "RGBCount",
         "postDelay": 500,
-        "colorScales": [[0, 200]],
+        "colorScales": [
+            [
+                0,
+                200
+            ]
+        ],
         "colorWithClose": false,
-        "roi": [770, 141, 100, 117],
-        "next": ["Sarkaz@Roguelike@StageRefreshConfirm", "Sarkaz@Roguelike@StageRefreshUpperLimit"]
+        "roi": [
+            770,
+            141,
+            100,
+            117
+        ],
+        "next": [
+            "Sarkaz@Roguelike@StageRefreshConfirm",
+            "Sarkaz@Roguelike@StageRefreshUpperLimit"
+        ]
     },
     "Sarkaz@Roguelike@StageRefreshClickLeft": {
         "action": "ClickRect",
         "template": "Sarkaz@Roguelike@StageTraderEnter.png",
-        "roi": [1035, 370, 226, 300],
-        "specificRect": [153, 79, 63, 29],
-        "next": ["Sarkaz@Roguelike@Stages#next"]
+        "roi": [
+            1035,
+            370,
+            226,
+            300
+        ],
+        "specificRect": [
+            153,
+            79,
+            63,
+            29
+        ],
+        "next": [
+            "Sarkaz@Roguelike@Stages#next"
+        ]
     },
     "Sarkaz@Roguelike@StageRefreshConfirm": {
         "action": "ClickSelf",
         "postDelay": 700,
-        "roi": [767, 409, 469, 155],
-        "next": ["Sarkaz@Roguelike@StageRefreshNoThought", "Sarkaz@Roguelike@StageRefreshClickLeft"]
+        "roi": [
+            767,
+            409,
+            469,
+            155
+        ],
+        "next": [
+            "Sarkaz@Roguelike@StageRefreshNoThought",
+            "Sarkaz@Roguelike@StageRefreshClickLeft"
+        ]
     },
     "Sarkaz@Roguelike@StageRefreshNoThought": {
         "action": "ClickRect",
         "templThreshold": 0.85,
-        "roi": [902, 24, 327, 179],
-        "specificRect": [1100, 558, 111, 50],
-        "next": ["Sarkaz@Roguelike@QuickFormation"]
+        "roi": [
+            902,
+            24,
+            327,
+            179
+        ],
+        "specificRect": [
+            1100,
+            558,
+            111,
+            50
+        ],
+        "next": [
+            "Sarkaz@Roguelike@QuickFormation"
+        ]
     },
     "Sarkaz@Roguelike@StageRefreshUpperLimit": {
         "action": "ClickRect",
         "templThreshold": 0.9,
-        "roi": [901, 24, 379, 186],
-        "specificRect": [1100, 558, 111, 50],
-        "next": ["Sarkaz@Roguelike@QuickFormation"]
+        "roi": [
+            901,
+            24,
+            379,
+            186
+        ],
+        "specificRect": [
+            1100,
+            558,
+            111,
+            50
+        ],
+        "next": [
+            "Sarkaz@Roguelike@QuickFormation"
+        ]
     },
     "Sarkaz@Roguelike@StageSafeHouse": {
         "templThreshold": 0.95
@@ -846,26 +1464,51 @@
         "method": "HSVCount",
         "colorScales": [
             [
-                [106, 100, 50],
-                [107, 160, 180]
+                [
+                    106,
+                    100,
+                    50
+                ],
+                [
+                    107,
+                    160,
+                    180
+                ]
             ]
         ],
-        "next": ["Sarkaz@Roguelike@StageSafeHouseEnter", "Sarkaz@Roguelike@StageEncounterJudgeClick"]
+        "next": [
+            "Sarkaz@Roguelike@ChaosNodeDontPrompt",
+            "Sarkaz@Roguelike@ChaosNodeConfirmClick",
+            "Sarkaz@Roguelike@StageSafeHouseEnter",
+            "Sarkaz@Roguelike@StageEncounterJudgeClick"
+        ]
     },
     "Sarkaz@Roguelike@StageSafeHouseHD": {
         "Doc": "已深化",
         "templThreshold": 0.95,
         "baseTask": "Sarkaz@Roguelike@Stage",
-        "next": ["Sarkaz@Roguelike@StageSafeHouseEnter", "Sarkaz@Roguelike@Stages#next"]
+        "next": [
+            "Sarkaz@Roguelike@StageSafeHouseEnter",
+            "Sarkaz@Roguelike@Stages#next"
+        ]
     },
     "Sarkaz@Roguelike@StageSafeHouseReuse": {
         "algorithm": "OcrDetect",
         "action": "ClickSelf",
         "withoutDet": true,
-        "roi": [880, 210, 140, 36],
-        "text": ["活用安全屋"],
+        "roi": [
+            880,
+            210,
+            140,
+            36
+        ],
+        "text": [
+            "活用安全屋"
+        ],
         "preDelay": 500,
-        "next": ["Sarkaz@Roguelike@StageEncounterOption#next"]
+        "next": [
+            "Sarkaz@Roguelike@StageEncounterOption#next"
+        ]
     },
     "Sarkaz@Roguelike@StageTrader": {
         "templThreshold": 0.95
@@ -885,11 +1528,21 @@
         "method": "HSVCount",
         "colorScales": [
             [
-                [71, 150, 40],
-                [73, 180, 150]
+                [
+                    71,
+                    150,
+                    40
+                ],
+                [
+                    73,
+                    180,
+                    150
+                ]
             ]
         ],
         "next": [
+            "Sarkaz@Roguelike@ChaosNodeDontPrompt",
+            "Sarkaz@Roguelike@ChaosNodeConfirmClick",
             "Sarkaz@Roguelike@StageTraderEnter@(Sarkaz@Roguelike@CloseCollectionClose)",
             "Sarkaz@Roguelike@StageTraderEnter@(Sarkaz@Roguelike@CloseCollectionContinue)",
             "Sarkaz@Roguelike@StageVerticalConfirmTrader",
@@ -905,16 +1558,26 @@
         "Doc": "已深化",
         "templThreshold": 0.95,
         "baseTask": "Sarkaz@Roguelike@Stage",
-        "next": ["Sarkaz@Roguelike@StageTraderEnter", "Sarkaz@Roguelike@Stages#next"]
+        "next": [
+            "Sarkaz@Roguelike@StageTraderEnter",
+            "Sarkaz@Roguelike@Stages#next"
+        ]
     },
     "Sarkaz@Roguelike@StageTraderLeaveConfirm": {
         "template": "Roguelike@StageTraderLeaveConfirm.png",
-        "exceededNext": ["Sarkaz@Roguelike@ExitThenAbandon"]
+        "exceededNext": [
+            "Sarkaz@Roguelike@ExitThenAbandon"
+        ]
     },
     "Sarkaz@Roguelike@StageTraderRefresh": {
         "template": "Roguelike@StageTraderRefresh.png",
         "action": "ClickSelf",
-        "roi": [230, 73, 212, 141]
+        "roi": [
+            230,
+            73,
+            212,
+            141
+        ]
     },
     "Sarkaz@Roguelike@StageWindAndRain": {
         "Doc": "失与得",
@@ -922,23 +1585,52 @@
         "method": "HSVCount",
         "colorScales": [
             [
-                [18, 130, 155],
-                [20, 180, 180]
+                [
+                    18,
+                    130,
+                    155
+                ],
+                [
+                    20,
+                    180,
+                    180
+                ]
             ],
             [
-                [15, 130, 160],
-                [16, 150, 220]
+                [
+                    15,
+                    130,
+                    160
+                ],
+                [
+                    16,
+                    150,
+                    220
+                ]
             ],
             [
-                [15, 40, 85],
-                [95, 120, 110]
+                [
+                    15,
+                    40,
+                    85
+                ],
+                [
+                    95,
+                    120,
+                    110
+                ]
             ]
         ],
-        "next": ["Sarkaz@Roguelike@StageEncounterEnter", "Sarkaz@Roguelike@Stages#next"]
+        "next": [
+            "Sarkaz@Roguelike@StageEncounterEnter",
+            "Sarkaz@Roguelike@Stages#next"
+        ]
     },
     "Sarkaz@Roguelike@Stages": {
         "baseTask": "Sarkaz@Roguelike@Stages_default",
-        "onErrorNext": ["Sarkaz@Roguelike@ExitThenAbandon"]
+        "onErrorNext": [
+            "Sarkaz@Roguelike@ExitThenAbandon"
+        ]
     },
     "Sarkaz@Roguelike@Stages_aggressive": {
         "Doc": "优先紧急作战,1-2层",
@@ -970,7 +1662,9 @@
             "Sarkaz@Roguelike@StageDreadfulFoe",
             "Sarkaz@Roguelike@StageDreadfulFoe-5"
         ],
-        "onErrorNext": ["Sarkaz@Roguelike@ExitThenAbandon"]
+        "onErrorNext": [
+            "Sarkaz@Roguelike@ExitThenAbandon"
+        ]
     },
     "Sarkaz@Roguelike@Stages_default": {
         "Doc": "avoid battle,其他模式和5-6层策略",
@@ -1002,7 +1696,167 @@
             "Sarkaz@Roguelike@StageDreadfulFoe",
             "Sarkaz@Roguelike@StageDreadfulFoe-5"
         ],
-        "onErrorNext": ["Sarkaz@Roguelike@ExitThenAbandon"]
+        "onErrorNext": [
+            "Sarkaz@Roguelike@ExitThenAbandon"
+        ]
+    },
+    "Sarkaz@Roguelike@StrategyChange-BlueprintCollectible": {
+        "Doc": "蓝图测绘分队烧水专用：前两层只走非作战节点（刷不动则弃局），第三层起保持官方退出策略",
+        "baseTask": "Sarkaz@Roguelike@StrategyChange_mode4",
+        "text": [
+            "_BlueprintCollectible",
+            "_exit"
+        ],
+        "ocrReplace": [
+            [
+                "熔魂之始",
+                "_BlueprintCollectible"
+            ],
+            [
+                "锻铁根须",
+                "_BlueprintCollectible"
+            ],
+            [
+                "灰铸迷城",
+                "_exit"
+            ],
+            [
+                "或然歧域",
+                "_exit"
+            ],
+            [
+                "虚实疆界",
+                "_exit"
+            ],
+            [
+                "辉光天顶",
+                "_exit"
+            ],
+            [
+                "诡.*断章",
+                "_exit"
+            ]
+        ]
+    },
+    "Sarkaz@Roguelike@Stages_BlueprintCollectible": {
+        "Doc": [
+            "蓝图测绘分队烧水专用。节点优先级与 Stages_default 完全一致，",
+            "唯一区别是把四个作战项换成先尝试刷新、刷不动就弃局的变体，永不进入战斗。"
+        ],
+        "algorithm": "JustReturn",
+        "next": [
+            "Sarkaz@Roguelike@ChaosNodeDontPrompt",
+            "Sarkaz@Roguelike@ChaosNodeConfirmClick",
+            "Sarkaz@Roguelike@NextLevel",
+            "Sarkaz@Roguelike@Stages@(Sarkaz@Roguelike@CloseCollectionContinue)",
+            "Sarkaz@Roguelike@Stages@(Sarkaz@Roguelike@CloseCollectionClose)",
+            "Sarkaz@Roguelike@StageBurdenOperation#next",
+            "Sarkaz@Roguelike@StageBoskyPassage",
+            "Sarkaz@Roguelike@StageTraderHD",
+            "Sarkaz@Roguelike@StageTrader",
+            "Sarkaz@Roguelike@StageTraderCR",
+            "Sarkaz@Roguelike@StageSafeHouseHD",
+            "Sarkaz@Roguelike@StageSafeHouse",
+            "Sarkaz@Roguelike@StageSafeHouseCR",
+            "Sarkaz@Roguelike@StageBoons",
+            "Sarkaz@Roguelike@StageEmergencyTransportation",
+            "Sarkaz@Roguelike@StageGambling",
+            "Sarkaz@Roguelike@StageProphecy",
+            "Sarkaz@Roguelike@StageFilterTruthHD",
+            "Sarkaz@Roguelike@StageFilterTruth",
+            "Sarkaz@Roguelike@StageFilterTruthCR",
+            "Sarkaz@Roguelike@StageEncounter",
+            "Sarkaz@Roguelike@StageWindAndRain",
+            "Sarkaz@Roguelike@StageConfrontation",
+            "Sarkaz@Roguelike@StageCombatOps-BlueprintCollectible",
+            "Sarkaz@Roguelike@StageEmergencyOps-BlueprintCollectible",
+            "Sarkaz@Roguelike@StageDreadfulFoe-BlueprintCollectible",
+            "Sarkaz@Roguelike@StageDreadfulFoe-5-BlueprintCollectible"
+        ],
+        "onErrorNext": [
+            "Sarkaz@Roguelike@ExitThenAbandon"
+        ]
+    },
+    "Sarkaz@Roguelike@StageCombatOps-BlueprintCollectible": {
+        "Doc": "蓝图测绘分队烧水：官方顺序匹配，按钮灰(刷不动)由 ExitThenAbandon 兜底弃局（不点十次）",
+        "baseTask": "Sarkaz@Roguelike@StageCombatOps",
+        "template": "Sarkaz@Roguelike@StageCombatOps.png",
+        "next": [
+            "Sarkaz@Roguelike@StageRefresh-BlueprintCollectible",
+            "Sarkaz@Roguelike@ExitThenAbandon",
+            "Sarkaz@Roguelike@Stages#next"
+        ]
+    },
+    "Sarkaz@Roguelike@StageEmergencyOps-BlueprintCollectible": {
+        "baseTask": "Sarkaz@Roguelike@StageEmergencyOps",
+        "template": "Sarkaz@Roguelike@StageEmergencyOps.png",
+        "next": [
+            "Sarkaz@Roguelike@StageRefresh-BlueprintCollectible",
+            "Sarkaz@Roguelike@ExitThenAbandon",
+            "Sarkaz@Roguelike@Stages#next"
+        ],
+        "Doc": "蓝图测绘分队烧水：官方顺序匹配，按钮灰(刷不动)由 ExitThenAbandon 兜底弃局（不点十次）"
+    },
+    "Sarkaz@Roguelike@StageDreadfulFoe-BlueprintCollectible": {
+        "baseTask": "Sarkaz@Roguelike@StageDreadfulFoe",
+        "template": "Sarkaz@Roguelike@StageDreadfulFoe.png",
+        "next": [
+            "Sarkaz@Roguelike@StageRefresh-BlueprintCollectible",
+            "Sarkaz@Roguelike@ExitThenAbandon",
+            "Sarkaz@Roguelike@Stages#next"
+        ],
+        "Doc": "蓝图测绘分队烧水：官方顺序匹配，按钮灰(刷不动)由 ExitThenAbandon 兜底弃局（不点十次）"
+    },
+    "Sarkaz@Roguelike@StageDreadfulFoe-5-BlueprintCollectible": {
+        "baseTask": "Sarkaz@Roguelike@StageDreadfulFoe-5",
+        "template": "Sarkaz@Roguelike@StageDreadfulFoe-5.png",
+        "next": [
+            "Sarkaz@Roguelike@StageRefresh-BlueprintCollectible",
+            "Sarkaz@Roguelike@ExitThenAbandon",
+            "Sarkaz@Roguelike@Stages#next"
+        ],
+        "Doc": "蓝图测绘分队烧水：官方顺序匹配，按钮灰(刷不动)由 ExitThenAbandon 兜底弃局（不点十次）"
+    },
+    "Sarkaz@Roguelike@StageRefresh-BlueprintCollectible": {
+        "Doc": "点刷新按钮（与官方 StageRefresh 同一套识别）",
+        "baseTask": "Sarkaz@Roguelike@StageRefresh",
+        "template": "Sarkaz@Roguelike@StageRefresh.png",
+        "next": [
+            "Sarkaz@Roguelike@StageRefreshConfirm-BlueprintCollectible",
+            "Sarkaz@Roguelike@StageRefreshUpperLimit-BlueprintCollectible"
+        ]
+    },
+    "Sarkaz@Roguelike@StageRefreshConfirm-BlueprintCollectible": {
+        "baseTask": "Sarkaz@Roguelike@StageRefreshConfirm",
+        "template": "Sarkaz@Roguelike@StageRefreshConfirm.png",
+        "next": [
+            "Sarkaz@Roguelike@StageRefreshNoThought-BlueprintCollectible",
+            "Sarkaz@Roguelike@StageRefreshClickLeft-BlueprintCollectible"
+        ]
+    },
+    "Sarkaz@Roguelike@StageRefreshClickLeft-BlueprintCollectible": {
+        "Doc": "刷新成功，回到选点流程重新挑节点",
+        "baseTask": "Sarkaz@Roguelike@StageRefreshClickLeft",
+        "template": "Sarkaz@Roguelike@StageTraderEnter.png",
+        "next": [
+            "Sarkaz@Roguelike@Stages#next"
+        ]
+    },
+    "Sarkaz@Roguelike@StageRefreshNoThought-BlueprintCollectible": {
+        "Doc": "构想不足以刷新节点 → 堵死，弃局重开",
+        "baseTask": "Sarkaz@Roguelike@StageRefreshNoThought",
+        "template": "Sarkaz@Roguelike@StageRefreshNoThought.png",
+        "next": [
+            "Sarkaz@Roguelike@ExitThenAbandon"
+        ]
+    },
+    "Sarkaz@Roguelike@StageRefreshUpperLimit-BlueprintCollectible": {
+        "Doc": "刷新次数已达上限 → 堵死，弃局重开",
+        "baseTask": "Sarkaz@Roguelike@StageRefreshUpperLimit",
+        "template": "Sarkaz@Roguelike@StageRefreshUpperLimit.png",
+        "next": [
+            "Sarkaz@Roguelike@ExitThenAbandon"
+        ]
     },
     "Sarkaz@Roguelike@Stages_fastInvestment": {
         "doc": "点刺成锭分队专用投资策略，调用 RoguelikeRoutingTaskPlugin",
@@ -1014,7 +1868,9 @@
             "Sarkaz@Roguelike@DecreaseBurdenRetardation",
             "Sarkaz@Roguelike@Routing-FastInvestment"
         ],
-        "onErrorNext": ["Sarkaz@Roguelike@ExitThenAbandon"]
+        "onErrorNext": [
+            "Sarkaz@Roguelike@ExitThenAbandon"
+        ]
     },
     "Sarkaz@Roguelike@Stages_pragmatic": {
         "Doc": "避紧急作战,3-4层策略",
@@ -1047,7 +1903,9 @@
             "Sarkaz@Roguelike@StageDreadfulFoe",
             "Sarkaz@Roguelike@StageDreadfulFoe-5"
         ],
-        "onErrorNext": ["Sarkaz@Roguelike@ExitThenAbandon"]
+        "onErrorNext": [
+            "Sarkaz@Roguelike@ExitThenAbandon"
+        ]
     },
     "Sarkaz@Roguelike@Stages_routing": {
         "algorithm": "JustReturn",
@@ -1060,111 +1918,317 @@
             "Sarkaz@Roguelike@DecreaseBurdenRetardation",
             "Sarkaz@Roguelike@Routing"
         ],
-        "onErrorNext": ["Sarkaz@Roguelike@ExitThenAbandon"]
+        "onErrorNext": [
+            "Sarkaz@Roguelike@ExitThenAbandon"
+        ]
     },
     "Sarkaz@Roguelike@StartExplore": {
-        "roi": [1014, 481, 266, 219]
+        "roi": [
+            1014,
+            481,
+            266,
+            219
+        ]
     },
     "Sarkaz@Roguelike@StartExplore-EnterCheck": {
         "template": "Sarkaz@Roguelike@StartExplore.png",
-        "roi": [1014, 481, 266, 219]
+        "roi": [
+            1014,
+            481,
+            266,
+            219
+        ]
     },
     "Sarkaz@Roguelike@StrategyChange-FastInvestment": {
         "baseTask": "Sarkaz@Roguelike@StrategyChange_mode1",
-        "text": ["_fastInvestment", "_exit"],
+        "text": [
+            "_fastInvestment",
+            "_exit"
+        ],
         "ocrReplace": [
-            ["熔魂之始", "_fastInvestment"],
-            ["锻铁根须", "_exit"],
-            ["灰铸迷城", "_exit"],
-            ["或然歧域", "_exit"],
-            ["虚实疆界", "_exit"],
-            ["辉光天顶", "_exit"],
-            ["诡.*断章", "_exit"]
+            [
+                "熔魂之始",
+                "_fastInvestment"
+            ],
+            [
+                "锻铁根须",
+                "_exit"
+            ],
+            [
+                "灰铸迷城",
+                "_exit"
+            ],
+            [
+                "或然歧域",
+                "_exit"
+            ],
+            [
+                "虚实疆界",
+                "_exit"
+            ],
+            [
+                "辉光天顶",
+                "_exit"
+            ],
+            [
+                "诡.*断章",
+                "_exit"
+            ]
         ]
     },
     "Sarkaz@Roguelike@StrategyChange_mode0": {
-        "text": ["_default", "_SKIP_"],
+        "text": [
+            "_default",
+            "_SKIP_"
+        ],
         "ocrReplace": [
-            ["熔魂之始", "_default"],
-            ["锻铁根须", "_default"],
-            ["灰铸迷城", "_default"],
-            ["或然歧域", "_default"],
-            ["虚实疆界", "_default"],
-            ["辉光天顶", "_default"],
-            ["诡.*断章", "_SKIP_"]
+            [
+                "熔魂之始",
+                "_default"
+            ],
+            [
+                "锻铁根须",
+                "_default"
+            ],
+            [
+                "灰铸迷城",
+                "_default"
+            ],
+            [
+                "或然歧域",
+                "_default"
+            ],
+            [
+                "虚实疆界",
+                "_default"
+            ],
+            [
+                "辉光天顶",
+                "_default"
+            ],
+            [
+                "诡.*断章",
+                "_SKIP_"
+            ]
         ]
     },
     "Sarkaz@Roguelike@StrategyChange_mode0_NOT_IN_USE": {
-        "text": ["_aggressive", "_pragmatic", "_default", "_SKIP_"],
+        "text": [
+            "_aggressive",
+            "_pragmatic",
+            "_default",
+            "_SKIP_"
+        ],
         "baseTask": "Roguelike@StrategyChange_default",
         "ocrReplace": [
-            ["熔魂之始", "_aggressive"],
-            ["锻铁根须", "_aggressive"],
-            ["灰铸迷城", "_pragmatic"],
-            ["或然歧域", "_pragmatic"],
-            ["虚实疆界", "_default"],
-            ["辉光天顶", "_default"],
-            ["诡.*断章", "_SKIP_"]
+            [
+                "熔魂之始",
+                "_aggressive"
+            ],
+            [
+                "锻铁根须",
+                "_aggressive"
+            ],
+            [
+                "灰铸迷城",
+                "_pragmatic"
+            ],
+            [
+                "或然歧域",
+                "_pragmatic"
+            ],
+            [
+                "虚实疆界",
+                "_default"
+            ],
+            [
+                "辉光天顶",
+                "_default"
+            ],
+            [
+                "诡.*断章",
+                "_SKIP_"
+            ]
         ]
     },
     "Sarkaz@Roguelike@StrategyChange_mode1": {
-        "text": ["_default", "_exit"],
+        "text": [
+            "_default",
+            "_exit"
+        ],
         "ocrReplace": [
-            ["熔魂之始", "_default"],
-            ["锻铁根须", "_exit"],
-            ["灰铸迷城", "_exit"],
-            ["或然歧域", "_exit"],
-            ["虚实疆界", "_exit"],
-            ["辉光天顶", "_exit"],
-            ["诡.*断章", "_exit"]
+            [
+                "熔魂之始",
+                "_default"
+            ],
+            [
+                "锻铁根须",
+                "_exit"
+            ],
+            [
+                "灰铸迷城",
+                "_exit"
+            ],
+            [
+                "或然歧域",
+                "_exit"
+            ],
+            [
+                "虚实疆界",
+                "_exit"
+            ],
+            [
+                "辉光天顶",
+                "_exit"
+            ],
+            [
+                "诡.*断章",
+                "_exit"
+            ]
         ]
     },
     "Sarkaz@Roguelike@StrategyChange_mode10001": {
-        "text": ["_routing", "_exit"],
+        "text": [
+            "_routing",
+            "_exit"
+        ],
         "ocrReplace": [
-            ["熔魂之始", "_routing"],
-            ["锻铁根须", "_exit"],
-            ["灰铸迷城", "_exit"],
-            ["或然歧域", "_exit"],
-            ["虚实疆界", "_exit"],
-            ["辉光天顶", "_exit"],
-            ["诡.*断章", "_exit"]
+            [
+                "熔魂之始",
+                "_routing"
+            ],
+            [
+                "锻铁根须",
+                "_exit"
+            ],
+            [
+                "灰铸迷城",
+                "_exit"
+            ],
+            [
+                "或然歧域",
+                "_exit"
+            ],
+            [
+                "虚实疆界",
+                "_exit"
+            ],
+            [
+                "辉光天顶",
+                "_exit"
+            ],
+            [
+                "诡.*断章",
+                "_exit"
+            ]
         ]
     },
     "Sarkaz@Roguelike@StrategyChange_mode4": {
-        "text": ["_default", "_exit"],
+        "text": [
+            "_default",
+            "_exit"
+        ],
         "ocrReplace": [
-            ["熔魂之始", "_default"],
-            ["锻铁根须", "_default"],
-            ["灰铸迷城", "_exit"],
-            ["或然歧域", "_exit"],
-            ["虚实疆界", "_exit"],
-            ["辉光天顶", "_exit"],
-            ["诡.*断章", "_exit"]
+            [
+                "熔魂之始",
+                "_default"
+            ],
+            [
+                "锻铁根须",
+                "_default"
+            ],
+            [
+                "灰铸迷城",
+                "_exit"
+            ],
+            [
+                "或然歧域",
+                "_exit"
+            ],
+            [
+                "虚实疆界",
+                "_exit"
+            ],
+            [
+                "辉光天顶",
+                "_exit"
+            ],
+            [
+                "诡.*断章",
+                "_exit"
+            ]
         ]
     },
     "Sarkaz@Roguelike@StrategyChange_mode6": {
-        "text": ["_default", "_SKIP_"],
+        "text": [
+            "_default",
+            "_SKIP_"
+        ],
         "ocrReplace": [
-            ["熔魂之始", "_default"],
-            ["锻铁根须", "_default"],
-            ["灰铸迷城", "_default"],
-            ["或然歧域", "_default"],
-            ["虚实疆界", "_default"],
-            ["辉光天顶", "_default"],
-            ["诡.*断章", "_SKIP_"]
+            [
+                "熔魂之始",
+                "_default"
+            ],
+            [
+                "锻铁根须",
+                "_default"
+            ],
+            [
+                "灰铸迷城",
+                "_default"
+            ],
+            [
+                "或然歧域",
+                "_default"
+            ],
+            [
+                "虚实疆界",
+                "_default"
+            ],
+            [
+                "辉光天顶",
+                "_default"
+            ],
+            [
+                "诡.*断章",
+                "_SKIP_"
+            ]
         ]
     },
     "Sarkaz@Roguelike@StrategyChange_mode7": {
-        "text": ["_default", "_SKIP_"],
+        "text": [
+            "_default",
+            "_SKIP_"
+        ],
         "ocrReplace": [
-            ["熔魂之始", "_default"],
-            ["锻铁根须", "_default"],
-            ["灰铸迷城", "_default"],
-            ["或然歧域", "_default"],
-            ["虚实疆界", "_default"],
-            ["辉光天顶", "_default"],
-            ["诡.*断章", "_SKIP_"]
+            [
+                "熔魂之始",
+                "_default"
+            ],
+            [
+                "锻铁根须",
+                "_default"
+            ],
+            [
+                "灰铸迷城",
+                "_default"
+            ],
+            [
+                "或然歧域",
+                "_default"
+            ],
+            [
+                "虚实疆界",
+                "_default"
+            ],
+            [
+                "辉光天顶",
+                "_default"
+            ],
+            [
+                "诡.*断章",
+                "_SKIP_"
+            ]
         ]
     },
     "Sarkaz@Roguelike@TodoEnter": {},
