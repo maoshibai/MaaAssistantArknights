@@ -1437,10 +1437,20 @@ public class AsstProxy
                     _taskChainStartTimes.Remove(taskId);
                     UpdateTaskStatus(taskId, TaskStatus.Error);
 
-                    // details.error 为 Core 侧 TaskExceptionKind 名（如 OutOfMemory），普通识别错误无此字段
-                    var log = details["error"]?.ToString() == "OutOfMemory"
-                        ? LocalizationHelper.GetStringFormat("OutOfMemoryError", LocalizationHelper.GetString(taskChain))
-                        : LocalizationHelper.GetString("TaskError") + LocalizationHelper.GetString(taskChain);
+                    // details.details.error 为 Core 侧 TaskExceptionKind 名，普通识别错误无此字段
+                    var exceptionKind = details["details"]?["error"]?.ToString();
+                    var localizedTaskChain = LocalizationHelper.GetString(taskChain);
+                    if (exceptionKind == "GpuDeviceRemoved")
+                    {
+                        Bootstrapper.MarkRequiresRestart();
+                    }
+
+                    var log = exceptionKind switch
+                    {
+                        "OutOfMemory" => LocalizationHelper.GetStringFormat("OutOfMemoryError", localizedTaskChain),
+                        "GpuDeviceRemoved" => LocalizationHelper.GetStringFormat("GpuDeviceRemovedRestartRequired", localizedTaskChain),
+                        _ => LocalizationHelper.GetString("TaskError") + localizedTaskChain,
+                    };
                     void DisplayErrorLog() => Instances.TaskQueueViewModel.DisplayLog(log, UiLogColor.Error,
                         updateCardImage: true, fetchLatestImage: true, useCardImageAsToolTip: true);
 
@@ -3866,6 +3876,17 @@ public class AsstProxy
 
         var (type, param) = task.Serialize();
         return AsstAppendTaskWithEncoding(TaskType.MiniGame, type, param) && AsstStart();
+    }
+
+    /// <summary>
+    /// 生息演算（牛杂）。不走 CustomTask 通道，直接以 Reclamation 任务类型提交；只追加不启动，启动由调用方负责。
+    /// </summary>
+    /// <param name="task">按当前配置构造的生息演算任务。</param>
+    /// <returns>是否成功追加。</returns>
+    public bool AsstReclamation(AsstReclamationTask task)
+    {
+        var (isSuccess, _) = AsstAppendTaskWithEncoding(TaskType.Reclamation, task);
+        return isSuccess;
     }
 
     /// <summary>
