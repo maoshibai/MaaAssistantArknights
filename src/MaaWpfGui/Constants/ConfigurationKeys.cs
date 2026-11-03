@@ -1,4 +1,4 @@
-// <copyright file="ConfigurationKeys.cs" company="MaaAssistantArknights">
+﻿// <copyright file="ConfigurationKeys.cs" company="MaaAssistantArknights">
 // Part of the MaaWpfGui project, maintained by the MaaAssistantArknights team (Maa Team)
 // Copyright (C) 2021-2026 MaaAssistantArknights Contributors
 //
@@ -349,8 +349,6 @@ public static class ConfigurationKeys
     public const string GachaShowDisclaimerNoMore = "Gacha.ShowDisclaimerNoMore"; // √
 
     public const string PeepTargetFps = "Peep.TargetFps"; // √
-
-    public const string GuideStepIndex = "Guide.StepIndex"; // √
 
     public const string ForceScheduledStart = "Timer.ForceScheduledStart"; // √
     public const string ShowWindowBeforeForceScheduledStart = "Timer.ShowWindowBeforeForceScheduledStart"; // √

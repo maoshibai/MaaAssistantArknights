@@ -1,4 +1,4 @@
-// <copyright file="Bootstrapper.cs" company="MaaAssistantArknights">
+﻿// <copyright file="Bootstrapper.cs" company="MaaAssistantArknights">
 // Part of the MaaWpfGui project, maintained by the MaaAssistantArknights team (Maa Team)
 // Copyright (C) 2021-2026 MaaAssistantArknights Contributors
 //
@@ -779,12 +779,10 @@ public class Bootstrapper : Bootstrapper<RootViewModel>
         // 统一归位；客户端类型固定为官服（与演示数据 zh-cn 组一致），使 Core 资源加载与启动时的
         // 关卡/活动解析都基于国服资源，不受运行目录遗留的外服配置影响；
         // 置空自定义背景路径并关闭莫奈取色，截图不携带运行目录遗留的背景图与取色主题；
-        // 设置指引按已完成处理，避免全新配置首次启动时向导覆盖任务页截图。
         // 必须在 ConvertConfig 之后执行，否则未迁移旧配置的转换结果会覆盖这里的设置
         ConfigFactory.CurrentConfig.Gui.RuntimeSettings.ClientType = MaaWpfGui.Constants.Enums.ClientType.Official;
         ConfigFactory.Root.Gui.Background.ImagePath = string.Empty;
         ConfigFactory.Root.Gui.BackgroundMonetEnabled = false;
-        ConfigFactory.Root.Gui.GuideStep = SettingsViewModel.GuideMaxStep;
     }
 
     /// <summary>

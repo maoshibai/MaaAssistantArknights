@@ -1,4 +1,4 @@
-// <copyright file="ConfigConverter.cs" company="MaaAssistantArknights">
+﻿// <copyright file="ConfigConverter.cs" company="MaaAssistantArknights">
 // Part of the MaaWpfGui project, maintained by the MaaAssistantArknights team (Maa Team)
 // Copyright (C) 2021-2026 MaaAssistantArknights Contributors
 //
@@ -1083,8 +1083,6 @@ public class ConfigConverter
             ConfigurationHelper.DeleteGlobalValue(ConfigurationKeys.BackgroundImageStretchMode, out var _);
             ConfigurationHelper.DeleteGlobalValue(ConfigurationKeys.BackgroundOpacity, out var _);
             ConfigurationHelper.DeleteGlobalValue(ConfigurationKeys.BackgroundBlurEffectRadius, out var _);
-            ConfigFactory.Root.Gui.GuideStep = ConfigurationHelper.GetValue(ConfigurationKeys.GuideStepIndex, 0);
-            ConfigurationHelper.DeleteValue(ConfigurationKeys.GuideStepIndex);
             try
             {
                 var hotKeys = ConfigurationHelper.GetGlobalValue("HotKeys", string.Empty);
