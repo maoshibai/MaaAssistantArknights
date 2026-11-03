@@ -1821,7 +1821,7 @@
     "resource/global/YoStarEN/resource/template/UiTheme/Default/Mall": "3f1e4d180a5483ea1b36becbbd5dd29467764a0b472dd5a623cf98312d9cd143",
     "resource/global/YoStarEN/resource/template/UiTheme/Default/GachaEnter": "a6ec2a2c6e32e9040c008e4b71d5406775e5e57eed99452a080f4c25d96a6554",
     "resource/global/YoStarEN/resource/template/UiTheme/Default/Recruit": "07558180d29e495b9676553aefbb79c645a1362fa4c3b3114939caaf6f87310d",
-    "resource/global/YoStarEN/resource/template/UiTheme/Default/DepotEnter": "fe39b6c4cc922733f6c2a9e5aef94abb5b609823970ed9a7c2ebeb781ed7ac35",
+    "resource/global/YoStarEN/resource/template/UiTheme/Default/DepotEnter": "def4cf2bbf1df8bb974c08431dfebe15d3703a596d8c7c120bd6d903a603d84f",
     "resource/global/YoStarEN/resource/template/UiTheme/Default/OperBoxEnter": "2c0f75bb36828cead15cb485eafcfe2efb014da97cffa673a2747a112da81ac4",
     "resource/global/YoStarEN/resource/template/UiTheme/Default/Friends": "a62cb077ddb0ef9ea3a9adc608dc4b9e68aa12385493ea7b983b8398cd345cfd",
     "resource/global/YoStarEN/resource/template/Recruit/RecruitRefresh": "4b78b3fba14a6709d5a08d098782970f2b2b8a82222fccc7f3462e53613cebb5",
@@ -4572,5 +4572,8 @@
     "resource/template/UiTheme/Default/Mall-90": "f51681f52fdb8011b6117e79b601c99365bfe15cca5e14bdaf75693445e172bc",
     "resource/template/UiTheme/Default/Recruit-90": "0e795a335097064cd1a6ad351b76f2f1fd347c437a8c09da5286302e57b4b09c",
     "resource/template/UiTheme/SwitchTheme/SwitchTheme@ToggleSettingsMenu-v2": "536feffb73d6e024d00cc07c643e6faeed28ec24939b3967f797937a38632a4a",
-    "resource/template/StageNavigation/SideStory/TL/TLChapterToTL2": "67f97653f9f053e464008cd30bd93944ab875dc726e3216bb11d0079600d668a"
+    "resource/template/StageNavigation/SideStory/TL/TLChapterToTL2": "67f97653f9f053e464008cd30bd93944ab875dc726e3216bb11d0079600d668a",
+    "resource/template/MiniGame/WartimePressCommittee/MiniGame@WartimePressCommittee@Max": "4bb5cf3f3fb8b9624b77889b5b7c5c6063e62d6749378467230df80c7e88fbfc",
+    "resource/template/MiniGame/WartimePressCommittee/MiniGame@WartimePressCommittee@MaxButton": "696beefed1e13106499ff41f133cdc9df900979c3586d6fd7ccaad52bc5049f0",
+    "resource/template/MiniGame/WartimePressCommittee/MiniGame@WartimePressCommittee@NextPage": "57ddbfa084037e255c4911200611c3869102f405f88080cf6eed700656217c60"
 }
