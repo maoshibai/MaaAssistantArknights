@@ -27,20 +27,16 @@ from pathlib import Path
 # 0. 基础路径
 # ============================================================
 
-PROJECT_DIR = Path(
-    r"C:\Users\MX\Desktop\MAA\MaaAssistantArknights"
-)
+PROJECT_DIR = Path(r"C:\Users\MX\Desktop\MAA\MaaAssistantArknights")
 
-# Release config
+# Debug config
 CONFIG_DIR = PROJECT_DIR / "build" / "bin" / "Debug" / "config"
 
 # Git 代理
 GIT_PROXY = "http://127.0.0.1:20122"
 
 # Visual Studio
-VS_ROOT = Path(
-    r"C:\Program Files\Microsoft Visual Studio\18\Community"
-)
+VS_ROOT = Path(r"C:\Program Files\Microsoft Visual Studio\18\Community")
 
 # VsDevCmd
 VSDEVCMD = VS_ROOT / "Common7" / "Tools" / "VsDevCmd.bat"
@@ -93,6 +89,7 @@ CONFIG_DIR_EXISTED = False
 # 通用函数
 # ============================================================
 
+
 def pause():
     input("\n按 Enter 键退出...")
 
@@ -104,10 +101,7 @@ def run_command(args, cwd=None):
     """
     print()
 
-    result = subprocess.run(
-        args,
-        cwd=str(cwd) if cwd else None
-    )
+    result = subprocess.run(args, cwd=str(cwd) if cwd else None)
 
     return result.returncode
 
@@ -116,10 +110,7 @@ def run_git(*args):
     """
     执行 Git 命令。
     """
-    return run_command(
-        ["git", *args],
-        cwd=PROJECT_DIR
-    )
+    return run_command(["git", *args], cwd=PROJECT_DIR)
 
 
 def git_proxy_cleanup():
@@ -138,14 +129,14 @@ def git_proxy_cleanup():
         ["git", "config", "--unset", "http.proxy"],
         cwd=PROJECT_DIR,
         stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL
+        stderr=subprocess.DEVNULL,
     )
 
     subprocess.run(
         ["git", "config", "--unset", "https.proxy"],
         cwd=PROJECT_DIR,
         stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL
+        stderr=subprocess.DEVNULL,
     )
 
     GIT_PROXY_ENABLED = False
@@ -155,9 +146,10 @@ def git_proxy_cleanup():
 # config 内存备份
 # ============================================================
 
+
 def backup_config_to_memory():
     """
-    将整个 Release config 目录完整读取到内存。
+    将整个 Debug config 目录完整读取到内存。
 
     不创建任何备份文件。
     不修改原 config。
@@ -177,7 +169,7 @@ def backup_config_to_memory():
 
     if not CONFIG_DIR.exists():
         print()
-        print("[警告] 未找到 Release config 目录：")
+        print("[警告] 未找到 Debug config 目录：")
         print(CONFIG_DIR)
         print()
         print("[*] 没有可备份的用户配置。")
@@ -196,29 +188,18 @@ def backup_config_to_memory():
 
     try:
         for path in CONFIG_DIR.rglob("*"):
-
             if path.is_file():
                 relative_path = path.relative_to(CONFIG_DIR)
 
                 # 保存原始 bytes
                 CONFIG_BACKUP[relative_path] = path.read_bytes()
 
-        print(
-            f"[*] 用户配置备份完成！"
-            f"共保存 {len(CONFIG_BACKUP)} 个文件。"
-        )
+        print(f"[*] 用户配置备份完成！共保存 {len(CONFIG_BACKUP)} 个文件。")
 
         # 显示总大小
-        total_size = sum(
-            len(data)
-            for data in CONFIG_BACKUP.values()
-        )
+        total_size = sum(len(data) for data in CONFIG_BACKUP.values())
 
-        print(
-            f"[*] 内存备份大小："
-            f"{total_size:,} bytes"
-            f" ({total_size / 1024:.2f} KB)"
-        )
+        print(f"[*] 内存备份大小：{total_size:,} bytes ({total_size / 1024:.2f} KB)")
 
         return True
 
@@ -262,10 +243,8 @@ def restore_config_from_memory():
         return False
 
     try:
-
         # 原来不存在 config
         if not CONFIG_DIR_EXISTED:
-
             if CONFIG_DIR.exists():
                 print("[*] 原 config 目录原本不存在。")
                 print("[*] 正在删除编译过程中产生的 config...")
@@ -280,20 +259,13 @@ def restore_config_from_memory():
             shutil.rmtree(CONFIG_DIR)
 
         # 重新创建
-        CONFIG_DIR.mkdir(
-            parents=True,
-            exist_ok=True
-        )
+        CONFIG_DIR.mkdir(parents=True, exist_ok=True)
 
         # 写回原始文件
         for relative_path, data in CONFIG_BACKUP.items():
-
             target = CONFIG_DIR / relative_path
 
-            target.parent.mkdir(
-                parents=True,
-                exist_ok=True
-            )
+            target.parent.mkdir(parents=True, exist_ok=True)
 
             target.write_bytes(data)
 
@@ -302,7 +274,6 @@ def restore_config_from_memory():
         return True
 
     except Exception as e:
-
         print()
         print("=========================================")
         print("      [警告] 用户配置恢复失败！")
@@ -317,6 +288,7 @@ def restore_config_from_memory():
 # Git 部分
 # ============================================================
 
+
 def merge_upstream():
     """只自动处理已知的指引删除冲突，其余冲突保留现场。"""
     run_git("config", "rerere.enabled", "true")
@@ -324,8 +296,13 @@ def merge_upstream():
         return True
     result = subprocess.run(
         ["git", "diff", "--name-only", "--diff-filter=U"],
-        cwd=PROJECT_DIR, capture_output=True, text=True, check=True)
+        cwd=PROJECT_DIR,
+        capture_output=True,
+        text=True,
+        check=True,
+    )
     import re
+
     for name in result.stdout.splitlines():
         path = PROJECT_DIR / name
         if name in (
@@ -333,21 +310,30 @@ def merge_upstream():
             "src/MaaWpfGui/Views/UserControl/GuideUserControl.xaml",
         ):
             # 仅在本分支确实删除该文件时保留删除。
-            exists = subprocess.run(["git", "cat-file", "-e", "HEAD:" + name],
-                                    cwd=PROJECT_DIR, capture_output=True)
+            exists = subprocess.run(
+                ["git", "cat-file", "-e", "HEAD:" + name],
+                cwd=PROJECT_DIR,
+                capture_output=True,
+            )
             if exists.returncode != 0:
                 run_git("rm", "--", name)
         elif name == "src/maa-cli":
             sha = subprocess.check_output(
                 ["git", "rev-parse", "origin/dev-v2:" + name],
-                cwd=PROJECT_DIR, text=True).strip()
+                cwd=PROJECT_DIR,
+                text=True,
+            ).strip()
             run_git("update-index", "--cacheinfo", "160000," + sha + "," + name)
         elif name == "src/MaaWpfGui/ViewModels/UI/SettingsViewModel.cs" or (
-            name.startswith("src/MaaWpfGui/Res/Localizations/") and name.endswith(".xaml")
+            name.startswith("src/MaaWpfGui/Res/Localizations/")
+            and name.endswith(".xaml")
         ):
             data = path.read_bytes()
-            pattern = rb"^<<<<<<< HEAD\r?\n(.*?)^=======\r?\n(.*?)^>>>>>>> [^\r\n]+\r?\n"
+            pattern = (
+                rb"^<<<<<<< HEAD\r?\n(.*?)^=======\r?\n(.*?)^>>>>>>> [^\r\n]+\r?\n"
+            )
             safe = True
+
             def resolve(match):
                 nonlocal safe
                 ours, theirs = match.group(1), match.group(2)
@@ -355,13 +341,14 @@ def merge_upstream():
                     safe = False
                     return match.group(0)
                 return ours
+
             fixed = re.sub(pattern, resolve, data, flags=re.M | re.S)
             if safe and b"<<<<<<<" not in fixed:
                 path.write_bytes(fixed)
                 run_git("add", "--", name)
     remaining = subprocess.check_output(
-        ["git", "diff", "--name-only", "--diff-filter=U"],
-        cwd=PROJECT_DIR, text=True)
+        ["git", "diff", "--name-only", "--diff-filter=U"], cwd=PROJECT_DIR, text=True
+    )
     if remaining.strip():
         print("需要人工检查的新冲突：", remaining)
         return False
@@ -380,20 +367,12 @@ def git_sync():
     print()
     print("[0/8] 开启 Sing-box 代理 (端口: 20122)...")
 
-    result = run_git(
-        "config",
-        "http.proxy",
-        GIT_PROXY
-    )
+    result = run_git("config", "http.proxy", GIT_PROXY)
 
     if result != 0:
         return False
 
-    result = run_git(
-        "config",
-        "https.proxy",
-        GIT_PROXY
-    )
+    result = run_git("config", "https.proxy", GIT_PROXY)
 
     if result != 0:
         return False
@@ -431,7 +410,7 @@ def git_sync():
         ["git", "status", "--porcelain"],
         cwd=PROJECT_DIR,
         capture_output=True,
-        text=True
+        text=True,
     )
 
     if status.returncode != 0:
@@ -445,11 +424,7 @@ def git_sync():
         if run_git("add", "-u") != 0:
             return False
 
-        if run_git(
-            "commit",
-            "-m",
-            "Preserve local no-popup modifications"
-        ) != 0:
+        if run_git("commit", "-m", "Preserve local no-popup modifications") != 0:
             return False
 
         print("[*] 本地 no-popup 修改已安全保存。")
@@ -474,11 +449,7 @@ def git_sync():
     print()
     print("[4/8] 推送更新后的 no-popup 到你的 GitHub (myfork)...")
 
-    if run_git(
-        "push",
-        "myfork",
-        "no-popup"
-    ) != 0:
+    if run_git("push", "myfork", "no-popup") != 0:
         return False
 
     # --------------------------------------------------------
@@ -494,21 +465,13 @@ def git_sync():
     print()
     print("[*] 合并官方 origin/dev-v2...")
 
-    if run_git(
-        "merge",
-        "origin/dev-v2",
-        "--no-edit"
-    ) != 0:
+    if run_git("merge", "origin/dev-v2", "--no-edit") != 0:
         return False
 
     print()
     print("[*] 推送 dev-v2 到你的 GitHub (myfork)...")
 
-    if run_git(
-        "push",
-        "myfork",
-        "dev-v2"
-    ) != 0:
+    if run_git("push", "myfork", "dev-v2") != 0:
         return False
 
     # --------------------------------------------------------
@@ -530,6 +493,7 @@ def git_sync():
 # Visual Studio / CMake
 # ============================================================
 
+
 def run_vs_cmake(command):
     """
     在同一个 cmd.exe 进程中加载 VsDevCmd，
@@ -538,11 +502,7 @@ def run_vs_cmake(command):
 
     cmd = f'call "{VSDEVCMD}" && {command}'
 
-    result = subprocess.run(
-        cmd,
-        cwd=str(PROJECT_DIR),
-        shell=True
-    )
+    result = subprocess.run(cmd, cwd=str(PROJECT_DIR), shell=True)
 
     return result.returncode
 
@@ -557,7 +517,7 @@ def build_release():
     # --------------------------------------------------------
 
     print()
-    print("[7/8] 正在调用 Visual Studio 本地编译 Release...")
+    print("[7/8] 正在调用 Visual Studio 本地编译 Debug...")
 
     print()
     print("[*] 加载 Visual Studio 2026 Community 编译环境...")
@@ -575,27 +535,20 @@ def build_release():
     print()
     print("[7/8] 正在重新配置 CMake，扫描新版本源码...")
 
-    cmake_configure = (
-        f'"{CMAKE}" '
-        f'-S "{PROJECT_DIR}" '
-        f'-B "{PROJECT_DIR / "build"}"'
-    )
+    cmake_configure = f'"{CMAKE}" -S "{PROJECT_DIR}" -B "{PROJECT_DIR / "build"}"'
 
     if run_vs_cmake(cmake_configure) != 0:
         return False
 
     # --------------------------------------------------------
-    # 编译 Release
+    # 编译 Debug
     # --------------------------------------------------------
 
     print()
-    print("[8/8] 正在编译 Release...")
+    print("[8/8] 正在编译 Debug...")
 
     cmake_build = (
-        f'"{CMAKE}" '
-        f'--build "{PROJECT_DIR / "build"}" '
-        f'--config Release '
-        f'--parallel'
+        f'"{CMAKE}" --build "{PROJECT_DIR / "build"}" --config Debug --parallel'
     )
 
     if run_vs_cmake(cmake_build) != 0:
@@ -608,8 +561,8 @@ def build_release():
 # 主程序
 # ============================================================
 
-def main():
 
+def main():
     # --------------------------------------------------------
     # 检查项目目录
     # --------------------------------------------------------
@@ -639,9 +592,7 @@ def main():
     print("=========================================")
 
     try:
-
         if not git_sync():
-
             git_proxy_cleanup()
 
             print()
@@ -674,18 +625,16 @@ def main():
             build_success = build_release()
 
         finally:
-
             # ------------------------------------------------
             # 只要进入过编译阶段，就一定尝试恢复 config
             # ------------------------------------------------
 
             if BUILD_STAGE_STARTED:
-
                 print()
 
                 if build_success:
                     print("=========================================")
-                    print("       Release 编译成功！")
+                    print("       Debug 编译成功！")
                     print("=========================================")
 
                 else:
@@ -700,7 +649,6 @@ def main():
         # ----------------------------------------------------
 
         if not build_success:
-
             git_proxy_cleanup()
 
             print()
@@ -723,7 +671,7 @@ def main():
         print()
         print("       官方 dev-v2 已同步")
         print("       no-popup 修改已保留")
-        print("       Release 已重新编译")
+        print("       Debug 已重新编译")
         print("       用户 config 已从内存恢复")
         print("=========================================")
         print()
@@ -733,7 +681,6 @@ def main():
         return 0
 
     except KeyboardInterrupt:
-
         print()
         print()
         print("[警告] 用户中断了脚本。")
@@ -750,7 +697,6 @@ def main():
         return 1
 
     except Exception as e:
-
         print()
         print("=========================================")
         print("       [错误] 脚本发生未处理异常！")
