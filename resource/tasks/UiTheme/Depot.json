@@ -24,7 +24,8 @@
             "DepotReconstruct",
             "DepotHunting",
             "DepotBlackFlow",
-            "DepotAct"
+            "DepotAct",
+            "DepotText"
         ]
     },
     "DepotDefault": {
@@ -115,5 +116,13 @@
     "DepotAct": {
         "baseTask": "DepotDefault",
         "template": ["Act/DepotEnter.png", "Act/DepotEnter-90.png"]
+    },
+    "DepotText": {
+        "algorithm": "OcrDetect",
+        "text": ["仓库"],
+        "roi": [1109, 560, 171, 160],
+        "action": "ClickSelf",
+        "postDelay": 500,
+        "next": ["#self", "Stop"]
     }
 }

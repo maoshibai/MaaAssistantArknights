@@ -24,7 +24,8 @@
             "TaskReconstruct",
             "TaskHunting",
             "TaskBlackFlow",
-            "TaskAct"
+            "TaskAct",
+            "TaskText"
         ]
     },
     "TaskDefault": {
@@ -115,5 +116,13 @@
     "TaskAct": {
         "baseTask": "TaskDefault",
         "template": ["Act/Task.png", "Act/Task-90.png"]
+    },
+    "TaskText": {
+        "algorithm": "OcrDetect",
+        "text": ["任务"],
+        "roi": [700, 530, 230, 190],
+        "action": "ClickSelf",
+        "postDelay": 1000,
+        "next": ["#self", "Stop"]
     }
 }
