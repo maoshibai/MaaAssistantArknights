@@ -6,7 +6,26 @@
             "roi": [720, 553, 75, 70],
             "mask": []
         },
-        "next": ["TaskDefault"]
+        "next": [
+            "TaskDefault",
+            "TaskDark",
+            "TaskSami",
+            "TaskMistCity",
+            "TaskSiege",
+            "TaskSarkaz",
+            "TaskDelicious",
+            "TaskGaming",
+            "TaskDahuangCity",
+            "TaskDreamland",
+            "TaskJieGarden",
+            "TaskAveMujica",
+            "TaskTogether",
+            "TaskLoneTrail",
+            "TaskReconstruct",
+            "TaskHunting",
+            "TaskBlackFlow",
+            "TaskAct"
+        ]
     },
     "TaskDefault": {
         "action": "ClickSelf",
@@ -15,5 +34,86 @@
         "template": ["Default/Task.png", "Default/Task-90.png"],
         "postDelay": 1000,
         "next": ["#self", "Stop"]
+    },
+    "TaskDark": {
+        "baseTask": "TaskDefault",
+        "template": ["Dark/Task.png", "Dark/Task-90.png"]
+    },
+    "TaskSami": {
+        "baseTask": "TaskDefault",
+        "template": ["Sami/Task.png", "Sami/Task-90.png"]
+    },
+    "TaskMistCity": {
+        "baseTask": "TaskDefault",
+        "template": ["MistCity/Task.png", "MistCity/Task-90.png"]
+    },
+    "TaskSiege": {
+        "baseTask": "TaskDefault",
+        "template": ["Siege/Task.png", "Siege/Task-90.png"]
+    },
+    "TaskSarkaz": {
+        "baseTask": "TaskDefault",
+        "template": ["Sarkaz/Task.png", "Sarkaz/Task-90.png"]
+    },
+    "TaskDelicious": {
+        "baseTask": "TaskDefault",
+        "template": ["Delicious/Task.png", "Delicious/Task-90.png"]
+    },
+    "TaskGaming": {
+        "baseTask": "TaskDefault",
+        "template": ["Gaming/Task.png", "Gaming/Task-90.png"]
+    },
+    "TaskDahuangCity": {
+        "baseTask": "TaskDefault",
+        "template": ["DahuangCity/Task.png", "DahuangCity/Task-90.png"]
+    },
+    "TaskDreamland": {
+        "baseTask": "TaskDefault",
+        "template": [
+            "Dreamland/Day/Task.png",
+            "Dreamland/Day/Task-90.png",
+            "Dreamland/Night/Task.png",
+            "Dreamland/Night/Task-90.png"
+        ]
+    },
+    "TaskJieGarden": {
+        "baseTask": "TaskDefault",
+        "template": ["JieGarden/Task.png", "JieGarden/Task-90.png"]
+    },
+    "TaskAveMujica": {
+        "baseTask": "TaskDefault",
+        "templThreshold": 0.9,
+        "template": ["AveMujica/Task.png", "AveMujica/Task-90.png"]
+    },
+    "TaskTogether": {
+        "baseTask": "TaskDefault",
+        "templThreshold": 0.9,
+        "template": ["Together/Task.png", "Together/Task-90.png"]
+    },
+    "TaskLoneTrail": {
+        "baseTask": "TaskDefault",
+        "template": [
+            "LoneTrail/Day/Task.png",
+            "LoneTrail/Day/Task-90.png",
+            "LoneTrail/Night/Task.png",
+            "LoneTrail/Night/Task-90.png"
+        ]
+    },
+    "TaskReconstruct": {
+        "baseTask": "TaskDefault",
+        "template": ["Reconstruct/Task.png", "Reconstruct/Task-90.png"]
+    },
+    "TaskHunting": {
+        "baseTask": "TaskDefault",
+        "template": ["Hunting/Task.png", "Hunting/Task-90.png"],
+        "roi": [685, 548, 151, 131]
+    },
+    "TaskBlackFlow": {
+        "baseTask": "TaskDefault",
+        "template": ["BlackFlow/Task.png", "BlackFlow/Task-90.png"]
+    },
+    "TaskAct": {
+        "baseTask": "TaskDefault",
+        "template": ["Act/Task.png", "Act/Task-90.png"]
     }
 }

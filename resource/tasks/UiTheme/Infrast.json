@@ -6,7 +6,26 @@
             "roi": [935, 570, 85, 75],
             "mask": []
         },
-        "next": ["InfrastDefault"]
+        "next": [
+            "InfrastDefault",
+            "InfrastDark",
+            "InfrastSami",
+            "InfrastMistCity",
+            "InfrastSiege",
+            "InfrastSarkaz",
+            "InfrastDelicious",
+            "InfrastGaming",
+            "InfrastDahuangCity",
+            "InfrastDreamland",
+            "InfrastJieGarden",
+            "InfrastAveMujica",
+            "InfrastTogether",
+            "InfrastLoneTrail",
+            "InfrastReconstruct",
+            "InfrastHunting",
+            "InfrastBlackFlow",
+            "InfrastAct"
+        ]
     },
     "InfrastDefault": {
         "action": "ClickSelf",
@@ -15,5 +34,83 @@
         "template": ["Default/EnterInfrast.png", "Default/EnterInfrast-90.png"],
         "postDelay": 5000,
         "next": ["#self", "Stop"]
+    },
+    "InfrastDark": {
+        "baseTask": "InfrastDefault",
+        "template": ["Dark/EnterInfrast.png", "Dark/EnterInfrast-90.png"]
+    },
+    "InfrastSami": {
+        "baseTask": "InfrastDefault",
+        "template": ["Sami/EnterInfrast.png", "Sami/EnterInfrast-90.png"]
+    },
+    "InfrastMistCity": {
+        "baseTask": "InfrastDefault",
+        "template": ["MistCity/EnterInfrast.png", "MistCity/EnterInfrast-90.png"]
+    },
+    "InfrastSiege": {
+        "baseTask": "InfrastDefault",
+        "template": ["Siege/EnterInfrast.png", "Siege/EnterInfrast-90.png"]
+    },
+    "InfrastSarkaz": {
+        "baseTask": "InfrastDefault",
+        "template": ["Sarkaz/EnterInfrast.png", "Sarkaz/EnterInfrast-90.png"]
+    },
+    "InfrastDelicious": {
+        "baseTask": "InfrastDefault",
+        "template": ["Delicious/EnterInfrast.png", "Delicious/EnterInfrast-90.png"]
+    },
+    "InfrastGaming": {
+        "baseTask": "InfrastDefault",
+        "template": ["Gaming/EnterInfrast.png", "Gaming/EnterInfrast-90.png"]
+    },
+    "InfrastDahuangCity": {
+        "baseTask": "InfrastDefault",
+        "template": ["DahuangCity/EnterInfrast.png", "DahuangCity/EnterInfrast-90.png"]
+    },
+    "InfrastDreamland": {
+        "baseTask": "InfrastDefault",
+        "template": [
+            "Dreamland/Day/EnterInfrast.png",
+            "Dreamland/Day/EnterInfrast-90.png",
+            "Dreamland/Night/EnterInfrast.png",
+            "Dreamland/Night/EnterInfrast-90.png"
+        ]
+    },
+    "InfrastJieGarden": {
+        "baseTask": "InfrastDefault",
+        "template": ["JieGarden/EnterInfrast.png", "JieGarden/EnterInfrast-90.png"]
+    },
+    "InfrastAveMujica": {
+        "baseTask": "InfrastDefault",
+        "template": ["AveMujica/EnterInfrast.png", "AveMujica/EnterInfrast-90.png"]
+    },
+    "InfrastTogether": {
+        "baseTask": "InfrastDefault",
+        "template": ["Together/EnterInfrast.png", "Together/EnterInfrast-90.png"]
+    },
+    "InfrastLoneTrail": {
+        "baseTask": "InfrastDefault",
+        "template": [
+            "LoneTrail/Day/EnterInfrast.png",
+            "LoneTrail/Day/EnterInfrast-90.png",
+            "LoneTrail/Night/EnterInfrast.png",
+            "LoneTrail/Night/EnterInfrast-90.png"
+        ]
+    },
+    "InfrastReconstruct": {
+        "baseTask": "InfrastDefault",
+        "template": ["Reconstruct/EnterInfrast.png", "Reconstruct/EnterInfrast-90.png"]
+    },
+    "InfrastHunting": {
+        "baseTask": "InfrastDefault",
+        "template": ["Hunting/EnterInfrast.png", "Hunting/EnterInfrast-90.png"]
+    },
+    "InfrastBlackFlow": {
+        "baseTask": "InfrastDefault",
+        "template": ["BlackFlow/EnterInfrast.png", "BlackFlow/EnterInfrast-90.png"]
+    },
+    "InfrastAct": {
+        "baseTask": "InfrastDefault",
+        "template": ["Act/EnterInfrast.png", "Act/EnterInfrast-90.png"]
     }
 }

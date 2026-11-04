@@ -6,7 +6,26 @@
             "roi": [1095, 497, 167, 56],
             "mask": []
         },
-        "next": ["GachaDefault"]
+        "next": [
+            "GachaDefault",
+            "GachaDark",
+            "GachaSami",
+            "GachaMistCity",
+            "GachaSiege",
+            "GachaSarkaz",
+            "GachaDelicious",
+            "GachaGaming",
+            "GachaDahuangCity",
+            "GachaDreamland",
+            "GachaJieGarden",
+            "GachaAveMujica",
+            "GachaTogether",
+            "GachaLoneTrail",
+            "GachaReconstruct",
+            "GachaHunting",
+            "GachaBlackFlow",
+            "GachaAct"
+        ]
     },
     "GachaDefault": {
         "action": "ClickSelf",
@@ -15,5 +34,83 @@
         "template": ["Default/GachaEnter.png", "Default/GachaEnter-90.png"],
         "postDelay": 500,
         "next": ["#self", "Stop"]
+    },
+    "GachaDark": {
+        "baseTask": "GachaDefault",
+        "template": ["Dark/GachaEnter.png", "Dark/GachaEnter-90.png"]
+    },
+    "GachaSami": {
+        "baseTask": "GachaDefault",
+        "template": ["Sami/GachaEnter.png", "Sami/GachaEnter-90.png"]
+    },
+    "GachaMistCity": {
+        "baseTask": "GachaDefault",
+        "template": ["MistCity/GachaEnter.png", "MistCity/GachaEnter-90.png"]
+    },
+    "GachaSiege": {
+        "baseTask": "GachaDefault",
+        "template": ["Siege/GachaEnter.png", "Siege/GachaEnter-90.png"]
+    },
+    "GachaSarkaz": {
+        "baseTask": "GachaDefault",
+        "template": ["Sarkaz/GachaEnter.png", "Sarkaz/GachaEnter-90.png"]
+    },
+    "GachaDelicious": {
+        "baseTask": "GachaDefault",
+        "template": ["Delicious/GachaEnter.png", "Delicious/GachaEnter-90.png"]
+    },
+    "GachaGaming": {
+        "baseTask": "GachaDefault",
+        "template": ["Gaming/GachaEnter.png", "Gaming/GachaEnter-90.png"]
+    },
+    "GachaDahuangCity": {
+        "baseTask": "GachaDefault",
+        "template": ["DahuangCity/GachaEnter.png", "DahuangCity/GachaEnter-90.png"]
+    },
+    "GachaDreamland": {
+        "baseTask": "GachaDefault",
+        "template": [
+            "Dreamland/Day/GachaEnter.png",
+            "Dreamland/Day/GachaEnter-90.png",
+            "Dreamland/Night/GachaEnter.png",
+            "Dreamland/Night/GachaEnter-90.png"
+        ]
+    },
+    "GachaJieGarden": {
+        "baseTask": "GachaDefault",
+        "template": ["JieGarden/GachaEnter.png", "JieGarden/GachaEnter-90.png"]
+    },
+    "GachaAveMujica": {
+        "baseTask": "GachaDefault",
+        "template": ["AveMujica/GachaEnter.png", "AveMujica/GachaEnter-90.png"]
+    },
+    "GachaTogether": {
+        "baseTask": "GachaDefault",
+        "template": ["Together/GachaEnter.png", "Together/GachaEnter-90.png"]
+    },
+    "GachaLoneTrail": {
+        "baseTask": "GachaDefault",
+        "template": [
+            "LoneTrail/Day/GachaEnter.png",
+            "LoneTrail/Day/GachaEnter-90.png",
+            "LoneTrail/Night/GachaEnter.png",
+            "LoneTrail/Night/GachaEnter-90.png"
+        ]
+    },
+    "GachaReconstruct": {
+        "baseTask": "GachaDefault",
+        "template": ["Reconstruct/GachaEnter.png", "Reconstruct/GachaEnter-90.png"]
+    },
+    "GachaHunting": {
+        "baseTask": "GachaDefault",
+        "template": ["Hunting/GachaEnter.png", "Hunting/GachaEnter-90.png"]
+    },
+    "GachaBlackFlow": {
+        "baseTask": "GachaDefault",
+        "template": ["BlackFlow/GachaEnter.png", "BlackFlow/GachaEnter-90.png"]
+    },
+    "GachaAct": {
+        "baseTask": "GachaDefault",
+        "template": ["Act/GachaEnter.png", "Act/GachaEnter-90.png"]
     }
 }

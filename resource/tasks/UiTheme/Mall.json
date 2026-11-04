@@ -6,7 +6,26 @@
             "roi": [822, 457, 86, 71],
             "mask": []
         },
-        "next": ["MallDefault"]
+        "next": [
+            "MallDefault",
+            "MallDark",
+            "MallSami",
+            "MallMistCity",
+            "MallSiege",
+            "MallSarkaz",
+            "MallDelicious",
+            "MallGaming",
+            "MallDahuangCity",
+            "MallDreamland",
+            "MallJieGarden",
+            "MallAveMujica",
+            "MallTogether",
+            "MallLoneTrail",
+            "MallReconstruct",
+            "MallHunting",
+            "MallBlackFlow",
+            "MallAct"
+        ]
     },
     "MallDefault": {
         "action": "ClickSelf",
@@ -15,5 +34,83 @@
         "template": ["Default/Mall.png", "Default/Mall-90.png"],
         "postDelay": 500,
         "next": ["#self", "Stop"]
+    },
+    "MallDark": {
+        "baseTask": "MallDefault",
+        "template": ["Dark/Mall.png", "Dark/Mall-90.png"]
+    },
+    "MallSami": {
+        "baseTask": "MallDefault",
+        "template": ["Sami/Mall.png", "Sami/Mall-90.png"]
+    },
+    "MallMistCity": {
+        "baseTask": "MallDefault",
+        "template": ["MistCity/Mall.png", "MistCity/Mall-90.png"]
+    },
+    "MallSiege": {
+        "baseTask": "MallDefault",
+        "template": ["Siege/Mall.png", "Siege/Mall-90.png"]
+    },
+    "MallSarkaz": {
+        "baseTask": "MallDefault",
+        "template": ["Sarkaz/Mall.png", "Sarkaz/Mall-90.png"]
+    },
+    "MallDelicious": {
+        "baseTask": "MallDefault",
+        "template": ["Delicious/Mall.png", "Delicious/Mall-90.png"]
+    },
+    "MallGaming": {
+        "baseTask": "MallDefault",
+        "template": ["Gaming/Mall.png", "Gaming/Mall-90.png"]
+    },
+    "MallDahuangCity": {
+        "baseTask": "MallDefault",
+        "template": ["DahuangCity/Mall.png", "DahuangCity/Mall-90.png"]
+    },
+    "MallDreamland": {
+        "baseTask": "MallDefault",
+        "template": [
+            "Dreamland/Day/Mall.png",
+            "Dreamland/Day/Mall-90.png",
+            "Dreamland/Night/Mall.png",
+            "Dreamland/Night/Mall-90.png"
+        ]
+    },
+    "MallJieGarden": {
+        "baseTask": "MallDefault",
+        "template": ["JieGarden/Mall.png", "JieGarden/Mall-90.png"]
+    },
+    "MallAveMujica": {
+        "baseTask": "MallDefault",
+        "template": ["AveMujica/Mall.png", "AveMujica/Mall-90.png"]
+    },
+    "MallTogether": {
+        "baseTask": "MallDefault",
+        "template": ["Together/Mall.png", "Together/Mall-90.png"]
+    },
+    "MallLoneTrail": {
+        "baseTask": "MallDefault",
+        "template": [
+            "LoneTrail/Day/Mall.png",
+            "LoneTrail/Day/Mall-90.png",
+            "LoneTrail/Night/Mall.png",
+            "LoneTrail/Night/Mall-90.png"
+        ]
+    },
+    "MallReconstruct": {
+        "baseTask": "MallDefault",
+        "template": ["Reconstruct/Mall.png", "Reconstruct/Mall-90.png"]
+    },
+    "MallHunting": {
+        "baseTask": "MallDefault",
+        "template": ["Hunting/Mall.png", "Hunting/Mall-90.png"]
+    },
+    "MallBlackFlow": {
+        "baseTask": "MallDefault",
+        "template": ["BlackFlow/Mall.png", "BlackFlow/Mall-90.png"]
+    },
+    "MallAct": {
+        "baseTask": "MallDefault",
+        "template": ["Act/Mall.png", "Act/Mall-90.png"]
     }
 }
