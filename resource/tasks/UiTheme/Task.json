@@ -6,8 +6,7 @@
             "roi": [720, 553, 75, 70],
             "mask": []
         },
-        "next": ["TaskDefault"],
-        "onErrorNext": ["Task-Entry@SwitchTheme@ToggleSettingsMenu"]
+        "next": ["TaskDefault"]
     },
     "TaskDefault": {
         "action": "ClickSelf",

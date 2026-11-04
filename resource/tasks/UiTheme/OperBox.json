@@ -6,8 +6,7 @@
             "roi": [945, 301, 85, 78],
             "mask": []
         },
-        "next": ["OperBoxDefault"],
-        "onErrorNext": ["OperBox-Entry@SwitchTheme@ToggleSettingsMenu"]
+        "next": ["OperBoxDefault"]
     },
     "OperBoxDefault": {
         "action": "ClickSelf",

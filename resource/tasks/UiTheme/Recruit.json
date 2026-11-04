@@ -6,8 +6,7 @@
             "roi": [935, 480, 145, 61],
             "mask": [125, 0, 25, 20]
         },
-        "next": ["RecruitDefault"],
-        "onErrorNext": ["Recruit-Entry@SwitchTheme@ToggleSettingsMenu"]
+        "next": ["RecruitDefault"]
     },
     "RecruitDefault": {
         "action": "ClickSelf",

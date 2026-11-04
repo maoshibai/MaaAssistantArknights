@@ -6,8 +6,7 @@
             "roi": [822, 457, 86, 71],
             "mask": []
         },
-        "next": ["MallDefault"],
-        "onErrorNext": ["Mall-Entry@SwitchTheme@ToggleSettingsMenu"]
+        "next": ["MallDefault"]
     },
     "MallDefault": {
         "action": "ClickSelf",

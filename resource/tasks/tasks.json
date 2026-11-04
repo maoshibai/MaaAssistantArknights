@@ -1012,8 +1012,7 @@
             "ReturnButton@LoadingIcon",
             "ReturnButton@LoadingText",
             "CloseAnnos#next"
-        ],
-        "onErrorNext": ["SwitchTheme@ToggleSettingsMenu"]
+        ]
     },
     "FromStageSN": {
         "template": "StageSNReturnFlag.png",

@@ -6,8 +6,7 @@
             "roi": [300, 550, 128, 41],
             "mask": []
         },
-        "next": ["FriendsDefault"],
-        "onErrorNext": ["Friends-Entry@SwitchTheme@ToggleSettingsMenu"]
+        "next": ["FriendsDefault"]
     },
     "FriendsDefault": {
         "action": "ClickSelf",

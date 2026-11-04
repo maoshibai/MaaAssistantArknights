@@ -6,8 +6,7 @@
             "roi": [935, 570, 85, 75],
             "mask": []
         },
-        "next": ["InfrastDefault"],
-        "onErrorNext": ["Infrast-Entry@SwitchTheme@ToggleSettingsMenu"]
+        "next": ["InfrastDefault"]
     },
     "InfrastDefault": {
         "action": "ClickSelf",

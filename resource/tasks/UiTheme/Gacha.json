@@ -6,8 +6,7 @@
             "roi": [1095, 497, 167, 56],
             "mask": []
         },
-        "next": ["GachaDefault"],
-        "onErrorNext": ["Gacha-Entry@SwitchTheme@ToggleSettingsMenu"]
+        "next": ["GachaDefault"]
     },
     "GachaDefault": {
         "action": "ClickSelf",
