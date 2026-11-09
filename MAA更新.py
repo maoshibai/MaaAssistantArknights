@@ -91,7 +91,8 @@ CONFIG_DIR_EXISTED = False
 
 
 def pause():
-    input("\n按 Enter 键退出...")
+    if sys.stdin.isatty():
+        input("\n按 Enter 键退出...")
 
 
 def run_command(args, cwd=None):
@@ -110,7 +111,25 @@ def run_git(*args):
     """
     执行 Git 命令。
     """
-    return run_command(["git", *args], cwd=PROJECT_DIR)
+    command = [
+        "git",
+        "-c",
+        "http.version=HTTP/1.1",
+        "-c",
+        "http.lowSpeedLimit=1024",
+        "-c",
+        "http.lowSpeedTime=30",
+        *args,
+    ]
+    attempts = 3 if args[0] in ("fetch", "push", "submodule") else 1
+    for attempt in range(attempts):
+        result = run_command(command, cwd=PROJECT_DIR)
+        if result == 0:
+            return 0
+        print(f"[错误] Git {args[0]} 失败，退出码：{result}")
+        if attempt + 1 < attempts:
+            print(f"[*] 正在重试 ({attempt + 2}/{attempts})...")
+    return result
 
 
 def git_proxy_cleanup():
@@ -386,7 +405,7 @@ def git_sync():
     print()
     print("[1/8] 正在拉取官方 origin 远程仓库最新变动...")
 
-    if run_git("fetch", "origin") != 0:
+    if run_git("fetch", "--progress", "origin") != 0:
         return False
 
     # --------------------------------------------------------
