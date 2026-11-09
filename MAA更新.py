@@ -92,7 +92,10 @@ CONFIG_DIR_EXISTED = False
 
 def pause():
     if sys.stdin.isatty():
-        input("\n按 Enter 键退出...")
+        try:
+            input("\n按 Enter 键退出...")
+        except EOFError:
+            pass
 
 
 def run_command(args, cwd=None):
@@ -336,7 +339,8 @@ def merge_upstream():
             )
             if exists.returncode != 0:
                 run_git("rm", "--", name)
-        elif name == "src/maa-cli":
+        elif name in ("src/maa-cli", "src/MaaMacGui", "src/MaaUtils"):
+            # 依赖子模块跟随官方锁定版本，不保留旧版本指针。
             sha = subprocess.check_output(
                 ["git", "rev-parse", "origin/dev-v2:" + name],
                 cwd=PROJECT_DIR,
@@ -356,10 +360,27 @@ def merge_upstream():
             def resolve(match):
                 nonlocal safe
                 ours, theirs = match.group(1), match.group(2)
-                if ours.strip() or b"Guide" not in theirs:
-                    safe = False
-                    return match.group(0)
-                return ours
+                if not ours.strip():
+                    if name.endswith(".xaml"):
+                        # 冲突块可能同时包含新增功能的词条，只移除 Guide.*。
+                        kept, count = re.subn(
+                            rb'^[ \t]*<system:String\b(?=[^>]*\bx:Key="Guide\.)'
+                            rb"[^>]*>.*?</system:String>[ \t]*\r?\n",
+                            b"",
+                            theirs,
+                            flags=re.M | re.S,
+                        )
+                        if count:
+                            return kept
+                    elif re.fullmatch(
+                        rb"\s*#region SettingsGuide\r?\n.*"
+                        rb"#endregion SettingsGuide\s*",
+                        theirs,
+                        flags=re.S,
+                    ):
+                        return ours
+                safe = False
+                return match.group(0)
 
             fixed = re.sub(pattern, resolve, data, flags=re.M | re.S)
             if safe and b"<<<<<<<" not in fixed:
@@ -371,13 +392,30 @@ def merge_upstream():
     if remaining.strip():
         print("需要人工检查的新冲突：", remaining)
         return False
-    if run_git("diff", "--cached", "--check") != 0:
+    # Markdown 的行尾双空格是硬换行，不能因此阻止上游合并。
+    if (
+        run_git("-c", "core.whitespace=-blank-at-eol", "diff", "--cached", "--check")
+        != 0
+    ):
         return False
     return run_git("commit", "--no-edit") == 0
 
 
 def git_sync():
     global GIT_PROXY_ENABLED
+
+    # 未解决的冲突不能经 add -u 被误当作普通本地修改提交。
+    conflicts = subprocess.run(
+        ["git", "diff", "--name-only", "--diff-filter=U"],
+        cwd=PROJECT_DIR,
+        capture_output=True,
+        text=True,
+    )
+    if conflicts.returncode != 0:
+        return False
+    if conflicts.stdout.strip():
+        print("[错误] 请先解决上次合并留下的冲突：", conflicts.stdout)
+        return False
 
     # --------------------------------------------------------
     # 0. 开启代理

@@ -1,4 +1,4 @@
-﻿// <copyright file="Gui.cs" company="MaaAssistantArknights">
+// <copyright file="Gui.cs" company="MaaAssistantArknights">
 // Part of the MaaWpfGui project, maintained by the MaaAssistantArknights team (Maa Team)
 // Copyright (C) 2021-2026 MaaAssistantArknights Contributors
 //
@@ -89,6 +89,8 @@ public class Gui : NotifyPropertyChangedWithValue
     /// </summary>
     public List<SettingKey> SettingOrders { get; set; } = [];
 
+    public bool ShowAdvancedSettings { get; set; }
+
     /// <summary>
     /// 设置页折叠框展开状态。
     /// </summary>
@@ -98,6 +100,16 @@ public class Gui : NotifyPropertyChangedWithValue
     /// 全局热键配置。
     /// </summary>
     public Dictionary<MaaHotKeyAction, MaaHotKey?> HotKeys { get; set; } = [];
+
+    /// <summary>
+    /// 作战日报数据保留档位（全局，data/DailyReport 日文件按此裁剪）。
+    /// </summary>
+    public DailyReportRetention DailyReportRetention { get; set; } = DailyReportRetention.Unlimited;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether 作战日报的图表卡片处于折叠状态。
+    /// </summary>
+    public bool DailyReportChartCollapsed { get; set; } = false;
 
     public Background Background { get; set; } = new();
 
