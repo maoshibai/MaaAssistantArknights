@@ -98,14 +98,14 @@ def pause():
             pass
 
 
-def run_command(args, cwd=None):
+def run_command(args, cwd=None, env=None):
     """
     执行普通命令。
     实时显示程序输出。
     """
     print()
 
-    result = subprocess.run(args, cwd=str(cwd) if cwd else None)
+    result = subprocess.run(args, cwd=str(cwd) if cwd else None, env=env)
 
     return result.returncode
 
@@ -583,6 +583,28 @@ def build_release():
         print()
         print("[错误] 找不到 VsDevCmd.bat：")
         print(VSDEVCMD)
+        return False
+
+    # 源码升级可能引入新版 OCR 等依赖，版本由官方脚本统一指定。
+    # 校验缓存后跳过未变化的依赖，避免每次重复下载、解压。
+    print()
+    print("[7/8] 正在检查并更新官方编译依赖...")
+    dependency_env = os.environ.copy()
+    dependency_env.update(http_proxy=GIT_PROXY, https_proxy=GIT_PROXY)
+    if (
+        run_command(
+            [
+                sys.executable,
+                "-u",
+                str(PROJECT_DIR / "tools" / "maadeps-download.py"),
+                "x64-windows",
+                "--cache-asset",
+            ],
+            cwd=PROJECT_DIR,
+            env=dependency_env,
+        )
+        != 0
+    ):
         return False
 
     # --------------------------------------------------------
